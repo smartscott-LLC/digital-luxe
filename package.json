@@ -1,0 +1,13 @@
+{
+  "name": "digital-luxe",
+  "version": "1.0.0",
+  "description": "Digital Luxe — The Catalog. A local-first, installable PWA for curating and customising premium UI components. Part of the ToolSmart suite.",
+  "private": true,
+  "scripts": {
+    "start": "npx serve -l 3002 .",
+    "dev": "npx serve -l 3002 ."
+  },
+  "keywords": ["pwa", "ui-components", "design-system", "toolsmart"],
+  "author": "smartscott-LLC",
+  "license": "UNLICENSED"
+}

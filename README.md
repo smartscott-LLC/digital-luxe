@@ -89,15 +89,18 @@ Digital Luxe is a **zero-build, static web app** — no bundler, no transpiler, 
 git clone https://github.com/smartscott-LLC/digital-luxe.git
 cd digital-luxe
 
-# Serve with any static file server, e.g.:
-npx serve .
+# Option 1 — npm start (uses port 3002 by default)
+npm start
+
+# Option 2 — any static file server
+npx serve -l 3002 .
 # or
-python3 -m http.server 8080
+python3 -m http.server 3002
 # or
-npx http-server . -p 8080
+npx http-server . -p 3002
 ```
 
-Then open `http://localhost:8080` in Chrome or Edge.
+Then open `http://localhost:3002` in Chrome or Edge.
 
 > **Why a server?** Service workers and OPFS require a secure context (`https://` or `localhost`). Opening `index.html` via `file://` will disable both features.
 
@@ -108,6 +111,8 @@ digital-luxe/
 ├── index.html          — App shell, all modals and overlays
 ├── manifest.json       — PWA manifest
 ├── sw.js               — Service worker (cache-first app shell)
+├── package.json        — npm scripts (npm start → serve on port 3002)
+├── .gitignore
 ├── css/
 │   └── app.css         — Complete design system and CSS custom properties
 ├── js/

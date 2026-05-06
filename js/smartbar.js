@@ -32,6 +32,8 @@ let visibleItems = [];
 // ── Public API ────────────────────────────────────────────────
 export const smartbar = {
   init() {
+    document.getElementById('smartbar-trigger')
+      ?.addEventListener('click', () => smartbar.open());
     closeBtn.addEventListener('click', smartbar.close);
     overlay.addEventListener('click', e => {
       if (e.target === overlay) smartbar.close();
