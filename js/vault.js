@@ -15,8 +15,6 @@ let available = false;
 const modal      = document.getElementById('vault-modal');
 const closeBtn   = document.getElementById('vault-close');
 const body       = document.getElementById('vault-body');
-const storageBar = document.getElementById('vault-storage-fill');
-const storageLabel = document.getElementById('vault-storage-label');
 
 // ── Public API ────────────────────────────────────────────────
 export const vault = {
@@ -139,18 +137,6 @@ export const vault = {
   async renderList() {
     const designs = await this.listDesigns();
 
-    // Storage bar
-    if (available && navigator.storage && navigator.storage.estimate) {
-      try {
-        const { usage = 0, quota = 1 } = await navigator.storage.estimate();
-        const pct = Math.min(100, (usage / quota) * 100).toFixed(1);
-        const usedMb = (usage / 1024 / 1024).toFixed(2);
-        const quotaGb = (quota / 1024 / 1024 / 1024).toFixed(1);
-        if (storageBar)   storageBar.style.width = `${pct}%`;
-        if (storageLabel) storageLabel.textContent = `${usedMb} MB used of ${quotaGb} GB`;
-      } catch { /* skip */ }
-    }
-
     if (!designs.length) {
       body.innerHTML = `
         <div class="dlx-vault-empty">
@@ -161,41 +147,54 @@ export const vault = {
           </p>
         </div>
         ${storageSection()}`;
-      return;
+    } else {
+      const listHtml = designs.map(({ key, data, size, modified }) => {
+        const date = new Date(modified).toLocaleDateString(undefined, { month:'short', day:'numeric', year:'numeric' });
+        const kb   = (size / 1024).toFixed(1);
+        const count = (data.items || []).length;
+        return `
+          <div class="dlx-vault-item" data-key="${escAttr(key)}">
+            <div class="dlx-vault-item__icon">🗄</div>
+            <div class="dlx-vault-item__info">
+              <div class="dlx-vault-item__name" data-name-display>${escHtml(data.name)}</div>
+              <div class="dlx-vault-item__meta">${count} component${count !== 1 ? 's' : ''} · ${date} · ${kb} KB</div>
+            </div>
+            <div class="dlx-vault-item__actions">
+              <button class="dlx-btn-sm dlx-btn-sm--primary"   data-action="load">Open</button>
+              <button class="dlx-btn-sm dlx-btn-sm--ghost"     data-action="rename">Rename</button>
+              <button class="dlx-btn-sm dlx-btn-sm--danger"    data-action="delete">✕</button>
+            </div>
+          </div>`;
+      }).join('');
+
+      body.innerHTML = `
+        <div class="dlx-vault-list">${listHtml}</div>
+        ${storageSection()}`;
+
+      // Wire action buttons
+      body.querySelectorAll('.dlx-vault-item').forEach(item => {
+        const key = item.dataset.key;
+        item.querySelector('[data-action="load"]')  .addEventListener('click', () => vault.loadDesign(key));
+        item.querySelector('[data-action="rename"]').addEventListener('click', () => startRename(item, key));
+        item.querySelector('[data-action="delete"]').addEventListener('click', async () => {
+          if (confirm('Delete this design?')) await vault.deleteDesign(key);
+        });
+      });
     }
 
-    const listHtml = designs.map(({ key, data, size, modified }) => {
-      const date = new Date(modified).toLocaleDateString(undefined, { month:'short', day:'numeric', year:'numeric' });
-      const kb   = (size / 1024).toFixed(1);
-      const count = (data.items || []).length;
-      return `
-        <div class="dlx-vault-item" data-key="${escAttr(key)}">
-          <div class="dlx-vault-item__icon">🗄</div>
-          <div class="dlx-vault-item__info">
-            <div class="dlx-vault-item__name" data-name-display>${escHtml(data.name)}</div>
-            <div class="dlx-vault-item__meta">${count} component${count !== 1 ? 's' : ''} · ${date} · ${kb} KB</div>
-          </div>
-          <div class="dlx-vault-item__actions">
-            <button class="dlx-btn-sm dlx-btn-sm--primary"   data-action="load">Open</button>
-            <button class="dlx-btn-sm dlx-btn-sm--ghost"     data-action="rename">Rename</button>
-            <button class="dlx-btn-sm dlx-btn-sm--danger"    data-action="delete">✕</button>
-          </div>
-        </div>`;
-    }).join('');
-
-    body.innerHTML = `
-      <div class="dlx-vault-list">${listHtml}</div>
-      ${storageSection()}`;
-
-    // Wire action buttons
-    body.querySelectorAll('.dlx-vault-item').forEach(item => {
-      const key = item.dataset.key;
-      item.querySelector('[data-action="load"]')  .addEventListener('click', () => vault.loadDesign(key));
-      item.querySelector('[data-action="rename"]').addEventListener('click', () => startRename(item, key));
-      item.querySelector('[data-action="delete"]').addEventListener('click', async () => {
-        if (confirm('Delete this design?')) await vault.deleteDesign(key);
-      });
-    });
+    // Update storage bar now that the elements exist in the DOM
+    if (available && navigator.storage && navigator.storage.estimate) {
+      try {
+        const { usage = 0, quota = 1 } = await navigator.storage.estimate();
+        const pct = Math.min(100, (usage / quota) * 100).toFixed(1);
+        const usedMb = (usage / 1024 / 1024).toFixed(2);
+        const quotaGb = (quota / 1024 / 1024 / 1024).toFixed(1);
+        const storageBar   = document.getElementById('vault-storage-fill');
+        const storageLabel = document.getElementById('vault-storage-label');
+        if (storageBar)   storageBar.style.width = `${pct}%`;
+        if (storageLabel) storageLabel.textContent = `${usedMb} MB used of ${quotaGb} GB`;
+      } catch { /* skip */ }
+    }
   }
 };
 

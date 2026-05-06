@@ -119,8 +119,8 @@ function renderCanvas() {
     wrap.dataset.index = idx;
     if (idx === selectedIndex) wrap.classList.add('selected');
 
-    // Apply nudge data-attributes for shadow DOM CSS
-    applyNudgeAttrs(wrap, item.nudges);
+    // Apply nudge classes to wrapper (outer CSS) and data-attrs to shadow host
+    applyNudgeClasses(wrap, item.nudges);
 
     wrap.innerHTML = `
       <div class="dlx-canvas-item__bar">
@@ -167,10 +167,17 @@ function buildCanvasHost(component, nudges) {
   return host;
 }
 
-// ── Apply nudge data-attributes to a host element ─────────────
+// ── Apply nudge classes to canvas item wrapper (for main CSS) ────
+function applyNudgeClasses(el, nudges) {
+  ['nudge-grow', 'nudge-shadow', 'nudge-round', 'nudge-pulse'].forEach(n => {
+    el.classList.toggle(n, nudges.has(n));
+  });
+}
+
+// ── Apply nudge data-attributes to shadow DOM host element ────────
 function applyNudgeAttrs(el, nudges) {
   ['nudge-grow', 'nudge-shadow', 'nudge-round', 'nudge-pulse'].forEach(n => {
-    el.toggleAttribute(n, nudges.has(n));
+    el.toggleAttribute(`data-${n}`, nudges.has(n));
   });
 }
 
@@ -179,7 +186,7 @@ function updateNudgeAttributes() {
   const wrappers = itemsWrap.querySelectorAll('.dlx-canvas-item');
   wrappers.forEach((wrap, idx) => {
     if (!items[idx]) return;
-    applyNudgeAttrs(wrap, items[idx].nudges);
+    applyNudgeClasses(wrap, items[idx].nudges);
     const host = wrap.querySelector('.dlx-canvas-item__body > div');
     if (host) applyNudgeAttrs(host, items[idx].nudges);
   });
