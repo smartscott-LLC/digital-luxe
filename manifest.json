@@ -1,7 +1,7 @@
 {
   "name": "Digital Luxe — The Catalog",
   "short_name": "Digital Luxe",
-  "description": "A local-first Cabinet of Wonders for curating and customising premium UI components.",
+  "description": "A local-first Cabinet of Wonders for curating and customizing premium UI components.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#dcd6b9",
