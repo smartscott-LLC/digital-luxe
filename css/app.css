@@ -1,0 +1,1188 @@
+/* ============================================================
+   Digital Luxe — Design System & App Styles
+   Part of the ToolSmart suite by smartscott-LLC
+   Palette: Golden Bronze / Graphite / Silver / Pine Teal / Sand Dune
+   ============================================================ */
+
+/* ── 1. CSS Custom Properties ─────────────────────────────── */
+:root {
+  /* Official brand palette */
+  --golden-bronze: #bba54c;
+  --graphite:      #2c2b25;
+  --silver:        #a7a6a2;
+  --pine-teal:     #1F4F3C;
+  --sand-dune:     #dcd6b9;
+
+  /* Semantic colour tokens */
+  --color-bg:             var(--sand-dune);
+  --color-bg-dark:        var(--graphite);
+  --color-surface:        #ede7cd;
+  --color-surface-raised: #f7f3e8;
+  --color-border:         #c4bc9a;
+  --color-border-subtle:  #d6d0b4;
+
+  --color-text:           var(--graphite);
+  --color-text-secondary: #4a4940;
+  --color-text-muted:     var(--silver);
+  --color-text-on-dark:   var(--sand-dune);
+  --color-text-on-accent: #1a1a12;
+
+  --color-accent:         var(--golden-bronze);
+  --color-accent-hover:   #cbb85c;
+  --color-accent-dim:     rgba(187,165,76,.18);
+
+  --color-primary:        var(--pine-teal);
+  --color-primary-hover:  #285e47;
+  --color-primary-dim:    rgba(31,79,60,.14);
+
+  /* Typography */
+  --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
+
+  /* Spacing scale */
+  --sp-1: 4px;  --sp-2: 8px;  --sp-3: 12px; --sp-4: 16px;
+  --sp-5: 20px; --sp-6: 24px; --sp-8: 32px; --sp-10: 40px;
+  --sp-12: 48px; --sp-16: 64px;
+
+  /* Border radii */
+  --r-sm:   4px;
+  --r:      7px;
+  --r-lg:   12px;
+  --r-xl:   18px;
+  --r-full: 9999px;
+
+  /* Shadows */
+  --shadow-xs: 0 1px 2px  rgba(44,43,37,.10);
+  --shadow-sm: 0 1px 4px  rgba(44,43,37,.13);
+  --shadow:    0 2px 10px rgba(44,43,37,.15);
+  --shadow-md: 0 4px 18px rgba(44,43,37,.17);
+  --shadow-lg: 0 8px 32px rgba(44,43,37,.19);
+  --shadow-xl: 0 16px 48px rgba(44,43,37,.22);
+
+  /* Accent glow for nudge-shadow */
+  --shadow-accent: 0 6px 28px rgba(187,165,76,.35);
+  --shadow-teal:   0 6px 28px rgba(31,79,60,.35);
+
+  /* Transitions */
+  --t-fast: 110ms ease;
+  --t:      200ms ease;
+  --t-slow: 350ms ease;
+
+  /* Layout */
+  --header-h:    58px;
+  --nudge-h:     54px;
+  --sidebar-w:   196px;
+  --divider-w:   5px;
+}
+
+/* ── 2. Reset & Base ──────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { font-size: 15px; -webkit-text-size-adjust: 100%; }
+
+body {
+  font-family: var(--font-sans);
+  background: var(--color-bg);
+  color: var(--color-text);
+  line-height: 1.5;
+  overflow: hidden;
+  height: 100svh;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+button { font: inherit; cursor: pointer; border: none; background: none; }
+input, select, textarea { font: inherit; }
+img, svg { display: block; }
+
+/* ── 3. App Shell Grid ────────────────────────────────────── */
+.dlx-app {
+  display: grid;
+  grid-template-rows: var(--header-h) 1fr var(--nudge-h);
+  grid-template-areas: "header" "main" "nudge";
+  height: 100svh;
+  overflow: hidden;
+}
+
+/* ── 4. Header ────────────────────────────────────────────── */
+.dlx-header {
+  grid-area: header;
+  display: flex;
+  align-items: center;
+  gap: var(--sp-4);
+  padding: 0 var(--sp-6);
+  background: var(--pine-teal);
+  color: var(--sand-dune);
+  border-bottom: 2px solid var(--golden-bronze);
+  z-index: 200;
+  user-select: none;
+}
+
+.dlx-brand {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  text-decoration: none;
+  color: inherit;
+  flex-shrink: 0;
+}
+
+.dlx-brand__gem {
+  width: 32px; height: 32px;
+  flex-shrink: 0;
+}
+
+.dlx-brand__name {
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: .04em;
+  color: var(--sand-dune);
+}
+
+.dlx-brand__tagline {
+  font-size: .7rem;
+  font-weight: 500;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--golden-bronze);
+  margin-left: var(--sp-1);
+  opacity: .85;
+}
+
+/* SmartBar trigger */
+.dlx-smartbar-trigger {
+  flex: 1;
+  max-width: 380px;
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-2) var(--sp-4);
+  background: rgba(220,214,185,.12);
+  border: 1px solid rgba(220,214,185,.22);
+  border-radius: var(--r-full);
+  color: rgba(220,214,185,.7);
+  font-size: .85rem;
+  transition: background var(--t), border-color var(--t);
+  cursor: text;
+}
+.dlx-smartbar-trigger:hover {
+  background: rgba(220,214,185,.18);
+  border-color: rgba(220,214,185,.38);
+  color: var(--sand-dune);
+}
+.dlx-smartbar-trigger kbd {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1px 6px;
+  background: rgba(220,214,185,.18);
+  border: 1px solid rgba(220,214,185,.28);
+  border-radius: var(--r-sm);
+  font-size: .72rem;
+  font-family: var(--font-sans);
+  color: var(--golden-bronze);
+  margin-right: var(--sp-1);
+}
+
+.dlx-header__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+.dlx-btn-header {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: var(--sp-2) var(--sp-4);
+  border-radius: var(--r);
+  font-size: .83rem;
+  font-weight: 600;
+  letter-spacing: .03em;
+  transition: background var(--t), color var(--t);
+}
+.dlx-btn-header--ghost {
+  color: rgba(220,214,185,.8);
+  border: 1px solid rgba(220,214,185,.22);
+}
+.dlx-btn-header--ghost:hover {
+  background: rgba(220,214,185,.12);
+  color: var(--sand-dune);
+}
+.dlx-btn-header--accent {
+  background: var(--golden-bronze);
+  color: var(--graphite);
+  border: 1px solid transparent;
+}
+.dlx-btn-header--accent:hover { background: var(--color-accent-hover); }
+
+/* Install button (hidden until PWA prompt fires) */
+#install-btn { display: none; }
+#install-btn.visible { display: inline-flex; }
+
+/* ── 5. Workspace (Main) ──────────────────────────────────── */
+.dlx-workspace {
+  grid-area: main;
+  display: flex;
+  overflow: hidden;
+  position: relative;
+}
+
+/* ── 6. Catalog Pane (Left) ───────────────────────────────── */
+.dlx-catalog {
+  display: flex;
+  width: 44%;
+  min-width: 300px;
+  max-width: 620px;
+  overflow: hidden;
+  border-right: var(--divider-w) solid var(--graphite);
+  flex-shrink: 0;
+  transition: width var(--t-slow);
+}
+
+/* Drawer sidebar */
+.dlx-drawers {
+  width: var(--sidebar-w);
+  flex-shrink: 0;
+  background: var(--graphite);
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: var(--sp-3) 0 var(--sp-6);
+  scrollbar-width: thin;
+  scrollbar-color: rgba(187,165,76,.3) transparent;
+}
+.dlx-drawers::-webkit-scrollbar { width: 4px; }
+.dlx-drawers::-webkit-scrollbar-track { background: transparent; }
+.dlx-drawers::-webkit-scrollbar-thumb { background: rgba(187,165,76,.3); border-radius: 4px; }
+
+.dlx-drawers__label {
+  font-size: .65rem;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--silver);
+  padding: var(--sp-4) var(--sp-4) var(--sp-2);
+  opacity: .7;
+}
+
+.dlx-drawer-item {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  width: 100%;
+  padding: var(--sp-3) var(--sp-4);
+  color: rgba(220,214,185,.65);
+  font-size: .85rem;
+  font-weight: 500;
+  border-left: 3px solid transparent;
+  border-radius: 0 var(--r-sm) var(--r-sm) 0;
+  transition: background var(--t-fast), color var(--t-fast), border-color var(--t-fast);
+  cursor: pointer;
+  text-align: left;
+}
+.dlx-drawer-item:hover {
+  background: rgba(220,214,185,.08);
+  color: var(--sand-dune);
+}
+.dlx-drawer-item.active {
+  background: rgba(187,165,76,.12);
+  color: var(--golden-bronze);
+  border-left-color: var(--golden-bronze);
+}
+.dlx-drawer-item__icon {
+  font-size: 1rem;
+  width: 20px;
+  text-align: center;
+  flex-shrink: 0;
+}
+.dlx-drawer-item__count {
+  margin-left: auto;
+  font-size: .72rem;
+  background: rgba(220,214,185,.1);
+  color: var(--silver);
+  border-radius: var(--r-full);
+  padding: 1px 7px;
+}
+.dlx-drawer-item.active .dlx-drawer-item__count {
+  background: rgba(187,165,76,.2);
+  color: var(--golden-bronze);
+}
+
+/* Vault section in sidebar */
+.dlx-drawers__divider {
+  height: 1px;
+  background: rgba(220,214,185,.1);
+  margin: var(--sp-4) var(--sp-4);
+}
+
+/* Component grid */
+.dlx-component-grid {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: var(--sp-4);
+  background: var(--color-bg);
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border) transparent;
+}
+.dlx-component-grid::-webkit-scrollbar { width: 5px; }
+.dlx-component-grid::-webkit-scrollbar-track { background: transparent; }
+.dlx-component-grid::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: 5px; }
+
+.dlx-grid-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: var(--sp-4);
+  padding-bottom: var(--sp-3);
+  border-bottom: 1px solid var(--color-border-subtle);
+}
+.dlx-grid-header h2 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--color-text);
+}
+.dlx-grid-header__count {
+  font-size: .8rem;
+  color: var(--color-text-muted);
+}
+
+.dlx-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: var(--sp-3);
+}
+
+/* Component card (catalog item) */
+.dlx-comp-card {
+  background: var(--color-surface-raised);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  cursor: pointer;
+  transition: border-color var(--t), box-shadow var(--t), transform var(--t);
+  display: flex;
+  flex-direction: column;
+}
+.dlx-comp-card:hover {
+  border-color: var(--golden-bronze);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+.dlx-comp-card:active { transform: translateY(0); }
+
+.dlx-comp-card__preview {
+  height: 130px;
+  overflow: hidden;
+  background: var(--color-surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--sp-3);
+  position: relative;
+}
+
+.dlx-comp-card__preview > * {
+  pointer-events: none;
+  transform-origin: center;
+}
+
+.dlx-comp-card__meta {
+  padding: var(--sp-3) var(--sp-3) var(--sp-3);
+  border-top: 1px solid var(--color-border-subtle);
+}
+.dlx-comp-card__name {
+  font-size: .82rem;
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: 2px;
+}
+.dlx-comp-card__desc {
+  font-size: .72rem;
+  color: var(--color-text-muted);
+  line-height: 1.3;
+}
+.dlx-comp-card__actions {
+  display: flex;
+  gap: var(--sp-2);
+  margin-top: var(--sp-2);
+}
+.dlx-comp-card__add {
+  flex: 1;
+  padding: var(--sp-1) var(--sp-3);
+  background: var(--pine-teal);
+  color: var(--sand-dune);
+  border-radius: var(--r-sm);
+  font-size: .75rem;
+  font-weight: 600;
+  transition: background var(--t-fast);
+  text-align: center;
+}
+.dlx-comp-card__add:hover { background: var(--color-primary-hover); }
+
+/* ── 7. Divider / Resizer ─────────────────────────────────── */
+.dlx-pane-divider {
+  width: var(--divider-w);
+  background: var(--graphite);
+  cursor: col-resize;
+  flex-shrink: 0;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background var(--t-fast);
+}
+.dlx-pane-divider:hover,
+.dlx-pane-divider.dragging { background: var(--golden-bronze); }
+.dlx-pane-divider::after {
+  content: '';
+  width: 1px;
+  height: 40px;
+  background: rgba(220,214,185,.3);
+  border-radius: 2px;
+}
+
+/* ── 8. Canvas Pane (Right) ───────────────────────────────── */
+.dlx-canvas-pane {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--color-surface);
+  min-width: 280px;
+}
+
+.dlx-canvas-header {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-3) var(--sp-5);
+  background: var(--color-surface-raised);
+  border-bottom: 1px solid var(--color-border);
+  flex-shrink: 0;
+}
+.dlx-canvas-header h2 {
+  font-size: .9rem;
+  font-weight: 700;
+  color: var(--color-text);
+  letter-spacing: .03em;
+}
+.dlx-canvas-header__indicator {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--silver);
+  flex-shrink: 0;
+}
+.dlx-canvas-header__indicator.has-items {
+  background: var(--golden-bronze);
+  box-shadow: 0 0 0 3px rgba(187,165,76,.25);
+}
+.dlx-canvas-header__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  margin-left: auto;
+}
+
+.dlx-btn-sm {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px var(--sp-3);
+  border-radius: var(--r);
+  font-size: .78rem;
+  font-weight: 600;
+  letter-spacing: .02em;
+  transition: background var(--t-fast), color var(--t-fast), border-color var(--t-fast);
+}
+.dlx-btn-sm--ghost {
+  border: 1px solid var(--color-border);
+  color: var(--color-text-secondary);
+}
+.dlx-btn-sm--ghost:hover {
+  border-color: var(--color-text-secondary);
+  color: var(--color-text);
+  background: rgba(44,43,37,.05);
+}
+.dlx-btn-sm--primary {
+  background: var(--pine-teal);
+  color: var(--sand-dune);
+}
+.dlx-btn-sm--primary:hover { background: var(--color-primary-hover); }
+.dlx-btn-sm--accent {
+  background: var(--golden-bronze);
+  color: var(--graphite);
+}
+.dlx-btn-sm--accent:hover { background: var(--color-accent-hover); }
+.dlx-btn-sm--danger {
+  border: 1px solid #c0392b;
+  color: #c0392b;
+}
+.dlx-btn-sm--danger:hover { background: rgba(192,57,43,.08); }
+
+/* Canvas scroll area */
+.dlx-canvas {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: var(--sp-5);
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border) transparent;
+}
+.dlx-canvas::-webkit-scrollbar { width: 5px; }
+.dlx-canvas::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: 5px; }
+
+/* Empty state */
+.dlx-canvas-empty {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-4);
+  color: var(--color-text-muted);
+  text-align: center;
+  padding: var(--sp-10);
+  pointer-events: none;
+}
+.dlx-canvas-empty__icon {
+  font-size: 3.5rem;
+  opacity: .35;
+  line-height: 1;
+}
+.dlx-canvas-empty__title {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--silver);
+}
+.dlx-canvas-empty__hint {
+  font-size: .82rem;
+  max-width: 240px;
+  line-height: 1.5;
+}
+
+/* Canvas items grid */
+.dlx-canvas-items {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-5);
+}
+
+/* Individual canvas item wrapper */
+.dlx-canvas-item {
+  background: var(--color-surface-raised);
+  border: 2px solid var(--color-border-subtle);
+  border-radius: var(--r-xl);
+  overflow: hidden;
+  transition: border-color var(--t), box-shadow var(--t);
+  position: relative;
+}
+.dlx-canvas-item:hover { border-color: var(--color-border); }
+.dlx-canvas-item.selected {
+  border-color: var(--golden-bronze);
+  box-shadow: 0 0 0 3px rgba(187,165,76,.18), var(--shadow-md);
+}
+
+.dlx-canvas-item__bar {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-2) var(--sp-4);
+  background: rgba(44,43,37,.04);
+  border-bottom: 1px solid var(--color-border-subtle);
+  font-size: .75rem;
+  color: var(--color-text-muted);
+}
+.dlx-canvas-item__bar-name {
+  font-weight: 600;
+  color: var(--color-text-secondary);
+}
+.dlx-canvas-item__bar-actions {
+  margin-left: auto;
+  display: flex;
+  gap: var(--sp-2);
+}
+.dlx-canvas-item__bar-btn {
+  padding: 2px 8px;
+  border-radius: var(--r-sm);
+  font-size: .72rem;
+  font-weight: 600;
+  transition: background var(--t-fast), color var(--t-fast);
+  color: var(--color-text-muted);
+}
+.dlx-canvas-item__bar-btn:hover {
+  background: rgba(44,43,37,.08);
+  color: var(--color-text);
+}
+.dlx-canvas-item__bar-btn.remove:hover {
+  background: rgba(192,57,43,.1);
+  color: #c0392b;
+}
+
+.dlx-canvas-item__body {
+  padding: var(--sp-5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100px;
+  overflow: hidden;
+}
+
+/* ── 9. Nudge Bar (Bottom) ────────────────────────────────── */
+.dlx-nudge-bar {
+  grid-area: nudge;
+  display: flex;
+  align-items: center;
+  gap: var(--sp-5);
+  padding: 0 var(--sp-6);
+  background: var(--graphite);
+  color: var(--sand-dune);
+  border-top: 2px solid rgba(187,165,76,.3);
+  z-index: 100;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.dlx-nudge-bar__label {
+  font-size: .7rem;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--silver);
+  opacity: .7;
+  flex-shrink: 0;
+}
+
+.dlx-nudge-toggles {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  flex: 1;
+  flex-wrap: wrap;
+}
+
+/* Nudge toggle pill */
+.dlx-nudge-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: 5px var(--sp-4);
+  border: 1.5px solid rgba(187,165,76,.3);
+  border-radius: var(--r-full);
+  background: rgba(187,165,76,.06);
+  color: rgba(220,214,185,.6);
+  font-size: .78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background var(--t-fast), border-color var(--t-fast), color var(--t-fast), box-shadow var(--t-fast);
+}
+.dlx-nudge-toggle:hover {
+  border-color: rgba(187,165,76,.6);
+  color: var(--sand-dune);
+  background: rgba(187,165,76,.1);
+}
+.dlx-nudge-toggle.active {
+  background: var(--golden-bronze);
+  border-color: var(--golden-bronze);
+  color: var(--graphite);
+  box-shadow: 0 2px 12px rgba(187,165,76,.4);
+}
+.dlx-nudge-toggle__dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: currentColor;
+  flex-shrink: 0;
+  transition: transform var(--t-fast);
+}
+.dlx-nudge-toggle.active .dlx-nudge-toggle__dot { transform: scale(1.3); }
+
+/* Apply-to selector */
+.dlx-nudge-apply {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  flex-shrink: 0;
+  margin-left: auto;
+}
+.dlx-nudge-apply label {
+  font-size: .72rem;
+  color: var(--silver);
+  opacity: .7;
+}
+.dlx-nudge-apply select {
+  background: rgba(220,214,185,.08);
+  border: 1px solid rgba(220,214,185,.2);
+  border-radius: var(--r-sm);
+  color: var(--sand-dune);
+  font-size: .78rem;
+  padding: 3px var(--sp-3);
+  cursor: pointer;
+}
+.dlx-nudge-apply select option { background: var(--graphite); }
+
+/* ── 10. SmartBar Overlay ─────────────────────────────────── */
+.dlx-smartbar-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 80px;
+  background: rgba(44,43,37,.55);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  animation: sb-in var(--t-fast) ease;
+}
+.dlx-smartbar-overlay[hidden] { display: none; }
+
+@keyframes sb-in { from { opacity: 0; } to { opacity: 1; } }
+
+.dlx-smartbar {
+  width: 100%;
+  max-width: 560px;
+  background: var(--color-surface-raised);
+  border: 1px solid var(--color-border);
+  border-radius: var(--r-xl);
+  box-shadow: var(--shadow-xl);
+  overflow: hidden;
+  animation: sb-drop var(--t) cubic-bezier(.22,.68,0,1.1);
+}
+@keyframes sb-drop {
+  from { transform: translateY(-16px) scale(.97); opacity: 0; }
+  to   { transform: translateY(0)      scale(1);   opacity: 1; }
+}
+
+.dlx-smartbar__input-row {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-4) var(--sp-5);
+  border-bottom: 1px solid var(--color-border-subtle);
+}
+.dlx-smartbar__icon {
+  font-size: 1.1rem;
+  color: var(--golden-bronze);
+  flex-shrink: 0;
+}
+.dlx-smartbar__input {
+  flex: 1;
+  border: none;
+  background: none;
+  outline: none;
+  font-size: 1rem;
+  color: var(--color-text);
+}
+.dlx-smartbar__input::placeholder { color: var(--color-text-muted); }
+.dlx-smartbar__close {
+  width: 28px; height: 28px;
+  border-radius: var(--r);
+  display: flex; align-items: center; justify-content: center;
+  font-size: .8rem;
+  color: var(--color-text-muted);
+  transition: background var(--t-fast), color var(--t-fast);
+}
+.dlx-smartbar__close:hover {
+  background: rgba(44,43,37,.08);
+  color: var(--color-text);
+}
+
+.dlx-smartbar__results {
+  max-height: 380px;
+  overflow-y: auto;
+  padding: var(--sp-2) 0;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border) transparent;
+}
+.dlx-smartbar__results::-webkit-scrollbar { width: 4px; }
+.dlx-smartbar__results::-webkit-scrollbar-thumb { background: var(--color-border); }
+
+.dlx-smartbar__section-label {
+  font-size: .68rem;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  padding: var(--sp-3) var(--sp-5) var(--sp-1);
+}
+
+.dlx-smartbar__item {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-3) var(--sp-5);
+  cursor: pointer;
+  transition: background var(--t-fast);
+  position: relative;
+}
+.dlx-smartbar__item:hover,
+.dlx-smartbar__item.focused {
+  background: var(--color-primary-dim);
+}
+.dlx-smartbar__item.focused::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 3px;
+  background: var(--golden-bronze);
+  border-radius: 0 2px 2px 0;
+}
+.dlx-smartbar__item__icon {
+  width: 32px; height: 32px;
+  border-radius: var(--r);
+  background: var(--color-primary-dim);
+  display: flex; align-items: center; justify-content: center;
+  font-size: .95rem;
+  flex-shrink: 0;
+}
+.dlx-smartbar__item__text { flex: 1; min-width: 0; }
+.dlx-smartbar__item__name {
+  font-size: .88rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+.dlx-smartbar__item__sub {
+  font-size: .74rem;
+  color: var(--color-text-muted);
+}
+.dlx-smartbar__item__tag {
+  font-size: .7rem;
+  padding: 2px 8px;
+  background: rgba(31,79,60,.1);
+  color: var(--pine-teal);
+  border-radius: var(--r-full);
+  flex-shrink: 0;
+}
+.dlx-smartbar__item__tag.action {
+  background: rgba(187,165,76,.1);
+  color: var(--golden-bronze);
+}
+
+/* ── 11. Vault Modal ──────────────────────────────────────── */
+.dlx-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--sp-6);
+}
+.dlx-modal[hidden] { display: none; }
+
+.dlx-modal__backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(44,43,37,.5);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+.dlx-modal__content {
+  position: relative;
+  z-index: 1;
+  background: var(--color-surface-raised);
+  border: 1px solid var(--color-border);
+  border-radius: var(--r-xl);
+  box-shadow: var(--shadow-xl);
+  width: 100%;
+  max-width: 600px;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  animation: modal-in var(--t) cubic-bezier(.22,.68,0,1.1);
+}
+@keyframes modal-in {
+  from { transform: scale(.95) translateY(8px); opacity: 0; }
+  to   { transform: scale(1)   translateY(0);   opacity: 1; }
+}
+
+.dlx-modal__header {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-5) var(--sp-6);
+  border-bottom: 1px solid var(--color-border-subtle);
+  flex-shrink: 0;
+}
+.dlx-modal__header h2 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-text);
+  flex: 1;
+}
+.dlx-modal__header-icon { font-size: 1.3rem; }
+.dlx-modal__close {
+  width: 32px; height: 32px;
+  border-radius: var(--r);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--color-text-muted);
+  font-size: .9rem;
+  transition: background var(--t-fast), color var(--t-fast);
+}
+.dlx-modal__close:hover {
+  background: rgba(44,43,37,.08);
+  color: var(--color-text);
+}
+
+.dlx-modal__body {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--sp-5) var(--sp-6);
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border) transparent;
+}
+
+.dlx-modal__footer {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-4) var(--sp-6);
+  border-top: 1px solid var(--color-border-subtle);
+  flex-shrink: 0;
+}
+
+/* Vault project list */
+.dlx-vault-empty {
+  text-align: center;
+  padding: var(--sp-10) var(--sp-6);
+  color: var(--color-text-muted);
+}
+.dlx-vault-empty__icon { font-size: 2.5rem; margin-bottom: var(--sp-4); opacity: .4; }
+.dlx-vault-empty__title {
+  font-size: .95rem;
+  font-weight: 600;
+  margin-bottom: var(--sp-2);
+}
+
+.dlx-vault-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+}
+
+.dlx-vault-item {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-4);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--r-lg);
+  transition: border-color var(--t-fast), background var(--t-fast);
+}
+.dlx-vault-item:hover {
+  border-color: var(--color-border);
+  background: var(--color-bg);
+}
+.dlx-vault-item__icon {
+  width: 40px; height: 40px;
+  border-radius: var(--r);
+  background: var(--color-primary-dim);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+  color: var(--pine-teal);
+}
+.dlx-vault-item__info { flex: 1; min-width: 0; }
+.dlx-vault-item__name {
+  font-size: .88rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+.dlx-vault-item__name-input {
+  font-size: .88rem;
+  font-weight: 600;
+  color: var(--color-text);
+  border: 1px solid var(--golden-bronze);
+  background: var(--color-bg);
+  border-radius: var(--r-sm);
+  padding: 2px 6px;
+  width: 100%;
+  outline: none;
+}
+.dlx-vault-item__meta {
+  font-size: .72rem;
+  color: var(--color-text-muted);
+  margin-top: 2px;
+}
+.dlx-vault-item__actions {
+  display: flex;
+  gap: var(--sp-2);
+}
+
+/* Vault storage indicator */
+.dlx-vault-storage {
+  margin-top: var(--sp-5);
+  padding-top: var(--sp-5);
+  border-top: 1px solid var(--color-border-subtle);
+}
+.dlx-vault-storage__label {
+  font-size: .78rem;
+  color: var(--color-text-muted);
+  margin-bottom: var(--sp-2);
+  display: flex;
+  justify-content: space-between;
+}
+.dlx-vault-storage__bar {
+  height: 6px;
+  background: var(--color-border);
+  border-radius: var(--r-full);
+  overflow: hidden;
+}
+.dlx-vault-storage__fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--pine-teal), var(--golden-bronze));
+  border-radius: var(--r-full);
+  transition: width var(--t-slow);
+}
+
+/* ── 12. Export Modal ─────────────────────────────────────── */
+.dlx-export-options {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+}
+
+.dlx-export-code {
+  background: var(--graphite);
+  color: var(--sand-dune);
+  border-radius: var(--r-lg);
+  padding: var(--sp-4);
+  font-family: var(--font-mono);
+  font-size: .78rem;
+  line-height: 1.6;
+  overflow-x: auto;
+  max-height: 320px;
+  overflow-y: auto;
+  white-space: pre;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(220,214,185,.2) transparent;
+}
+
+/* ── 13. Toast Notifications ──────────────────────────────── */
+.dlx-toasts {
+  position: fixed;
+  bottom: calc(var(--nudge-h) + var(--sp-4));
+  right: var(--sp-5);
+  z-index: 2000;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+  pointer-events: none;
+}
+
+.dlx-toast {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-3) var(--sp-5);
+  background: var(--graphite);
+  color: var(--sand-dune);
+  border-left: 3px solid var(--golden-bronze);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-lg);
+  font-size: .84rem;
+  font-weight: 500;
+  animation: toast-in 280ms cubic-bezier(.22,.68,0,1.1);
+  pointer-events: auto;
+  max-width: 320px;
+}
+.dlx-toast.success { border-left-color: #4caf50; }
+.dlx-toast.error   { border-left-color: #e53935; }
+@keyframes toast-in {
+  from { transform: translateX(40px); opacity: 0; }
+  to   { transform: translateX(0);    opacity: 1; }
+}
+@keyframes toast-out {
+  from { transform: translateX(0);    opacity: 1; }
+  to   { transform: translateX(40px); opacity: 0; }
+}
+.dlx-toast.leaving { animation: toast-out 220ms ease forwards; }
+
+/* ── 14. Nudge Classes (applied to canvas item bodies) ───── */
+/* These classes are set on .dlx-canvas-item when nudges active */
+.nudge-grow .dlx-canvas-item__body > * {
+  transition: transform .25s ease !important;
+}
+.nudge-grow .dlx-canvas-item__body > *:hover {
+  transform: scale(1.05) !important;
+}
+.nudge-shadow .dlx-canvas-item__body > * {
+  box-shadow: var(--shadow-accent) !important;
+}
+.nudge-round .dlx-canvas-item__body > * {
+  border-radius: 24px !important;
+  overflow: hidden !important;
+}
+.nudge-pulse .dlx-canvas-item__body > * {
+  animation: dlx-pulse 2.5s ease-in-out infinite !important;
+}
+@keyframes dlx-pulse {
+  0%, 100% { transform: scale(1); }
+  50%       { transform: scale(1.025); opacity: .9; }
+}
+
+/* ── 15. Scrollbar Utility ────────────────────────────────── */
+.dlx-scroll {
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border) transparent;
+}
+.dlx-scroll::-webkit-scrollbar { width: 5px; }
+.dlx-scroll::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: 5px; }
+
+/* ── 16. Utility Classes ──────────────────────────────────── */
+.visually-hidden {
+  position: absolute;
+  width: 1px; height: 1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+}
+.text-muted { color: var(--color-text-muted); }
+.text-accent { color: var(--golden-bronze); }
+.text-primary { color: var(--pine-teal); }
+
+/* ── 17. Keyboard shortcut badge ──────────────────────────── */
+.dlx-kbd {
+  display: inline-flex;
+  align-items: center;
+  padding: 1px 5px;
+  background: rgba(44,43,37,.06);
+  border: 1px solid var(--color-border);
+  border-radius: var(--r-sm);
+  font-size: .68rem;
+  font-family: var(--font-mono);
+  color: var(--color-text-muted);
+}
+
+/* ── 18. Responsive / narrow viewports ───────────────────── */
+@media (max-width: 720px) {
+  .dlx-catalog { width: 100%; max-width: none; border-right: none; }
+  .dlx-canvas-pane { display: none; }
+  .dlx-catalog.canvas-mode { display: none; }
+  .dlx-canvas-pane.canvas-mode { display: flex; }
+  .dlx-pane-divider { display: none; }
+  .dlx-brand__tagline { display: none; }
+}
+
+/* ── 19. Loading skeleton ─────────────────────────────────── */
+@keyframes shimmer {
+  0%   { background-position: -400px 0; }
+  100% { background-position: 400px 0; }
+}
+.dlx-skeleton {
+  background: linear-gradient(90deg,
+    var(--color-border-subtle) 25%,
+    var(--color-surface) 50%,
+    var(--color-border-subtle) 75%
+  );
+  background-size: 800px 100%;
+  animation: shimmer 1.4s ease-in-out infinite;
+  border-radius: var(--r);
+}
