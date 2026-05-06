@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Digital Luxe — The Cabinet of Wonders. A local-first UI component catalog for curating and customising premium components. Part of the ToolSmart suite.">
+  <meta name="theme-color" content="#1F4F3C">
+  <meta name="color-scheme" content="light">
+
+  <!-- Open Graph -->
+  <meta property="og:title"       content="Digital Luxe — The Catalog">
+  <meta property="og:description" content="Curate premium UI components. No code required.">
+  <meta property="og:type"        content="website">
+
+  <title>Digital Luxe — The Catalog</title>
+
+  <!-- PWA -->
+  <link rel="manifest"    href="/manifest.json">
+  <link rel="icon"        href="/icons/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/icons/icon.svg">
+
+  <!-- Fonts (offline-safe fallback to system-ui) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  </noscript>
+
+  <!-- App styles -->
+  <link rel="stylesheet" href="/css/app.css">
+</head>
+
+<body>
+<div class="dlx-app" id="app">
+
+  <!-- ══ HEADER ══════════════════════════════════════════════ -->
+  <header class="dlx-header" role="banner">
+
+    <!-- Brand -->
+    <a class="dlx-brand" href="/" aria-label="Digital Luxe home">
+      <svg class="dlx-brand__gem" viewBox="0 0 100 100" aria-hidden="true">
+        <polygon points="14,38 30,38 50,18" fill="#a7a6a2"/>
+        <polygon points="86,38 70,38 50,18" fill="#bba54c"/>
+        <polygon points="30,38 50,18 70,38" fill="#dcd6b9"/>
+        <polygon points="14,38 30,38 50,82" fill="#1F4F3C"/>
+        <polygon points="86,38 70,38 50,82" fill="#bba54c" opacity="0.85"/>
+        <polygon points="30,38 70,38 50,82" fill="#1F4F3C" opacity="0.7"/>
+        <line x1="14" y1="38" x2="86" y2="38" stroke="#2c2b25" stroke-width="1.5"/>
+        <line x1="50" y1="18" x2="30" y2="38" stroke="#2c2b25" stroke-width="0.8"/>
+        <line x1="50" y1="18" x2="70" y2="38" stroke="#2c2b25" stroke-width="0.8"/>
+        <line x1="30" y1="38" x2="50" y2="82" stroke="#2c2b25" stroke-width="0.8"/>
+        <line x1="70" y1="38" x2="50" y2="82" stroke="#2c2b25" stroke-width="0.8"/>
+      </svg>
+      <span class="dlx-brand__name">Digital Luxe</span>
+      <span class="dlx-brand__tagline">The Catalog</span>
+    </a>
+
+    <!-- SmartBar trigger -->
+    <button class="dlx-smartbar-trigger" id="smartbar-trigger"
+            aria-label="Open command palette"
+            aria-keyshortcuts="Control+K Meta+K">
+      <kbd>⌘K</kbd>
+      Search components, actions&hellip;
+    </button>
+
+    <!-- Header actions -->
+    <div class="dlx-header__actions">
+      <button class="dlx-btn-header dlx-btn-header--ghost" id="vault-header-btn"
+              aria-label="Open Vault">
+        🗄 Vault
+      </button>
+      <button class="dlx-btn-header dlx-btn-header--accent" id="install-btn"
+              aria-label="Install app">
+        ⬇ Install
+      </button>
+    </div>
+
+  </header>
+
+  <!-- ══ WORKSPACE ════════════════════════════════════════════ -->
+  <main class="dlx-workspace" id="workspace" role="main">
+
+    <!-- ── LEFT: Catalog pane ──────────────────────────────── -->
+    <section class="dlx-catalog" aria-label="Component catalog">
+
+      <!-- Drawer navigation sidebar -->
+      <nav class="dlx-drawers" id="drawer-nav" aria-label="Component categories">
+        <!-- Populated by catalog.js -->
+      </nav>
+
+      <!-- Component grid -->
+      <div class="dlx-component-grid" id="component-grid" role="region" aria-live="polite">
+        <div class="dlx-grid-header">
+          <h2 id="grid-title">Buttons</h2>
+          <span class="dlx-grid-header__count" id="grid-count"></span>
+        </div>
+        <div class="dlx-grid" id="component-grid-items" aria-label="Component cards">
+          <!-- Populated by catalog.js -->
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ── DIVIDER ──────────────────────────────────────────── -->
+    <div class="dlx-pane-divider" id="pane-divider" aria-hidden="true"></div>
+
+    <!-- ── RIGHT: Canvas pane ──────────────────────────────── -->
+    <section class="dlx-canvas-pane" aria-label="Design canvas">
+
+      <!-- Canvas header bar -->
+      <div class="dlx-canvas-header">
+        <div class="dlx-canvas-header__indicator" id="canvas-indicator"></div>
+        <h2>Your Design</h2>
+        <div class="dlx-canvas-header__actions">
+          <button class="dlx-btn-sm dlx-btn-sm--ghost"    id="export-canvas-btn"
+                  title="Export as HTML (⌘E)" aria-keyshortcuts="Control+E Meta+E">
+            ↗ Export
+          </button>
+          <button class="dlx-btn-sm dlx-btn-sm--ghost dlx-btn-sm--danger" id="clear-canvas-btn"
+                  title="Clear canvas (⌘N)">
+            ✕ Clear
+          </button>
+          <button class="dlx-btn-sm dlx-btn-sm--accent" id="save-canvas-btn"
+                  title="Save to Vault (⌘S)" aria-keyshortcuts="Control+S Meta+S">
+            🗄 Save
+          </button>
+        </div>
+      </div>
+
+      <!-- Canvas scroll area -->
+      <div class="dlx-canvas" id="canvas-area" role="region" aria-label="Design canvas">
+
+        <!-- Empty state -->
+        <div class="dlx-canvas-empty" id="canvas-empty" aria-live="polite">
+          <div class="dlx-canvas-empty__icon">🏛️</div>
+          <div class="dlx-canvas-empty__title">Your Cabinet of Wonders</div>
+          <p class="dlx-canvas-empty__hint">
+            Browse the drawers on the left and click any component to manifest it here.
+          </p>
+        </div>
+
+        <!-- Canvas items -->
+        <div class="dlx-canvas-items" id="canvas-items" hidden
+             aria-label="Collected components"></div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ══ NUDGE BAR ════════════════════════════════════════════ -->
+  <footer class="dlx-nudge-bar" role="toolbar" aria-label="Nudge controls">
+    <span class="dlx-nudge-bar__label" aria-hidden="true">Nudge:</span>
+    <div class="dlx-nudge-toggles" id="nudge-toggles" role="group" aria-label="Component nudges">
+      <!-- Populated by nudge.js -->
+    </div>
+    <div class="dlx-nudge-apply">
+      <label for="nudge-target">Apply to:</label>
+      <select id="nudge-target" aria-label="Nudge target">
+        <option value="all">All Components</option>
+        <option value="selected">Selected Only</option>
+      </select>
+    </div>
+  </footer>
+
+  <!-- ══ SMARTBAR OVERLAY ══════════════════════════════════════ -->
+  <div class="dlx-smartbar-overlay" id="smartbar-overlay" hidden
+       role="dialog" aria-modal="true" aria-label="Command palette">
+    <div class="dlx-smartbar">
+      <div class="dlx-smartbar__input-row">
+        <span class="dlx-smartbar__icon" aria-hidden="true">💎</span>
+        <input
+          class="dlx-smartbar__input"
+          id="smartbar-input"
+          type="search"
+          placeholder="Search components, actions, drawers…"
+          autocomplete="off"
+          spellcheck="false"
+          aria-autocomplete="list"
+          aria-controls="smartbar-results"
+        >
+        <button class="dlx-smartbar__close" id="smartbar-close" aria-label="Close">
+          ✕
+        </button>
+      </div>
+      <div class="dlx-smartbar__results" id="smartbar-results" role="listbox">
+        <!-- Populated by smartbar.js -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ VAULT MODAL ══════════════════════════════════════════ -->
+  <div class="dlx-modal" id="vault-modal" hidden
+       role="dialog" aria-modal="true" aria-labelledby="vault-modal-title">
+    <div class="dlx-modal__backdrop"></div>
+    <div class="dlx-modal__content">
+      <div class="dlx-modal__header">
+        <span class="dlx-modal__header-icon" aria-hidden="true">🗄</span>
+        <h2 id="vault-modal-title">Vault — Your Saved Designs</h2>
+        <button class="dlx-modal__close" id="vault-close" aria-label="Close Vault">✕</button>
+      </div>
+      <div class="dlx-modal__body" id="vault-body">
+        <!-- Populated by vault.js -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ EXPORT MODAL ══════════════════════════════════════════ -->
+  <div class="dlx-modal" id="export-modal" hidden
+       role="dialog" aria-modal="true" aria-labelledby="export-modal-title">
+    <div class="dlx-modal__backdrop"></div>
+    <div class="dlx-modal__content">
+      <div class="dlx-modal__header">
+        <span class="dlx-modal__header-icon" aria-hidden="true">↗</span>
+        <h2 id="export-modal-title">Export Design</h2>
+        <button class="dlx-modal__close" id="export-close" aria-label="Close export">✕</button>
+      </div>
+      <div class="dlx-modal__body">
+        <p style="font-size:.84rem;color:var(--color-text-secondary);margin-bottom:1rem;">
+          Your design as a self-contained HTML file. Copy or download, then open in any browser.
+        </p>
+        <div class="dlx-export-code" id="export-code" aria-label="Exported HTML code"></div>
+      </div>
+      <div class="dlx-modal__footer">
+        <button class="dlx-btn-sm dlx-btn-sm--primary" id="export-copy-btn">
+          Copy HTML
+        </button>
+        <button class="dlx-btn-sm dlx-btn-sm--ghost"  id="export-close-footer">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ TOAST CONTAINER ═══════════════════════════════════════ -->
+  <div class="dlx-toasts" id="toasts" aria-live="polite" aria-atomic="false"></div>
+
+</div><!-- /.dlx-app -->
+
+<!-- App entry point (ES module) -->
+<script type="module" src="/js/app.js"></script>
+
+<script>
+  // Wire SmartBar trigger inline (before module loads) for instant response
+  document.getElementById('smartbar-trigger')?.addEventListener('click', () => {
+    document.getElementById('smartbar-overlay')?.removeAttribute('hidden');
+    document.getElementById('smartbar-input')?.focus();
+  });
+  // Wire second export close button
+  document.getElementById('export-close-footer')?.addEventListener('click', () => {
+    document.getElementById('export-modal')?.setAttribute('hidden', '');
+  });
+</script>
+</body>
+</html>
