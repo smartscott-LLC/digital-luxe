@@ -226,29 +226,29 @@ function renderMulti(indices) {
 
 // ── Alignment ─────────────────────────────────────────────────
 function alignItems(indices, allItems, mode) {
-  const sel  = indices.map(i => allItems[i]).filter(Boolean);
-  if (!sel.length) return;
+  const selectedItems = indices.map(i => allItems[i]).filter(Boolean);
+  if (!selectedItems.length) return;
 
-  const minX = Math.min(...sel.map(it => it.x));
-  const maxX = Math.max(...sel.map(it => it.x + it.width));
-  const minY = Math.min(...sel.map(it => it.y));
-  const maxY = Math.max(...sel.map(it => it.y + it.height));
+  const minX = Math.min(...selectedItems.map(it => it.x));
+  const maxX = Math.max(...selectedItems.map(it => it.x + it.width));
+  const minY = Math.min(...selectedItems.map(it => it.y));
+  const maxY = Math.max(...selectedItems.map(it => it.y + it.height));
   const midX = (minX + maxX) / 2;
   const midY = (minY + maxY) / 2;
 
-  sel.forEach((it, pos) => {
-    const i = indices[pos];
+  selectedItems.forEach((it, pos) => {
+    const itemIndex = indices[pos];
     switch (mode) {
-      case 'left':    it.x = minX;              break;
-      case 'center':  it.x = midX - it.width / 2; break;
-      case 'right':   it.x = maxX - it.width;  break;
-      case 'top':     it.y = minY;              break;
+      case 'left':    it.x = minX;                  break;
+      case 'center':  it.x = midX - it.width / 2;  break;
+      case 'right':   it.x = maxX - it.width;       break;
+      case 'top':     it.y = minY;                  break;
       case 'middle':  it.y = midY - it.height / 2; break;
-      case 'bottom':  it.y = maxY - it.height;  break;
+      case 'bottom':  it.y = maxY - it.height;      break;
       case 'dist-h': {
-        if (sel.length < 3) return;
-        const sorted = [...sel].sort((a, b) => a.x - b.x);
-        const totalW = sorted.reduce((s, it2) => s + it2.width, 0);
+        if (selectedItems.length < 3) return;
+        const sorted = [...selectedItems].sort((a, b) => a.x - b.x);
+        const totalW = sorted.reduce((sum, item) => sum + item.width, 0);
         const span   = sorted[sorted.length-1].x + sorted[sorted.length-1].width - sorted[0].x;
         const gap    = (span - totalW) / (sorted.length - 1);
         let cx = sorted[0].x + sorted[0].width + gap;
@@ -256,9 +256,9 @@ function alignItems(indices, allItems, mode) {
         break;
       }
       case 'dist-v': {
-        if (sel.length < 3) return;
-        const sorted = [...sel].sort((a, b) => a.y - b.y);
-        const totalH = sorted.reduce((s, it2) => s + it2.height, 0);
+        if (selectedItems.length < 3) return;
+        const sorted = [...selectedItems].sort((a, b) => a.y - b.y);
+        const totalH = sorted.reduce((sum, item) => sum + item.height, 0);
         const span   = sorted[sorted.length-1].y + sorted[sorted.length-1].height - sorted[0].y;
         const gap    = (span - totalH) / (sorted.length - 1);
         let cy = sorted[0].y + sorted[0].height + gap;
@@ -266,7 +266,7 @@ function alignItems(indices, allItems, mode) {
         break;
       }
     }
-    canvas.updateItemPosition(i, allItems[i].x, allItems[i].y);
+    canvas.updateItemPosition(itemIndex, allItems[itemIndex].x, allItems[itemIndex].y);
   });
 
   toast('Aligned \u2746');

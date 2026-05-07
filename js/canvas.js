@@ -465,9 +465,18 @@ function onGlobalKeyDown(e) {
     const toClone = [...selectedIndices];
     const newSet  = new Set();
     toClone.forEach(i => {
-      const s = items[i];
-      items.push({ component:s.component, nudges:new Set(s.nudges), x:s.x+20, y:s.y+20,
-                   width:s.width, height:s.height, zIndex:nextZ++, props:{...s.props}, rotation:s.rotation });
+      const src = items[i];
+      items.push({
+        component: src.component,
+        nudges   : new Set(src.nudges),
+        x        : src.x + 20,
+        y        : src.y + 20,
+        width    : src.width,
+        height   : src.height,
+        zIndex   : nextZ++,
+        props    : { ...src.props },
+        rotation : src.rotation,
+      });
       newSet.add(items.length - 1);
     });
     selectedIndices.clear();
@@ -621,8 +630,7 @@ function updateBandEl(x, y, w, h) {
 
 function highlightBandItems(x, y, w, h) {
   items.forEach((item, i) => {
-    const hit = item.x < x+w && item.x+item.width  > x &&
-                item.y < y+h && item.y+item.height > y;
+    const hit = isItemInBounds(item, x, y, w, h);
     const el  = itemsWrap.querySelector(`.dlx-canvas-item[data-index="${i}"]`);
     if (el) el.classList.toggle('band-hover', hit);
   });
@@ -631,12 +639,17 @@ function highlightBandItems(x, y, w, h) {
 function finalizeBand(x, y, w, h, additive) {
   if (!additive) selectedIndices.clear();
   items.forEach((item, i) => {
-    if (item.x < x+w && item.x+item.width  > x &&
-        item.y < y+h && item.y+item.height > y) selectedIndices.add(i);
+    if (isItemInBounds(item, x, y, w, h)) selectedIndices.add(i);
   });
   itemsWrap.querySelectorAll('.band-hover').forEach(el => el.classList.remove('band-hover'));
   syncDOMSelection();
   fireSelectionChange();
+}
+
+/** Returns true if the item's AABB overlaps the given canvas-space rect */
+function isItemInBounds(item, x, y, w, h) {
+  return item.x < x + w && item.x + item.width  > x &&
+         item.y < y + h && item.y + item.height > y;
 }
 
 function applyNudgeClasses(el, nudges) {
