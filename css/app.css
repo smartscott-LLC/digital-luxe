@@ -462,12 +462,16 @@ img, svg { display: block; }
 .dlx-canvas-header {
   display: flex;
   align-items: center;
-  gap: var(--sp-3);
-  padding: var(--sp-3) var(--sp-5);
+  gap: var(--sp-2);
+  padding: var(--sp-3) var(--sp-4);
   background: var(--color-surface-raised);
   border-bottom: 1px solid var(--color-border);
   flex-shrink: 0;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  scrollbar-width: none;
 }
+.dlx-canvas-header::-webkit-scrollbar { display: none; }
 .dlx-canvas-header h2 {
   font-size: .9rem;
   font-weight: 700;
@@ -489,6 +493,24 @@ img, svg { display: block; }
   align-items: center;
   gap: var(--sp-2);
   margin-left: auto;
+}
+.dlx-canvas-toolbar {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.dlx-frame-controls {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.dlx-frame-controls select {
+  border: 1px solid var(--color-border);
+  background: var(--color-bg);
+  color: var(--color-text);
+  border-radius: var(--r-sm);
+  font-size: .72rem;
+  padding: 4px 6px;
 }
 
 .dlx-btn-sm {
@@ -527,21 +549,57 @@ img, svg { display: block; }
 }
 .dlx-btn-sm--danger:hover { background: rgba(192,57,43,.08); }
 
-/* Canvas scroll area */
+/* Canvas viewport (pan+zoom container) */
 .dlx-canvas {
   flex: 1;
-  overflow-y: auto;
-  overflow-x: hidden;
-  padding: var(--sp-5);
-  scrollbar-width: thin;
-  scrollbar-color: var(--color-border) transparent;
+  overflow: hidden;
+  position: relative;
+  background: var(--color-surface);
+  cursor: default;
 }
-.dlx-canvas::-webkit-scrollbar { width: 5px; }
-.dlx-canvas::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: 5px; }
+.dlx-canvas-ruler {
+  position: absolute;
+  background: rgba(44,43,37,.07);
+  border-color: var(--color-border-subtle);
+  z-index: 4;
+  user-select: none;
+}
+.dlx-canvas-ruler--h {
+  left: 20px;
+  right: 0;
+  top: 0;
+  height: 20px;
+  border-bottom: 1px solid var(--color-border-subtle);
+  background-image: repeating-linear-gradient(to right, transparent 0 39px, rgba(44,43,37,.2) 39px 40px);
+}
+.dlx-canvas-ruler--v {
+  top: 20px;
+  bottom: 0;
+  left: 0;
+  width: 20px;
+  border-right: 1px solid var(--color-border-subtle);
+  background-image: repeating-linear-gradient(to bottom, transparent 0 39px, rgba(44,43,37,.2) 39px 40px);
+}
+.dlx-canvas-guides {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 5;
+}
+.dlx-guide-line {
+  position: absolute;
+  background: rgba(31,79,60,.8);
+  pointer-events: none;
+}
+.dlx-guide-line--v { top: 0; bottom: 0; width: 1px; }
+.dlx-guide-line--h { left: 0; right: 0; height: 1px; }
+.dlx-canvas.is-panning { cursor: grab; }
+.dlx-canvas.is-panning:active { cursor: grabbing; }
 
 /* Empty state */
 .dlx-canvas-empty {
-  height: 100%;
+  position: absolute;
+  inset: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -551,6 +609,7 @@ img, svg { display: block; }
   text-align: center;
   padding: var(--sp-10);
   pointer-events: none;
+  z-index: 0;
 }
 .dlx-canvas-empty__icon {
   font-size: 3.5rem;
@@ -564,58 +623,110 @@ img, svg { display: block; }
 }
 .dlx-canvas-empty__hint {
   font-size: .82rem;
-  max-width: 240px;
-  line-height: 1.5;
+  max-width: 280px;
+  line-height: 1.6;
 }
 
-/* Canvas items grid */
+/* Virtual canvas (absolute positioned, transform for pan+zoom) */
 .dlx-canvas-items {
-  display: flex;
-  flex-direction: column;
-  gap: var(--sp-5);
+  position: absolute;
+  top: 20px; left: 20px;
+  width: 4000px; height: 3000px;
+  transform-origin: 0 0;
+  /* Subtle dot-grid background */
+  background-image: radial-gradient(circle, var(--color-border-subtle) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+.dlx-canvas-frame {
+  position: absolute;
+  border: 2px dashed rgba(31,79,60,.35);
+  background: rgba(31,79,60,.03);
+  border-radius: 8px;
+  pointer-events: none;
+}
+.dlx-canvas-frame.active {
+  border-color: rgba(187,165,76,.95);
+  background: rgba(187,165,76,.04);
+}
+.dlx-canvas-frame__label {
+  position: absolute;
+  top: -21px;
+  left: 0;
+  font-size: .68rem;
+  background: rgba(44,43,37,.72);
+  color: var(--sand-dune);
+  border-radius: 4px;
+  padding: 2px 6px;
+  white-space: nowrap;
 }
 
-/* Individual canvas item wrapper */
+/* Individual canvas item (position:absolute inside virtual canvas) */
 .dlx-canvas-item {
+  position: absolute;
   background: var(--color-surface-raised);
   border: 2px solid var(--color-border-subtle);
   border-radius: var(--r-xl);
-  overflow: hidden;
-  transition: border-color var(--t), box-shadow var(--t);
-  position: relative;
+  overflow: visible;   /* allow resize handles to extend outside */
+  display: flex;
+  flex-direction: column;
+  transition: border-color var(--t-fast), box-shadow var(--t-fast);
+  user-select: none;
+  cursor: default;
 }
-.dlx-canvas-item:hover { border-color: var(--color-border); }
+.dlx-canvas-item:hover   { border-color: var(--color-border); }
 .dlx-canvas-item.selected {
   border-color: var(--golden-bronze);
-  box-shadow: 0 0 0 3px rgba(187,165,76,.18), var(--shadow-md);
+  box-shadow: 0 0 0 2px rgba(187,165,76,.25), var(--shadow-md);
 }
+.dlx-canvas-item.band-hover { border-color: var(--pine-teal); }
 
 .dlx-canvas-item__bar {
   display: flex;
   align-items: center;
-  gap: var(--sp-3);
-  padding: var(--sp-2) var(--sp-4);
+  gap: 5px;
+  padding: 4px 8px;
   background: rgba(44,43,37,.04);
   border-bottom: 1px solid var(--color-border-subtle);
-  font-size: .75rem;
+  border-radius: calc(var(--r-xl) - 2px) calc(var(--r-xl) - 2px) 0 0;
+  font-size: .72rem;
   color: var(--color-text-muted);
+  flex-shrink: 0;
+  cursor: move;
+}
+.dlx-canvas-item__bar-drag {
+  font-size: .85rem;
+  color: var(--silver);
+  opacity: .7;
+  flex-shrink: 0;
+  cursor: move;
 }
 .dlx-canvas-item__bar-name {
   font-weight: 600;
   color: var(--color-text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex-shrink: 1;
+  min-width: 0;
+}
+.dlx-canvas-item__bar-cat {
+  opacity: .55;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 .dlx-canvas-item__bar-actions {
   margin-left: auto;
   display: flex;
-  gap: var(--sp-2);
+  gap: 3px;
+  flex-shrink: 0;
 }
 .dlx-canvas-item__bar-btn {
-  padding: 2px 8px;
+  padding: 2px 6px;
   border-radius: var(--r-sm);
-  font-size: .72rem;
+  font-size: .68rem;
   font-weight: 600;
-  transition: background var(--t-fast), color var(--t-fast);
   color: var(--color-text-muted);
+  transition: background var(--t-fast), color var(--t-fast);
 }
 .dlx-canvas-item__bar-btn:hover {
   background: rgba(44,43,37,.08);
@@ -627,12 +738,46 @@ img, svg { display: block; }
 }
 
 .dlx-canvas-item__body {
-  padding: var(--sp-5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 100px;
+  flex: 1;
   overflow: hidden;
+  border-radius: 0 0 calc(var(--r-xl) - 2px) calc(var(--r-xl) - 2px);
+  min-height: 0;
+}
+.dlx-shadow-host {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* ── Resize handles ───────────────────────────────────────── */
+.dlx-resize-handle {
+  position: absolute;
+  width: 9px; height: 9px;
+  background: #fff;
+  border: 2px solid var(--golden-bronze);
+  border-radius: 2px;
+  z-index: 20;
+  transition: transform var(--t-fast);
+}
+.dlx-resize-handle:hover { transform: scale(1.3); }
+
+.dlx-resize-handle--tl { top: -5px; left: -5px;  cursor: nw-resize; }
+.dlx-resize-handle--t  { top: -5px; left: calc(50% - 4px); cursor: n-resize; }
+.dlx-resize-handle--tr { top: -5px; right: -5px; cursor: ne-resize; }
+.dlx-resize-handle--r  { top: calc(50% - 4px); right: -5px; cursor: e-resize; }
+.dlx-resize-handle--br { bottom: -5px; right: -5px; cursor: se-resize; }
+.dlx-resize-handle--b  { bottom: -5px; left: calc(50% - 4px); cursor: s-resize; }
+.dlx-resize-handle--bl { bottom: -5px; left: -5px; cursor: sw-resize; }
+.dlx-resize-handle--l  { top: calc(50% - 4px); left: -5px; cursor: w-resize; }
+
+/* ── Rubber-band selection overlay ────────────────────────── */
+.dlx-canvas-band {
+  position: absolute;
+  border: 1.5px solid var(--pine-teal);
+  background: rgba(31,79,60,.08);
+  border-radius: 2px;
+  pointer-events: none;
+  z-index: 1000;
 }
 
 /* ── 9. Nudge Bar (Bottom) ────────────────────────────────── */
@@ -1172,6 +1317,8 @@ img, svg { display: block; }
   .dlx-canvas-pane.canvas-mode { display: flex; }
   .dlx-pane-divider { display: none; }
   .dlx-brand__tagline { display: none; }
+  .dlx-inspector { display: none !important; }
+  .dlx-zoom-controls { display: none; }
 }
 
 /* ── 19. Loading skeleton ─────────────────────────────────── */
@@ -1188,4 +1335,231 @@ img, svg { display: block; }
   background-size: 800px 100%;
   animation: shimmer 1.4s ease-in-out infinite;
   border-radius: var(--r);
+}
+
+/* ── 20. Zoom Controls ────────────────────────────────────── */
+.dlx-zoom-controls {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  margin-left: var(--sp-2);
+  flex-shrink: 0;
+}
+.dlx-zoom-btn {
+  width: 22px; height: 22px;
+  border-radius: var(--r-sm);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-secondary);
+  font-size: .82rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background var(--t-fast), border-color var(--t-fast);
+}
+.dlx-zoom-btn:hover {
+  background: rgba(44,43,37,.06);
+  border-color: var(--color-text-secondary);
+}
+.dlx-zoom-btn--fit { font-size: .75rem; width: 26px; }
+.dlx-zoom-label {
+  min-width: 40px;
+  text-align: center;
+  font-size: .75rem;
+  color: var(--color-text-muted);
+  font-variant-numeric: tabular-nums;
+  flex-shrink: 0;
+}
+
+/* ── 21. Snap Toggle ──────────────────────────────────────── */
+.dlx-snap-toggle {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: .74rem;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  flex-shrink: 0;
+  margin-left: var(--sp-2);
+  white-space: nowrap;
+}
+.dlx-snap-toggle input[type="checkbox"] {
+  accent-color: var(--pine-teal);
+  width: 12px; height: 12px;
+  cursor: pointer;
+}
+
+/* ── 22. Property Inspector Panel ─────────────────────────── */
+.dlx-inspector {
+  width: 256px;
+  flex-shrink: 0;
+  background: var(--color-surface-raised);
+  border-left: 1px solid var(--color-border);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: insp-slide-in var(--t) cubic-bezier(.22,.68,0,1.1);
+}
+.dlx-inspector[hidden] { display: none; }
+
+@keyframes insp-slide-in {
+  from { transform: translateX(20px); opacity: 0; }
+  to   { transform: translateX(0);    opacity: 1; }
+}
+
+.dlx-inspector__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--sp-3) var(--sp-4);
+  border-bottom: 1px solid var(--color-border-subtle);
+  flex-shrink: 0;
+}
+.dlx-inspector__title {
+  font-size: .78rem;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+.dlx-inspector__close {
+  width: 22px; height: 22px;
+  border-radius: var(--r-sm);
+  font-size: .72rem;
+  color: var(--color-text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background var(--t-fast), color var(--t-fast);
+}
+.dlx-inspector__close:hover {
+  background: rgba(44,43,37,.08);
+  color: var(--color-text);
+}
+
+.dlx-inspector__body {
+  flex: 1;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border) transparent;
+}
+.dlx-inspector__body::-webkit-scrollbar { width: 4px; }
+.dlx-inspector__body::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: 4px; }
+
+/* Inspector sections */
+.dlx-insp-section {
+  padding: var(--sp-3) var(--sp-4);
+  border-bottom: 1px solid var(--color-border-subtle);
+}
+.dlx-insp-section:last-child { border-bottom: none; }
+
+.dlx-insp-section__title {
+  font-size: .64rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin-bottom: var(--sp-2);
+}
+.dlx-insp-subtitle {
+  font-size: .68rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  margin-bottom: var(--sp-2);
+}
+.dlx-insp-grid2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp-2);
+}
+.dlx-insp-label {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: .7rem;
+  color: var(--color-text-secondary);
+}
+.dlx-insp-label--row {
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+.dlx-insp-input {
+  width: 100%;
+  padding: 3px 6px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--r-sm);
+  font-size: .76rem;
+  background: var(--color-bg);
+  color: var(--color-text);
+  transition: border-color var(--t-fast);
+}
+.dlx-insp-input:focus {
+  outline: none;
+  border-color: var(--golden-bronze);
+}
+.dlx-insp-color {
+  width: 36px; height: 22px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--r-sm);
+  cursor: pointer;
+  padding: 1px 2px;
+  background: none;
+  flex-shrink: 0;
+}
+.dlx-insp-row {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  flex-wrap: wrap;
+}
+.dlx-insp-row-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-1);
+}
+.dlx-insp-muted {
+  font-size: .7rem;
+  color: var(--color-text-muted);
+}
+
+/* ── 23. Community Drawer ─────────────────────────────────── */
+.dlx-community-empty {
+  text-align: center;
+  padding: var(--sp-8) var(--sp-4);
+  color: var(--color-text-muted);
+  line-height: 1.6;
+  font-size: .82rem;
+}
+.dlx-community-empty code {
+  font-family: var(--font-mono);
+  font-size: .76rem;
+  background: rgba(44,43,37,.06);
+  padding: 1px 5px;
+  border-radius: var(--r-sm);
+  color: var(--pine-teal);
+}
+
+/* Component grid drop zone */
+.dlx-component-grid.drag-over {
+  outline: 2px dashed var(--pine-teal);
+  outline-offset: -4px;
+  background: rgba(31,79,60,.04);
+}
+
+/* Remove button on community cards */
+.dlx-comp-card__remove {
+  width: 22px; height: 22px;
+  border-radius: var(--r-sm);
+  font-size: .7rem;
+  color: var(--color-text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background var(--t-fast), color var(--t-fast);
+  flex-shrink: 0;
+}
+.dlx-comp-card__remove:hover {
+  background: rgba(192,57,43,.1);
+  color: #c0392b;
 }

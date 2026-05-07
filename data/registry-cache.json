@@ -1,0 +1,107 @@
+{
+  "version": 1,
+  "generatedAt": "2026-05-07T00:00:00.000Z",
+  "count": 10,
+  "components": [
+    {
+      "id": "reg-hero-section",
+      "category": "community",
+      "name": "Hero Section",
+      "description": "Full-width landing hero with headline, sub-copy and dual CTAs",
+      "tags": ["hero", "landing", "section", "cta", "headline"],
+      "source": "built-in",
+      "html": "<section class=\"hero\"><div class=\"hero__badge\">New Release</div><h1 class=\"hero__title\">Build Something<br><span class=\"accent\">Beautiful</span></h1><p class=\"hero__sub\">Premium components for modern web experiences. No design experience required.</p><div class=\"hero__actions\"><button class=\"btn-primary\">Get Started \u2192</button><button class=\"btn-ghost\">Watch Demo</button></div></section>",
+      "css": ":host{display:flex;align-items:stretch;justify-content:stretch;}.hero{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:2.5rem 2rem;background:linear-gradient(160deg,var(--pine-teal,#1F4F3C) 0%,#0e2e21 100%);color:var(--sand-dune,#dcd6b9);width:100%;gap:1rem;min-height:200px;}.hero__badge{display:inline-block;padding:.25rem .9rem;background:rgba(187,165,76,.2);border:1px solid rgba(187,165,76,.4);border-radius:9999px;font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--golden-bronze,#bba54c);}.hero__title{font-size:2rem;font-weight:800;line-height:1.15;margin:0;}.accent{color:var(--golden-bronze,#bba54c);}.hero__sub{font-size:.88rem;opacity:.8;max-width:340px;line-height:1.6;margin:0;}.hero__actions{display:flex;gap:.75rem;flex-wrap:wrap;justify-content:center;margin-top:.5rem;}.btn-primary{padding:.65rem 1.6rem;background:var(--golden-bronze,#bba54c);color:var(--graphite,#2c2b25);border:none;border-radius:8px;font-size:.9rem;font-weight:700;cursor:pointer;transition:background .2s,transform .2s;}.btn-primary:hover{background:#cbb85c;transform:translateY(-2px);}.btn-ghost{padding:.65rem 1.4rem;background:transparent;color:var(--sand-dune,#dcd6b9);border:1.5px solid rgba(220,214,185,.35);border-radius:8px;font-size:.9rem;font-weight:600;cursor:pointer;transition:border-color .2s,background .2s;}.btn-ghost:hover{border-color:rgba(220,214,185,.7);background:rgba(220,214,185,.07);}"
+    },
+    {
+      "id": "reg-pricing-card",
+      "category": "community",
+      "name": "Pricing Card",
+      "description": "Tiered pricing card with feature list and CTA",
+      "tags": ["pricing", "card", "saas", "plan", "subscription"],
+      "source": "built-in",
+      "html": "<div class=\"card\"><div class=\"badge\">Pro</div><div class=\"price\"><span class=\"currency\">$</span><span class=\"amount\">49</span><span class=\"period\">/mo</span></div><p class=\"tagline\">Everything you need to ship fast</p><ul class=\"features\"><li>\u2713 Unlimited projects</li><li>\u2713 Priority support</li><li>\u2713 Advanced analytics</li><li>\u2713 Custom domains</li></ul><button class=\"cta\">Start Free Trial</button></div>",
+      "css": ":host{display:flex;align-items:center;justify-content:center;padding:1rem;}.card{background:var(--graphite,#2c2b25);color:var(--sand-dune,#dcd6b9);border-radius:16px;padding:1.5rem;width:100%;max-width:240px;display:flex;flex-direction:column;gap:.75rem;box-shadow:0 8px 32px rgba(44,43,37,.3);}.badge{display:inline-block;padding:.2rem .7rem;background:rgba(187,165,76,.18);color:var(--golden-bronze,#bba54c);border-radius:9999px;font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;align-self:flex-start;}.price{display:flex;align-items:baseline;gap:.15rem;}.currency{font-size:1.2rem;font-weight:700;color:var(--golden-bronze,#bba54c);}.amount{font-size:2.4rem;font-weight:800;line-height:1;}.period{font-size:.82rem;opacity:.6;}.tagline{font-size:.78rem;opacity:.65;line-height:1.4;margin:0;}.features{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.4rem;font-size:.8rem;opacity:.85;}.cta{padding:.65rem;background:var(--golden-bronze,#bba54c);color:var(--graphite,#2c2b25);border:none;border-radius:8px;font-size:.88rem;font-weight:700;cursor:pointer;margin-top:.25rem;transition:background .2s,transform .2s;}.cta:hover{background:#cbb85c;transform:translateY(-1px);}"
+    },
+    {
+      "id": "reg-feature-card",
+      "category": "community",
+      "name": "Feature Card",
+      "description": "Icon + headline + description feature block",
+      "tags": ["feature", "card", "icon", "benefit", "landing"],
+      "source": "built-in",
+      "html": "<div class=\"feat\"><div class=\"icon\">\u26a1</div><h3 class=\"title\">Lightning Fast</h3><p class=\"desc\">Optimised for performance from the ground up. Sub-second load times guaranteed.</p></div>",
+      "css": ":host{display:flex;align-items:center;justify-content:center;padding:1rem;}.feat{background:var(--color-surface-raised,#f7f3e8);border:1px solid var(--color-border-subtle,#d6d0b4);border-radius:14px;padding:1.25rem;display:flex;flex-direction:column;gap:.6rem;width:100%;transition:box-shadow .2s,transform .2s;}.feat:hover{box-shadow:0 6px 24px rgba(44,43,37,.12);transform:translateY(-2px);}.icon{font-size:1.8rem;line-height:1;}.title{font-size:.95rem;font-weight:700;color:var(--graphite,#2c2b25);margin:0;}.desc{font-size:.8rem;color:var(--color-text-muted,#a7a6a2);line-height:1.5;margin:0;}"
+    },
+    {
+      "id": "reg-testimonial-card",
+      "category": "community",
+      "name": "Testimonial",
+      "description": "Customer quote card with avatar and star rating",
+      "tags": ["testimonial", "review", "quote", "social proof"],
+      "source": "built-in",
+      "html": "<div class=\"testi\"><div class=\"stars\">\u2605\u2605\u2605\u2605\u2605</div><p class=\"quote\">\u201cDigital Luxe transformed how our team designs. We shipped our landing page in a single afternoon.\u201d</p><div class=\"author\"><div class=\"avatar\">JK</div><div class=\"info\"><div class=\"name\">Jamie K.</div><div class=\"role\">Head of Product, Acme</div></div></div></div>",
+      "css": ":host{display:flex;align-items:center;justify-content:center;padding:1rem;}.testi{background:var(--color-surface-raised,#f7f3e8);border:1px solid var(--color-border-subtle,#d6d0b4);border-radius:14px;padding:1.25rem 1.4rem;display:flex;flex-direction:column;gap:.75rem;width:100%;}.stars{font-size:1rem;letter-spacing:.1em;color:var(--golden-bronze,#bba54c);}.quote{font-size:.84rem;color:var(--graphite,#2c2b25);line-height:1.6;margin:0;font-style:italic;}.author{display:flex;align-items:center;gap:.7rem;}.avatar{width:34px;height:34px;border-radius:50%;background:var(--pine-teal,#1F4F3C);color:var(--sand-dune,#dcd6b9);display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:700;flex-shrink:0;}.name{font-size:.8rem;font-weight:700;color:var(--graphite,#2c2b25);}.role{font-size:.72rem;color:var(--color-text-muted,#a7a6a2);}"
+    },
+    {
+      "id": "reg-newsletter-signup",
+      "category": "community",
+      "name": "Newsletter Signup",
+      "description": "Email capture form with inline submit button",
+      "tags": ["newsletter", "email", "signup", "form", "cta"],
+      "source": "built-in",
+      "html": "<div class=\"nl\"><h3 class=\"nl__title\">Stay in the loop</h3><p class=\"nl__sub\">Weekly design inspiration and component drops.</p><form class=\"nl__form\" onsubmit=\"event.preventDefault()\"><input class=\"nl__input\" type=\"email\" placeholder=\"your@email.com\"><button class=\"nl__btn\" type=\"submit\">Subscribe</button></form></div>",
+      "css": ":host{display:flex;align-items:center;justify-content:center;padding:1rem;}.nl{background:linear-gradient(135deg,var(--pine-teal,#1F4F3C),#0e2e21);border-radius:14px;padding:1.4rem;display:flex;flex-direction:column;gap:.65rem;width:100%;color:var(--sand-dune,#dcd6b9);}.nl__title{font-size:1rem;font-weight:700;margin:0;}.nl__sub{font-size:.78rem;opacity:.75;margin:0;line-height:1.4;}.nl__form{display:flex;gap:.5rem;margin-top:.25rem;flex-wrap:wrap;}.nl__input{flex:1;min-width:120px;padding:.5rem .75rem;border:1px solid rgba(220,214,185,.3);border-radius:8px;background:rgba(220,214,185,.1);color:var(--sand-dune,#dcd6b9);font-size:.82rem;outline:none;}.nl__input::placeholder{color:rgba(220,214,185,.45);}.nl__input:focus{border-color:var(--golden-bronze,#bba54c);}.nl__btn{padding:.5rem 1.2rem;background:var(--golden-bronze,#bba54c);color:var(--graphite,#2c2b25);border:none;border-radius:8px;font-size:.82rem;font-weight:700;cursor:pointer;white-space:nowrap;transition:background .2s;}.nl__btn:hover{background:#cbb85c;}"
+    },
+    {
+      "id": "reg-stats-bar",
+      "category": "community",
+      "name": "Stats Bar",
+      "description": "Row of key metrics / social proof numbers",
+      "tags": ["stats", "metrics", "numbers", "kpi", "social proof"],
+      "source": "built-in",
+      "html": "<div class=\"stats\"><div class=\"stat\"><div class=\"stat__n\">12K+</div><div class=\"stat__l\">Designers</div></div><div class=\"divider\"></div><div class=\"stat\"><div class=\"stat__n\">98%</div><div class=\"stat__l\">Satisfaction</div></div><div class=\"divider\"></div><div class=\"stat\"><div class=\"stat__n\">400+</div><div class=\"stat__l\">Components</div></div></div>",
+      "css": ":host{display:flex;align-items:center;justify-content:center;padding:1rem;}.stats{display:flex;align-items:center;gap:1rem;padding:.75rem 1.25rem;background:var(--color-surface-raised,#f7f3e8);border:1px solid var(--color-border-subtle,#d6d0b4);border-radius:12px;width:100%;justify-content:space-around;}.stat{display:flex;flex-direction:column;align-items:center;gap:.15rem;}.stat__n{font-size:1.5rem;font-weight:800;color:var(--pine-teal,#1F4F3C);line-height:1;}.stat__l{font-size:.7rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--silver,#a7a6a2);}.divider{width:1px;height:36px;background:var(--color-border-subtle,#d6d0b4);flex-shrink:0;}"
+    },
+    {
+      "id": "reg-alert-banner",
+      "category": "community",
+      "name": "Alert Banner",
+      "description": "Dismissable info / warning / success alert",
+      "tags": ["alert", "banner", "notification", "info", "warning"],
+      "source": "built-in",
+      "html": "<div class=\"alert\"><span class=\"alert__icon\">\u2139\ufe0f</span><div class=\"alert__body\"><strong>Heads up!</strong> Your trial expires in 3 days. <a class=\"alert__link\" href=\"#\">Upgrade now</a> to keep your designs.</div><button class=\"alert__close\" onclick=\"this.closest('.alert').remove()\">\u2715</button></div>",
+      "css": ":host{display:flex;align-items:center;justify-content:center;padding:1rem;}.alert{display:flex;align-items:flex-start;gap:.65rem;padding:.75rem 1rem;background:rgba(187,165,76,.1);border:1px solid rgba(187,165,76,.4);border-radius:10px;width:100%;}.alert__icon{font-size:1rem;flex-shrink:0;margin-top:.05rem;}.alert__body{flex:1;font-size:.82rem;color:var(--graphite,#2c2b25);line-height:1.5;}.alert__link{color:var(--pine-teal,#1F4F3C);font-weight:600;text-decoration:underline;}.alert__close{flex-shrink:0;width:22px;height:22px;border:none;background:none;cursor:pointer;font-size:.8rem;color:var(--silver,#a7a6a2);border-radius:4px;display:flex;align-items:center;justify-content:center;}.alert__close:hover{background:rgba(44,43,37,.08);color:var(--graphite,#2c2b25);}"
+    },
+    {
+      "id": "reg-avatar-card",
+      "category": "community",
+      "name": "Profile Card",
+      "description": "User profile card with avatar, name, role and social links",
+      "tags": ["profile", "avatar", "card", "team", "social"],
+      "source": "built-in",
+      "html": "<div class=\"profile\"><div class=\"profile__cover\"></div><div class=\"profile__body\"><div class=\"profile__avatar\">AJ</div><div class=\"profile__name\">Alexandra J.</div><div class=\"profile__role\">Senior UX Designer</div><div class=\"profile__stats\"><span><strong>48</strong> Projects</span><span><strong>200</strong> Followers</span></div></div></div>",
+      "css": ":host{display:flex;align-items:center;justify-content:center;padding:1rem;}.profile{border-radius:16px;overflow:hidden;border:1px solid var(--color-border-subtle,#d6d0b4);background:var(--color-surface-raised,#f7f3e8);width:100%;max-width:220px;}.profile__cover{height:54px;background:linear-gradient(135deg,var(--pine-teal,#1F4F3C),var(--golden-bronze,#bba54c));}.profile__body{padding:0 1rem 1rem;display:flex;flex-direction:column;align-items:center;gap:.35rem;}.profile__avatar{width:48px;height:48px;border-radius:50%;background:var(--graphite,#2c2b25);color:var(--sand-dune,#dcd6b9);display:flex;align-items:center;justify-content:center;font-size:.85rem;font-weight:700;border:3px solid var(--color-surface-raised,#f7f3e8);margin-top:-24px;}.profile__name{font-size:.88rem;font-weight:700;color:var(--graphite,#2c2b25);margin-top:.25rem;}.profile__role{font-size:.72rem;color:var(--silver,#a7a6a2);}.profile__stats{display:flex;gap:1rem;margin-top:.4rem;font-size:.72rem;color:var(--color-text-muted,#a7a6a2);}strong{color:var(--graphite,#2c2b25);}"
+    },
+    {
+      "id": "reg-progress-card",
+      "category": "community",
+      "name": "Progress Card",
+      "description": "Task / skill progress card with labelled bars",
+      "tags": ["progress", "card", "skill", "task", "bar"],
+      "source": "built-in",
+      "html": "<div class=\"prog\"><h4 class=\"prog__title\">Project Progress</h4><div class=\"prog__item\"><div class=\"prog__label\"><span>Design</span><span>85%</span></div><div class=\"prog__track\"><div class=\"prog__fill\" style=\"width:85%\"></div></div></div><div class=\"prog__item\"><div class=\"prog__label\"><span>Development</span><span>60%</span></div><div class=\"prog__track\"><div class=\"prog__fill\" style=\"width:60%;background:var(--golden-bronze,#bba54c)\"></div></div></div><div class=\"prog__item\"><div class=\"prog__label\"><span>QA</span><span>30%</span></div><div class=\"prog__track\"><div class=\"prog__fill\" style=\"width:30%;background:#e07b54\"></div></div></div></div>",
+      "css": ":host{display:flex;align-items:center;justify-content:center;padding:1rem;}.prog{background:var(--color-surface-raised,#f7f3e8);border:1px solid var(--color-border-subtle,#d6d0b4);border-radius:14px;padding:1.1rem 1.2rem;width:100%;display:flex;flex-direction:column;gap:.75rem;}.prog__title{font-size:.88rem;font-weight:700;color:var(--graphite,#2c2b25);margin:0;}.prog__item{display:flex;flex-direction:column;gap:.3rem;}.prog__label{display:flex;justify-content:space-between;font-size:.75rem;color:var(--graphite,#2c2b25);}.prog__track{height:7px;background:var(--color-border,#c4bc9a);border-radius:9999px;overflow:hidden;}.prog__fill{height:100%;background:var(--pine-teal,#1F4F3C);border-radius:9999px;transition:width .4s ease;}"
+    },
+    {
+      "id": "reg-timeline-item",
+      "category": "community",
+      "name": "Timeline",
+      "description": "Vertical timeline with events and dates",
+      "tags": ["timeline", "history", "events", "steps", "vertical"],
+      "source": "built-in",
+      "html": "<div class=\"tl\"><div class=\"tl__item\"><div class=\"tl__dot\"></div><div class=\"tl__line\"></div><div class=\"tl__body\"><div class=\"tl__date\">Jan 2026</div><div class=\"tl__title\">MVP Launched</div><div class=\"tl__desc\">First public release with core components.</div></div></div><div class=\"tl__item\"><div class=\"tl__dot\"></div><div class=\"tl__line\"></div><div class=\"tl__body\"><div class=\"tl__date\">Mar 2026</div><div class=\"tl__title\">Community Drawers</div><div class=\"tl__desc\">Registry crawler &amp; 400+ community blocks.</div></div></div><div class=\"tl__item last\"><div class=\"tl__dot tl__dot--active\"></div><div class=\"tl__body\"><div class=\"tl__date\">Now</div><div class=\"tl__title\">Free-form Canvas</div><div class=\"tl__desc\">Drag, resize, inspect — true design freedom.</div></div></div></div>",
+      "css": ":host{display:flex;align-items:center;justify-content:center;padding:1rem;}.tl{display:flex;flex-direction:column;width:100%;padding:.5rem 0;}.tl__item{display:grid;grid-template-columns:12px 20px 1fr;gap:0 .6rem;}.tl__dot{width:12px;height:12px;border-radius:50%;background:var(--silver,#a7a6a2);border:2px solid var(--color-surface-raised,#f7f3e8);box-shadow:0 0 0 2px var(--silver,#a7a6a2);margin-top:.25rem;}.tl__dot--active{background:var(--golden-bronze,#bba54c);box-shadow:0 0 0 2px var(--golden-bronze,#bba54c);}.tl__line{width:2px;background:var(--color-border,#c4bc9a);margin:4px auto 0;height:calc(100% - 4px);}.tl__item.last .tl__line{display:none;}.tl__body{padding-bottom:.9rem;}.tl__date{font-size:.68rem;color:var(--silver,#a7a6a2);font-weight:600;letter-spacing:.04em;}.tl__title{font-size:.84rem;font-weight:700;color:var(--graphite,#2c2b25);margin:.1rem 0;}.tl__desc{font-size:.75rem;color:var(--color-text-muted,#a7a6a2);line-height:1.4;}"
+    }
+  ]
+}

@@ -13,16 +13,23 @@ const closeBtn = document.getElementById('smartbar-close');
 
 // ── Built-in actions ──────────────────────────────────────────
 const ACTIONS = [
-  { type:'action', name:'New Canvas',       icon:'✦', sub:'Clear and start fresh',                action: () => canvas.clear() },
-  { type:'action', name:'Save to Vault',    icon:'🗄', sub:'Save current design',                  action: () => canvas.save() },
-  { type:'action', name:'Open Vault',       icon:'⬡', sub:'Browse your saved designs',             action: openVault },
-  { type:'action', name:'Export HTML',      icon:'↗', sub:'Download as standalone HTML',           action: () => canvas.exportHtml() },
-  { type:'action', name:'Clear Nudges',     icon:'○', sub:'Remove all active nudge effects',       action: () => import('./nudge.js').then(m => m.nudge.clearAll()) },
-  { type:'action', name:'Browse Buttons',   icon:'⬡', sub:'Switch to Buttons drawer',              action: () => switchDrawer('buttons') },
-  { type:'action', name:'Browse Cards',     icon:'🃏', sub:'Switch to Cards drawer',                action: () => switchDrawer('cards') },
-  { type:'action', name:'Browse Forms',     icon:'✏', sub:'Switch to Forms drawer',                action: () => switchDrawer('forms') },
-  { type:'action', name:'Browse Navigation',icon:'🧭', sub:'Switch to Navigation drawer',           action: () => switchDrawer('navigation') },
-  { type:'action', name:'Browse Dashboards',icon:'📊', sub:'Switch to Dashboards drawer',           action: () => switchDrawer('dashboards') },
+  { type:'action', name:'New Canvas',        icon:'✦',  sub:'Clear and start fresh',                  action: () => canvas.clear() },
+  { type:'action', name:'Save to Vault',     icon:'🗄', sub:'Save current design',                    action: () => canvas.save() },
+  { type:'action', name:'Open Vault',        icon:'⬡',  sub:'Browse your saved designs',               action: openVault },
+  { type:'action', name:'Export HTML',       icon:'↗',  sub:'Download as standalone HTML',             action: () => canvas.exportHtml() },
+  { type:'action', name:'Export PNG',        icon:'🖼', sub:'Export active frame as PNG',               action: () => canvas.exportPng?.() },
+  { type:'action', name:'Export Tokens',     icon:'🎨', sub:'Export JSON design tokens',                action: () => canvas.exportTokens?.() },
+  { type:'action', name:'Live Preview',      icon:'▶',  sub:'Open interactive preview in new tab',      action: () => canvas.previewLive?.() },
+  { type:'action', name:'Fit to Screen',     icon:'⊡',  sub:'Zoom canvas to fit all items',            action: () => import('./canvas.js').then(m => m.canvas.fitToScreen?.()) },
+  { type:'action', name:'Clear Nudges',      icon:'○',  sub:'Remove all active nudge effects',         action: () => import('./nudge.js').then(m => m.nudge.clearAll()) },
+  { type:'action', name:'Browse Community',  icon:'🌐', sub:'Switch to Community registry drawer',     action: () => switchDrawer('community') },
+  { type:'action', name:'Browse Buttons',    icon:'⬡',  sub:'Switch to Buttons drawer',                action: () => switchDrawer('buttons') },
+  { type:'action', name:'Browse Cards',      icon:'🃏', sub:'Switch to Cards drawer',                  action: () => switchDrawer('cards') },
+  { type:'action', name:'Browse Forms',      icon:'✏',  sub:'Switch to Forms drawer',                  action: () => switchDrawer('forms') },
+  { type:'action', name:'Browse Navigation', icon:'🧭', sub:'Switch to Navigation drawer',             action: () => switchDrawer('navigation') },
+  { type:'action', name:'Browse Dashboards', icon:'📊', sub:'Switch to Dashboards drawer',             action: () => switchDrawer('dashboards') },
+  { type:'action', name:'Browse Blocks',     icon:'🧱', sub:'Switch to Blocks drawer',                  action: () => switchDrawer('blocks') },
+  { type:'action', name:'Import from URL',   icon:'⇩',  sub:'Paste a registry JSON URL to import',    action: importFromUrl },
 ];
 
 // ── State ─────────────────────────────────────────────────────
@@ -181,6 +188,38 @@ function openVault() {
   document.getElementById('vault-modal').removeAttribute('hidden');
   import('./vault.js').then(m => m.vault.renderList());
   smartbar.close();
+}
+
+async function importFromUrl() {
+  smartbar.close();
+  const url = prompt('Paste a registry JSON URL:\n(e.g. https://example.com/registry.json)');
+  if (!url?.startsWith('http')) return;
+  try {
+    const res  = await fetch(url);
+    const data = await res.json();
+    import('./catalog.js').then(({ catalog }) => {
+      // Delegate to catalog's import handler
+      const comps = Array.isArray(data)
+        ? data
+        : (data.components || (data.id ? [data] : []));
+      if (!comps.length) { import('./utils.js').then(m => m.toast('No components found at that URL', 'warn')); return; }
+      comps.forEach(c => {
+        if (c.id && c.html) catalog.importComponent({
+          id: c.id || `import-${Date.now()}`,
+          category: 'community',
+          name: c.name || c.id,
+          description: c.description || 'Imported',
+          tags: c.tags || ['community'],
+          source: url,
+          html: c.html,
+          css: c.css || ':host{display:block;padding:1rem;}',
+        });
+      });
+      catalog.selectDrawer('community');
+    });
+  } catch (e) {
+    import('./utils.js').then(m => m.toast(`Import failed: ${e.message}`, 'error'));
+  }
 }
 
 function escHtml(str) {

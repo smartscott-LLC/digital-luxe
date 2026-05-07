@@ -113,9 +113,127 @@
       <div class="dlx-canvas-header">
         <div class="dlx-canvas-header__indicator" id="canvas-indicator"></div>
         <h2>Your Design</h2>
+
+        <div class="dlx-canvas-toolbar" id="canvas-multi-tools" hidden aria-label="Multi-selection tools">
+          <!-- Align group -->
+          <button class="dlx-btn-sm dlx-btn-sm--ghost dlx-align-btn" data-align="left"
+                  title="Align left edges" aria-label="Align left edges">
+            <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true" fill="currentColor">
+              <rect x="1" y="2" width="1.5" height="10" rx=".75"/>
+              <rect x="3" y="3" width="6" height="2.5" rx="1"/>
+              <rect x="3" y="8.5" width="9" height="2.5" rx="1"/>
+            </svg>
+          </button>
+          <button class="dlx-btn-sm dlx-btn-sm--ghost dlx-align-btn" data-align="center"
+                  title="Align centers horizontally" aria-label="Align centers horizontally">
+            <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true" fill="currentColor">
+              <rect x="6.25" y="1" width="1.5" height="12" rx=".75"/>
+              <rect x="2" y="3" width="10" height="2.5" rx="1"/>
+              <rect x="3.5" y="8.5" width="7" height="2.5" rx="1"/>
+            </svg>
+          </button>
+          <button class="dlx-btn-sm dlx-btn-sm--ghost dlx-align-btn" data-align="right"
+                  title="Align right edges" aria-label="Align right edges">
+            <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true" fill="currentColor">
+              <rect x="11.5" y="2" width="1.5" height="10" rx=".75"/>
+              <rect x="5" y="3" width="6" height="2.5" rx="1"/>
+              <rect x="2" y="8.5" width="9" height="2.5" rx="1"/>
+            </svg>
+          </button>
+          <button class="dlx-btn-sm dlx-btn-sm--ghost dlx-align-btn" data-align="top"
+                  title="Align top edges" aria-label="Align top edges">
+            <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true" fill="currentColor">
+              <rect x="2" y="1" width="10" height="1.5" rx=".75"/>
+              <rect x="3" y="3" width="2.5" height="6" rx="1"/>
+              <rect x="8.5" y="3" width="2.5" height="9" rx="1"/>
+            </svg>
+          </button>
+          <button class="dlx-btn-sm dlx-btn-sm--ghost dlx-align-btn" data-align="middle"
+                  title="Align midpoints vertically" aria-label="Align midpoints vertically">
+            <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true" fill="currentColor">
+              <rect x="1" y="6.25" width="12" height="1.5" rx=".75"/>
+              <rect x="3" y="2" width="2.5" height="10" rx="1"/>
+              <rect x="8.5" y="3.5" width="2.5" height="7" rx="1"/>
+            </svg>
+          </button>
+          <button class="dlx-btn-sm dlx-btn-sm--ghost dlx-align-btn" data-align="bottom"
+                  title="Align bottom edges" aria-label="Align bottom edges">
+            <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true" fill="currentColor">
+              <rect x="2" y="11.5" width="10" height="1.5" rx=".75"/>
+              <rect x="3" y="2" width="2.5" height="9" rx="1"/>
+              <rect x="8.5" y="5" width="2.5" height="6" rx="1"/>
+            </svg>
+          </button>
+
+          <span class="dlx-canvas-toolbar__sep" aria-hidden="true"></span>
+
+          <!-- Distribute group -->
+          <button class="dlx-btn-sm dlx-btn-sm--ghost dlx-align-btn" data-align="dist-h"
+                  title="Distribute evenly — horizontal" aria-label="Distribute evenly horizontal">
+            <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true" fill="currentColor">
+              <rect x="1" y="2" width="1.5" height="10" rx=".75"/>
+              <rect x="12.5" y="2" width="1.5" height="10" rx=".75"/>
+              <rect x="4.5" y="3.5" width="5" height="7" rx="1"/>
+            </svg>
+          </button>
+          <button class="dlx-btn-sm dlx-btn-sm--ghost dlx-align-btn" data-align="dist-v"
+                  title="Distribute evenly — vertical" aria-label="Distribute evenly vertical">
+            <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true" fill="currentColor">
+              <rect x="2" y="1" width="10" height="1.5" rx=".75"/>
+              <rect x="2" y="11.5" width="10" height="1.5" rx=".75"/>
+              <rect x="3.5" y="4.5" width="7" height="5" rx="1"/>
+            </svg>
+          </button>
+
+          <span class="dlx-canvas-toolbar__sep" aria-hidden="true"></span>
+
+          <!-- Match size group -->
+          <button class="dlx-btn-sm dlx-btn-sm--ghost dlx-align-btn" data-align="match-w"
+                  title="Match width to first selected" aria-label="Match width">
+            <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true" fill="currentColor">
+              <rect x="1" y="5" width="12" height="4" rx="1"/>
+              <path d="M1 3.5 L3 1.5 L3 5.5 Z M13 3.5 L11 1.5 L11 5.5 Z" opacity=".6"/>
+            </svg>
+          </button>
+          <button class="dlx-btn-sm dlx-btn-sm--ghost dlx-align-btn" data-align="match-h"
+                  title="Match height to first selected" aria-label="Match height">
+            <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true" fill="currentColor">
+              <rect x="5" y="1" width="4" height="12" rx="1"/>
+              <path d="M3.5 1 L1.5 3 L5.5 3 Z M3.5 13 L1.5 11 L5.5 11 Z" opacity=".6"/>
+            </svg>
+          </button>
+        </div>
+
+        <div class="dlx-frame-controls">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor" style="opacity:.55;flex-shrink:0" aria-hidden="true">
+            <rect x="1" y="1" width="10" height="10" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.5"/>
+          </svg>
+          <select id="frame-select" aria-label="Active frame" title="Switch active frame"></select>
+          <button class="dlx-btn-sm dlx-btn-sm--ghost" id="frame-add-btn"
+                  aria-label="Add a new frame/page" title="Add frame (desktop · mobile · tablet)">+ Frame</button>
+        </div>
+
+        <!-- Zoom controls -->
+        <div class="dlx-zoom-controls" aria-label="Zoom controls">
+          <button class="dlx-zoom-btn" id="zoom-out-btn" title="Zoom out (scroll wheel)">−</button>
+          <span class="dlx-zoom-label" id="zoom-label" aria-live="polite">100%</span>
+          <button class="dlx-zoom-btn" id="zoom-in-btn" title="Zoom in (scroll wheel)">+</button>
+          <button class="dlx-zoom-btn dlx-zoom-btn--fit" id="zoom-fit-btn" title="Fit to screen">⊡</button>
+        </div>
+
+        <!-- Snap toggle -->
+        <label class="dlx-snap-toggle" title="Snap items to 8 px grid">
+          <input type="checkbox" id="snap-toggle" checked aria-label="Snap to grid">
+          <span>Snap</span>
+        </label>
+
         <div class="dlx-canvas-header__actions">
+          <button class="dlx-btn-sm dlx-btn-sm--ghost" id="whats-new-btn"
+                  title="What's new — Phase 4 &amp; 5 features" aria-label="Open What's New guide">
+            ✦ What's New
+          </button>
           <button class="dlx-btn-sm dlx-btn-sm--ghost"    id="export-canvas-btn"
-                  title="Export as HTML (⌘E)" aria-keyshortcuts="Control+E Meta+E">
+                  title="Export active frame (⌘E)" aria-keyshortcuts="Control+E Meta+E">
             ↗ Export
           </button>
           <button class="dlx-btn-sm dlx-btn-sm--ghost dlx-btn-sm--danger" id="clear-canvas-btn"
@@ -129,24 +247,43 @@
         </div>
       </div>
 
-      <!-- Canvas scroll area -->
-      <div class="dlx-canvas" id="canvas-area" role="region" aria-label="Design canvas">
+      <!-- Canvas viewport -->
+      <div class="dlx-canvas" id="canvas-area" role="region"
+           aria-label="Design canvas — drag to pan, scroll to zoom">
+        <div class="dlx-canvas-ruler dlx-canvas-ruler--h" id="canvas-ruler-h" aria-hidden="true"></div>
+        <div class="dlx-canvas-ruler dlx-canvas-ruler--v" id="canvas-ruler-v" aria-hidden="true"></div>
+        <div class="dlx-canvas-guides" id="canvas-guides" aria-hidden="true"></div>
 
         <!-- Empty state -->
         <div class="dlx-canvas-empty" id="canvas-empty" aria-live="polite">
           <div class="dlx-canvas-empty__icon">🏛️</div>
           <div class="dlx-canvas-empty__title">Your Cabinet of Wonders</div>
           <p class="dlx-canvas-empty__hint">
-            Browse the drawers on the left and click any component to manifest it here.
+            Click any component in the left panel to add it.<br>
+            Drag to move · Scroll to zoom · Space+drag to pan.
           </p>
         </div>
 
-        <!-- Canvas items -->
+        <!-- Canvas virtual space (items are position:absolute inside here) -->
         <div class="dlx-canvas-items" id="canvas-items" hidden
-             aria-label="Collected components"></div>
+             aria-label="Placed components"></div>
 
+        <!-- Rubber-band selection overlay (screen-space, inside canvas-area) -->
+        <div class="dlx-canvas-band" id="canvas-band" hidden aria-hidden="true"></div>
       </div>
     </section>
+
+    <!-- ── RIGHT: Property Inspector ────────────────────────── -->
+    <aside class="dlx-inspector" id="inspector" hidden
+           aria-label="Property inspector">
+      <div class="dlx-inspector__header">
+        <span class="dlx-inspector__title">Inspector</span>
+        <button class="dlx-inspector__close" id="inspector-close" aria-label="Close inspector">✕</button>
+      </div>
+      <div class="dlx-inspector__body" id="inspector-body">
+        <!-- Populated by inspector.js -->
+      </div>
+    </aside>
 
   </main>
 
@@ -219,14 +356,23 @@
       </div>
       <div class="dlx-modal__body">
         <p style="font-size:.84rem;color:var(--color-text-secondary);margin-bottom:1rem;">
-          Your design as a self-contained HTML file. Copy or download, then open in any browser.
+          Export the <strong>active frame</strong> in multiple formats — or open a live interactive preview.
         </p>
         <div class="dlx-export-code" id="export-code" aria-label="Exported HTML code"></div>
       </div>
       <div class="dlx-modal__footer">
-        <button class="dlx-btn-sm dlx-btn-sm--primary" id="export-copy-btn">
-          Copy HTML
+        <button class="dlx-btn-sm dlx-btn-sm--primary" id="export-copy-btn"
+                title="Copy generated HTML to clipboard">
+          📋 Copy HTML
         </button>
+        <button class="dlx-btn-sm dlx-btn-sm--ghost" id="export-download-html-btn"
+                title="Download as a standalone .html file">⬇ HTML file</button>
+        <button class="dlx-btn-sm dlx-btn-sm--ghost" id="export-png-btn"
+                title="Export frame as a PNG image">🖼 PNG</button>
+        <button class="dlx-btn-sm dlx-btn-sm--ghost" id="export-tokens-btn"
+                title="Download a JSON design token file">🎨 Tokens JSON</button>
+        <button class="dlx-btn-sm dlx-btn-sm--ghost" id="preview-btn"
+                title="Open fully interactive preview in a new tab">▶ Preview</button>
         <button class="dlx-btn-sm dlx-btn-sm--ghost"  id="export-close-footer">
           Close
         </button>
