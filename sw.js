@@ -3,7 +3,7 @@
    Part of the ToolSmart suite by smartscott-LLC
    ============================================================ */
 
-const CACHE = 'digital-luxe-v1';
+const CACHE = 'digital-luxe-v2';
 
 const APP_SHELL = [
   '/',
@@ -18,6 +18,9 @@ const APP_SHELL = [
   '/js/vault.js',
   '/js/utils.js',
   '/js/components.js',
+  '/js/dock.js',
+  '/js/hotbar.js',
+  '/js/inspector.js',
   '/icons/icon.svg'
 ];
 

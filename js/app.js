@@ -10,6 +10,7 @@ import { vault }         from './vault.js';
 import { toast, dlxConfirm } from './utils.js';
 import { initInspector } from './inspector.js';
 import { initDock }      from './dock.js';
+import { initHotBar }    from './hotbar.js';
 
 // ── Boot ──────────────────────────────────────────────────────
 window.addEventListener('DOMContentLoaded', async () => {
@@ -25,6 +26,7 @@ window.addEventListener('DOMContentLoaded', async () => {
   initInspector();
   initDock();             // builds dock DOM first (nudge-toggles container)
   nudge.init();           // then nudge renders into the dock's #nudge-toggles
+  initHotBar();           // hot bar (reads localStorage, wires right-click)
   await vault.init();
 
   // PWA install prompt

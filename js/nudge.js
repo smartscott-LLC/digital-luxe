@@ -14,9 +14,6 @@ const NUDGES = [
 // ── Active nudges set ─────────────────────────────────────────
 const activeNudges = new Set();
 
-// ── DOM ref ───────────────────────────────────────────────────
-const togglesContainer = document.getElementById('nudge-toggles');
-
 // ── Public API ────────────────────────────────────────────────
 export const nudge = {
   init() {
@@ -46,6 +43,8 @@ export const nudge = {
 
 // ── Render toggle pills ───────────────────────────────────────
 function renderToggles() {
+  const togglesContainer = document.getElementById('nudge-toggles');
+  if (!togglesContainer) return;
   togglesContainer.innerHTML = NUDGES.map(n => `
     <button
       class="dlx-nudge-toggle"

@@ -60,10 +60,10 @@
     <!-- Header actions -->
     <div class="dlx-header__actions">
       <div class="dlx-undo-redo" role="group" aria-label="History">
-        <button class="dlx-history-btn" id="undo-btn" title="Undo (⌘Z)" disabled aria-label="Undo">
+        <button class="dlx-history-btn" id="undo-btn" data-action-id="undo" title="Undo (⌘Z)" disabled aria-label="Undo">
           ↩
         </button>
-        <button class="dlx-history-btn" id="redo-btn" title="Redo (⌘⇧Z)" disabled aria-label="Redo">
+        <button class="dlx-history-btn" id="redo-btn" data-action-id="redo" title="Redo (⌘⇧Z)" disabled aria-label="Redo">
           ↪
         </button>
       </div>
@@ -237,15 +237,15 @@
                   title="What's new — Phase 4 &amp; 5 features" aria-label="Open What's New guide">
             ✦ What's New
           </button>
-          <button class="dlx-btn-sm dlx-btn-sm--ghost"    id="export-canvas-btn"
+          <button class="dlx-btn-sm dlx-btn-sm--ghost" id="export-canvas-btn" data-action-id="export-html"
                   title="Export active frame (⌘E)" aria-keyshortcuts="Control+E Meta+E">
             ↗ Export
           </button>
-          <button class="dlx-btn-sm dlx-btn-sm--ghost dlx-btn-sm--danger" id="clear-canvas-btn"
+          <button class="dlx-btn-sm dlx-btn-sm--ghost dlx-btn-sm--danger" id="clear-canvas-btn" data-action-id="clear"
                   title="Clear canvas (⌘N)">
             ✕ Clear
           </button>
-          <button class="dlx-btn-sm dlx-btn-sm--accent" id="save-canvas-btn"
+          <button class="dlx-btn-sm dlx-btn-sm--accent" id="save-canvas-btn" data-action-id="save"
                   title="Save to Vault (⌘S)" aria-keyshortcuts="Control+S Meta+S">
             🗄 Save
           </button>
@@ -294,6 +294,7 @@
 
   <!-- ══ BOTTOM BAR ══════════════════════════════════════════ -->
   <footer class="dlx-nudge-bar" role="toolbar" aria-label="Canvas controls">
+    <div class="dlx-hotbar" id="hotbar" role="group" aria-label="Hot Bar"></div>
     <div class="dlx-nudge-apply">
       <label for="nudge-target">Effects target:</label>
       <select id="nudge-target" aria-label="Nudge target">

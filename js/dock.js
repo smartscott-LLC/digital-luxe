@@ -200,8 +200,8 @@ function renderCompSingle(idx, item) {
   const layerHtml = `
     <div class="dlx-dp-row">
       <span class="dlx-dp-muted" style="flex:1">z: ${zIndex}</span>
-      <button class="dlx-dp-btn" data-layer="up" title="Bring forward">↑ Fwd</button>
-      <button class="dlx-dp-btn" data-layer="down" title="Send backward">↓ Back</button>
+      <button class="dlx-dp-btn" data-layer="up" data-action-id="bring-forward" title="Bring forward">↑ Fwd</button>
+      <button class="dlx-dp-btn" data-layer="down" data-action-id="send-backward" title="Send backward">↓ Back</button>
     </div>`;
 
   const variantHtml = variants.length > 1 ? `
@@ -340,11 +340,11 @@ function buildCanvasPanel() {
   canvasBody.innerHTML =
     section('zoom', '⊕', 'Zoom', `
       <div class="dlx-dp-row" style="gap:6px">
-        <button class="dlx-dp-btn dlx-dp-btn--wide" id="dock-zoom-out">− Out</button>
+        <button class="dlx-dp-btn dlx-dp-btn--wide" id="dock-zoom-out" data-action-id="zoom-out">− Out</button>
         <span class="dlx-dp-zoom-lbl" id="dock-zoom-lbl">100%</span>
-        <button class="dlx-dp-btn dlx-dp-btn--wide" id="dock-zoom-in">+ In</button>
+        <button class="dlx-dp-btn dlx-dp-btn--wide" id="dock-zoom-in" data-action-id="zoom-in">+ In</button>
       </div>
-      <button class="dlx-dp-btn dlx-dp-btn--full" id="dock-zoom-fit" style="margin-top:6px">⊡ Fit to Screen</button>`) +
+      <button class="dlx-dp-btn dlx-dp-btn--full" id="dock-zoom-fit" data-action-id="zoom-fit" style="margin-top:6px">⊡ Fit to Screen</button>`) +
 
     section('grid', '⊞', 'Grid &amp; Snap', `
       <label class="dlx-dp-label dlx-dp-label--row" style="cursor:pointer">
@@ -354,17 +354,17 @@ function buildCanvasPanel() {
 
     section('align', '⇔', 'Align Selected', `
       <div class="dlx-dp-row-wrap">
-        <button class="dlx-dp-btn" data-align="left">⇐ L</button>
-        <button class="dlx-dp-btn" data-align="center">⇔ C</button>
-        <button class="dlx-dp-btn" data-align="right">R ⇒</button>
-        <button class="dlx-dp-btn" data-align="top">⇑ T</button>
-        <button class="dlx-dp-btn" data-align="middle">⇕ M</button>
-        <button class="dlx-dp-btn" data-align="bottom">B ⇓</button>
+        <button class="dlx-dp-btn" data-align="left"   data-action-id="align-left">⇐ L</button>
+        <button class="dlx-dp-btn" data-align="center" data-action-id="align-center">⇔ C</button>
+        <button class="dlx-dp-btn" data-align="right"  data-action-id="align-right">R ⇒</button>
+        <button class="dlx-dp-btn" data-align="top"    data-action-id="align-top">⇑ T</button>
+        <button class="dlx-dp-btn" data-align="middle" data-action-id="align-middle">⇕ M</button>
+        <button class="dlx-dp-btn" data-align="bottom" data-action-id="align-bottom">B ⇓</button>
       </div>
       <div class="dlx-dp-sep"></div>
       <div class="dlx-dp-row-wrap">
-        <button class="dlx-dp-btn" data-align="dist-h">↔ Dist H</button>
-        <button class="dlx-dp-btn" data-align="dist-v">↕ Dist V</button>
+        <button class="dlx-dp-btn" data-align="dist-h" data-action-id="dist-h">↔ Dist H</button>
+        <button class="dlx-dp-btn" data-align="dist-v" data-action-id="dist-v">↕ Dist V</button>
       </div>`, false) +
 
     section('theme', '◑', 'Brand Theme', `
@@ -372,7 +372,7 @@ function buildCanvasPanel() {
         <span>Brand color</span>
         <input type="color" id="dock-brand-color" value="#1F4F3C" class="dlx-dp-color">
       </label>
-      <button class="dlx-dp-btn dlx-dp-btn--full dlx-dp-btn--primary" id="dock-apply-theme">
+      <button class="dlx-dp-btn dlx-dp-btn--full dlx-dp-btn--primary" id="dock-apply-theme" data-action-id="apply-theme">
         Apply theme to all items
       </button>`) +
 
@@ -440,7 +440,7 @@ function buildFilePanel() {
 
   fileBody.innerHTML =
     section('save', '🗄', 'Save', `
-      <button class="dlx-dp-btn dlx-dp-btn--full dlx-dp-btn--primary" id="dock-save">
+      <button class="dlx-dp-btn dlx-dp-btn--full dlx-dp-btn--primary" id="dock-save" data-action-id="save">
         🗄 Save to Vault
       </button>
       <button class="dlx-dp-btn dlx-dp-btn--full" id="dock-vault-open" style="margin-top:6px">
@@ -448,14 +448,14 @@ function buildFilePanel() {
       </button>`) +
 
     section('export', '↗', 'Export', `
-      <button class="dlx-dp-btn dlx-dp-btn--full" id="dock-export-html">↗ Export HTML</button>
-      <button class="dlx-dp-btn dlx-dp-btn--full" id="dock-download-html" style="margin-top:5px">⬇ Download .html</button>
-      <button class="dlx-dp-btn dlx-dp-btn--full" id="dock-export-png" style="margin-top:5px">🖼 Export PNG</button>
-      <button class="dlx-dp-btn dlx-dp-btn--full" id="dock-export-tokens" style="margin-top:5px">🎨 Design Tokens</button>
-      <button class="dlx-dp-btn dlx-dp-btn--full" id="dock-preview" style="margin-top:5px">▶ Live Preview</button>`) +
+      <button class="dlx-dp-btn dlx-dp-btn--full" id="dock-export-html" data-action-id="export-html">↗ Export HTML</button>
+      <button class="dlx-dp-btn dlx-dp-btn--full" id="dock-download-html" data-action-id="download-html" style="margin-top:5px">⬇ Download .html</button>
+      <button class="dlx-dp-btn dlx-dp-btn--full" id="dock-export-png" data-action-id="export-png" style="margin-top:5px">🖼 Export PNG</button>
+      <button class="dlx-dp-btn dlx-dp-btn--full" id="dock-export-tokens" data-action-id="export-tokens" style="margin-top:5px">🎨 Design Tokens</button>
+      <button class="dlx-dp-btn dlx-dp-btn--full" id="dock-preview" data-action-id="preview" style="margin-top:5px">▶ Live Preview</button>`) +
 
     section('danger', '⚠', 'Danger Zone', `
-      <button class="dlx-dp-btn dlx-dp-btn--full dlx-dp-btn--danger" id="dock-clear">
+      <button class="dlx-dp-btn dlx-dp-btn--full dlx-dp-btn--danger" id="dock-clear" data-action-id="clear">
         ✕ Clear Canvas
       </button>`, false);
 
