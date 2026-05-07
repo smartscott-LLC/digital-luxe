@@ -113,6 +113,21 @@
       <div class="dlx-canvas-header">
         <div class="dlx-canvas-header__indicator" id="canvas-indicator"></div>
         <h2>Your Design</h2>
+
+        <!-- Zoom controls -->
+        <div class="dlx-zoom-controls" aria-label="Zoom controls">
+          <button class="dlx-zoom-btn" id="zoom-out-btn" title="Zoom out (scroll wheel)">−</button>
+          <span class="dlx-zoom-label" id="zoom-label" aria-live="polite">100%</span>
+          <button class="dlx-zoom-btn" id="zoom-in-btn" title="Zoom in (scroll wheel)">+</button>
+          <button class="dlx-zoom-btn dlx-zoom-btn--fit" id="zoom-fit-btn" title="Fit to screen">⊡</button>
+        </div>
+
+        <!-- Snap toggle -->
+        <label class="dlx-snap-toggle" title="Snap items to 8 px grid">
+          <input type="checkbox" id="snap-toggle" checked aria-label="Snap to grid">
+          <span>Snap</span>
+        </label>
+
         <div class="dlx-canvas-header__actions">
           <button class="dlx-btn-sm dlx-btn-sm--ghost"    id="export-canvas-btn"
                   title="Export as HTML (⌘E)" aria-keyshortcuts="Control+E Meta+E">
@@ -129,24 +144,40 @@
         </div>
       </div>
 
-      <!-- Canvas scroll area -->
-      <div class="dlx-canvas" id="canvas-area" role="region" aria-label="Design canvas">
+      <!-- Canvas viewport -->
+      <div class="dlx-canvas" id="canvas-area" role="region"
+           aria-label="Design canvas — drag to pan, scroll to zoom">
 
         <!-- Empty state -->
         <div class="dlx-canvas-empty" id="canvas-empty" aria-live="polite">
           <div class="dlx-canvas-empty__icon">🏛️</div>
           <div class="dlx-canvas-empty__title">Your Cabinet of Wonders</div>
           <p class="dlx-canvas-empty__hint">
-            Browse the drawers on the left and click any component to manifest it here.
+            Click any component in the left panel to add it.<br>
+            Drag to move · Scroll to zoom · Space+drag to pan.
           </p>
         </div>
 
-        <!-- Canvas items -->
+        <!-- Canvas virtual space (items are position:absolute inside here) -->
         <div class="dlx-canvas-items" id="canvas-items" hidden
-             aria-label="Collected components"></div>
+             aria-label="Placed components"></div>
 
+        <!-- Rubber-band selection overlay (screen-space, inside canvas-area) -->
+        <div class="dlx-canvas-band" id="canvas-band" hidden aria-hidden="true"></div>
       </div>
     </section>
+
+    <!-- ── RIGHT: Property Inspector ────────────────────────── -->
+    <aside class="dlx-inspector" id="inspector" hidden
+           aria-label="Property inspector">
+      <div class="dlx-inspector__header">
+        <span class="dlx-inspector__title">Inspector</span>
+        <button class="dlx-inspector__close" id="inspector-close" aria-label="Close inspector">✕</button>
+      </div>
+      <div class="dlx-inspector__body" id="inspector-body">
+        <!-- Populated by inspector.js -->
+      </div>
+    </aside>
 
   </main>
 

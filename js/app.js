@@ -2,12 +2,13 @@
    Digital Luxe — App.js  (boot, orchestration, keyboard shortcuts)
    Part of the ToolSmart suite by smartscott-LLC
    ============================================================ */
-import { catalog }   from './catalog.js';
-import { canvas }    from './canvas.js';
-import { nudge }     from './nudge.js';
-import { smartbar }  from './smartbar.js';
-import { vault }     from './vault.js';
-import { toast }     from './utils.js';
+import { catalog }       from './catalog.js';
+import { canvas }        from './canvas.js';
+import { nudge }         from './nudge.js';
+import { smartbar }      from './smartbar.js';
+import { vault }         from './vault.js';
+import { toast }         from './utils.js';
+import { initInspector } from './inspector.js';
 
 // ── Boot ──────────────────────────────────────────────────────
 window.addEventListener('DOMContentLoaded', async () => {
@@ -18,9 +19,10 @@ window.addEventListener('DOMContentLoaded', async () => {
 
   // Init all modules
   nudge.init();
-  catalog.init();
+  await catalog.init();   // async — loads community registry
   canvas.init();
   smartbar.init();
+  initInspector();
   await vault.init();
 
   // PWA install prompt
@@ -52,7 +54,7 @@ window.addEventListener('DOMContentLoaded', async () => {
       vault.renderList();
     });
 
-  console.log('💎 Digital Luxe loaded — ToolSmart by smartscott-LLC');
+  console.log('\uD83D\uDC8E Digital Luxe loaded — ToolSmart by smartscott-LLC');
 });
 
 // ── Global keyboard shortcuts ─────────────────────────────────
