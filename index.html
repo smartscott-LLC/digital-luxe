@@ -39,7 +39,7 @@
   <header class="dlx-header" role="banner">
 
     <!-- Brand -->
-    <a class="dlx-brand" href="/" aria-label="Digital Luxe home">
+    <a class="dlx-brand" id="brand-logo-link" href="/" aria-label="Digital Luxe home">
       <svg class="dlx-brand__gem" width="32" height="32" viewBox="0 0 100 100" aria-hidden="true">
         <polygon points="14,38 30,38 50,18" fill="#a7a6a2"/>
         <polygon points="86,38 70,38 50,18" fill="#bba54c"/>
@@ -56,14 +56,6 @@
       <span class="dlx-brand__name">Digital Luxe</span>
       <span class="dlx-brand__tagline">The Catalog</span>
     </a>
-
-    <!-- SmartBar trigger -->
-    <button class="dlx-smartbar-trigger" id="smartbar-trigger"
-            aria-label="Open command palette"
-            aria-keyshortcuts="Control+K Meta+K">
-      <kbd>⌘K</kbd>
-      Search components, actions&hellip;
-    </button>
 
     <!-- Header actions -->
     <div class="dlx-header__actions">
@@ -101,8 +93,13 @@
       <!-- Component grid -->
       <div class="dlx-component-grid" id="component-grid" role="region" aria-live="polite">
         <div class="dlx-grid-header">
-          <h2 id="grid-title">Buttons</h2>
+          <h2 id="grid-title">Components</h2>
           <span class="dlx-grid-header__count" id="grid-count"></span>
+          <div class="dlx-grid-search">
+            <input type="search" id="catalog-search" placeholder="Filter…"
+                   autocomplete="off" aria-label="Filter components">
+          </div>
+          <button class="dlx-grid-close" id="grid-close-btn" title="Collapse panel" aria-label="Close">✕</button>
         </div>
         <div class="dlx-grid" id="component-grid-items" aria-label="Component cards">
           <!-- Populated by catalog.js -->
@@ -295,14 +292,10 @@
 
   </main>
 
-  <!-- ══ NUDGE BAR ════════════════════════════════════════════ -->
-  <footer class="dlx-nudge-bar" role="toolbar" aria-label="Nudge controls">
-    <span class="dlx-nudge-bar__label" aria-hidden="true">Nudge:</span>
-    <div class="dlx-nudge-toggles" id="nudge-toggles" role="group" aria-label="Component nudges">
-      <!-- Populated by nudge.js -->
-    </div>
+  <!-- ══ BOTTOM BAR ══════════════════════════════════════════ -->
+  <footer class="dlx-nudge-bar" role="toolbar" aria-label="Canvas controls">
     <div class="dlx-nudge-apply">
-      <label for="nudge-target">Apply to:</label>
+      <label for="nudge-target">Effects target:</label>
       <select id="nudge-target" aria-label="Nudge target">
         <option value="all">All Components</option>
         <option value="selected">Selected Only</option>
@@ -388,6 +381,61 @@
     </div>
   </div>
 
+  <!-- ══ WHAT'S NEW MODAL ══════════════════════════════════════ -->
+  <div class="dlx-modal" id="whats-new-modal" hidden
+       role="dialog" aria-modal="true" aria-labelledby="whats-new-title">
+    <div class="dlx-modal__backdrop"></div>
+    <div class="dlx-modal__content dlx-modal__content--sm">
+      <div class="dlx-modal__header">
+        <span class="dlx-modal__header-icon" aria-hidden="true">✦</span>
+        <h2 id="whats-new-title">What's New in Digital Luxe</h2>
+        <button class="dlx-modal__close" id="whats-new-close" aria-label="Close">✕</button>
+      </div>
+      <div class="dlx-modal__body">
+        <ul class="dlx-whats-new-list">
+          <li>
+            <span class="dlx-wn-badge dlx-wn-badge--fix">Fix</span>
+            <div>
+              <strong>Components render correctly on canvas</strong>
+              <p>Components now appear exactly as they look in the catalog — no more card wrappers or title bars dragging onto the canvas.</p>
+            </div>
+          </li>
+          <li>
+            <span class="dlx-wn-badge dlx-wn-badge--new">New</span>
+            <div>
+              <strong>78-component library</strong>
+              <p>Buttons, Cards, Forms, Navigation, Dashboards, Typography, Modals, Tables, and Blocks — all with smart default sizing.</p>
+            </div>
+          </li>
+          <li>
+            <span class="dlx-wn-badge dlx-wn-badge--new">New</span>
+            <div>
+              <strong>Undo / Redo — 60-step history</strong>
+              <p>⌘Z to undo, ⌘⇧Z or ⌘Y to redo. Every drag, resize, prop edit, and delete is tracked.</p>
+            </div>
+          </li>
+          <li>
+            <span class="dlx-wn-badge dlx-wn-badge--new">New</span>
+            <div>
+              <strong>Safety dialogs</strong>
+              <p>Clearing the canvas or navigating away now asks if you want to save first — no more accidental work loss.</p>
+            </div>
+          </li>
+          <li>
+            <span class="dlx-wn-badge dlx-wn-badge--soon">Soon</span>
+            <div>
+              <strong>Cascading dock panels</strong>
+              <p>Three slide-out panels on the right edge — Component tools, Canvas controls, and File operations — replacing the current inspector.</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="dlx-modal__footer">
+        <button class="dlx-btn-sm dlx-btn-sm--primary" id="whats-new-close-btn">Got it ✦</button>
+      </div>
+    </div>
+  </div>
+
   <!-- ══ TOAST CONTAINER ═══════════════════════════════════════ -->
   <div class="dlx-toasts" id="toasts" aria-live="polite" aria-atomic="false"></div>
 
@@ -397,11 +445,6 @@
 <script type="module" src="/js/app.js"></script>
 
 <script>
-  // Wire SmartBar trigger inline (before module loads) for instant response
-  document.getElementById('smartbar-trigger')?.addEventListener('click', () => {
-    document.getElementById('smartbar-overlay')?.removeAttribute('hidden');
-    document.getElementById('smartbar-input')?.focus();
-  });
   // Wire second export close button
   document.getElementById('export-close-footer')?.addEventListener('click', () => {
     document.getElementById('export-modal')?.setAttribute('hidden', '');

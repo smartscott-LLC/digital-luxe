@@ -12,33 +12,59 @@ import { toast } from './utils.js';
 const COMMUNITY_DRAWER = { id: 'community', label: 'Community', icon: '\uD83C\uDF10' };
 
 // ── State ─────────────────────────────────────────────────────
-let activeDrawer       = DRAWERS[0].id;
-let communityComponents = [];   // loaded from registry-cache.json + localStorage
+let activeDrawer        = DRAWERS[0].id;
+let communityComponents = [];
 let registryLoaded      = false;
+let gridOpen            = false;
+let searchQuery         = '';
 
 // ── DOM refs ──────────────────────────────────────────────────
-const drawerNav = document.getElementById('drawer-nav');
-const gridTitle = document.getElementById('grid-title');
-const gridCount = document.getElementById('grid-count');
-const compGrid  = document.getElementById('component-grid-items');
+const drawerNav  = document.getElementById('drawer-nav');
+const gridTitle  = document.getElementById('grid-title');
+const gridCount  = document.getElementById('grid-count');
+const compGrid   = document.getElementById('component-grid-items');
+const catalogEl  = document.querySelector('.dlx-catalog');
 
 // ── Public API ────────────────────────────────────────────────
 export const catalog = {
   async init() {
     await loadCommunityComponents();
     renderDrawers();
-    renderComponents(activeDrawer);
     initDropImport();
+
+    // Close button in grid header
+    document.getElementById('grid-close-btn')?.addEventListener('click', () => this.closeGrid());
+
+    // Catalog search
+    document.getElementById('catalog-search')?.addEventListener('input', e => {
+      searchQuery = e.target.value.trim().toLowerCase();
+      if (gridOpen) renderComponents(activeDrawer);
+    });
   },
 
   getActiveDrawer() { return activeDrawer; },
 
   selectDrawer(id) {
+    if (gridOpen && id === activeDrawer) {
+      this.closeGrid();
+      return;
+    }
     activeDrawer = id;
-    document.querySelectorAll('.dlx-drawer-item').forEach(el => {
-      el.classList.toggle('active', el.dataset.drawer === id);
-    });
+    gridOpen = true;
+    catalogEl?.classList.add('grid-open');
+    searchQuery = '';
+    const searchEl = document.getElementById('catalog-search');
+    if (searchEl) searchEl.value = '';
+    document.querySelectorAll('.dlx-drawer-item').forEach(el =>
+      el.classList.toggle('active', el.dataset.drawer === id)
+    );
     renderComponents(id);
+  },
+
+  closeGrid() {
+    gridOpen = false;
+    catalogEl?.classList.remove('grid-open');
+    document.querySelectorAll('.dlx-drawer-item').forEach(el => el.classList.remove('active'));
   },
 
   getComponents(drawerId) {
@@ -155,9 +181,17 @@ function renderComponents(drawerId) {
   }
 
   const isCommunity = drawerId === 'community';
-  const items  = isCommunity
+  let items = isCommunity
     ? communityComponents
     : getCatalogComponents(drawerId);
+
+  if (searchQuery) {
+    items = items.filter(c =>
+      c.name?.toLowerCase().includes(searchQuery) ||
+      c.description?.toLowerCase().includes(searchQuery) ||
+      c.tags?.some(t => t.includes(searchQuery))
+    );
+  }
 
   const drawer = [...DRAWERS, COMMUNITY_DRAWER].find(d => d.id === drawerId);
   gridTitle.textContent = drawer?.label ?? drawerId;

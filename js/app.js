@@ -7,8 +7,9 @@ import { canvas }        from './canvas.js';
 import { nudge }         from './nudge.js';
 import { smartbar }      from './smartbar.js';
 import { vault }         from './vault.js';
-import { toast }         from './utils.js';
+import { toast, dlxConfirm } from './utils.js';
 import { initInspector } from './inspector.js';
+import { initDock }      from './dock.js';
 
 // ── Boot ──────────────────────────────────────────────────────
 window.addEventListener('DOMContentLoaded', async () => {
@@ -18,11 +19,12 @@ window.addEventListener('DOMContentLoaded', async () => {
   }
 
   // Init all modules
-  nudge.init();
   await catalog.init();   // async — loads community registry
   canvas.init();
   smartbar.init();
   initInspector();
+  initDock();             // builds dock DOM first (nudge-toggles container)
+  nudge.init();           // then nudge renders into the dock's #nudge-toggles
   await vault.init();
 
   // PWA install prompt
@@ -58,6 +60,34 @@ window.addEventListener('DOMContentLoaded', async () => {
   document.getElementById('undo-btn')?.addEventListener('click', () => canvas.undo());
   document.getElementById('redo-btn')?.addEventListener('click', () => canvas.redo());
 
+  // What's New modal
+  const whatsNewModal = document.getElementById('whats-new-modal');
+  document.getElementById('whats-new-btn')?.addEventListener('click', () =>
+    whatsNewModal?.removeAttribute('hidden'));
+  document.getElementById('whats-new-close')?.addEventListener('click', () =>
+    whatsNewModal?.setAttribute('hidden', ''));
+  document.getElementById('whats-new-close-btn')?.addEventListener('click', () =>
+    whatsNewModal?.setAttribute('hidden', ''));
+  whatsNewModal?.querySelector('.dlx-modal__backdrop')?.addEventListener('click', () =>
+    whatsNewModal?.setAttribute('hidden', ''));
+
+  // Safety harness: brand logo navigation
+  document.getElementById('brand-logo-link')?.addEventListener('click', async e => {
+    e.preventDefault();
+    const choice = await dlxConfirm({
+      title: 'Leave Digital Luxe?',
+      message: 'Any unsaved canvas work will be lost.',
+      buttons: [
+        { id: 'save-leave', label: '🗄 Save & Leave', accent: true },
+        { id: 'leave',      label: 'Leave Anyway',    danger: true  },
+        { id: 'cancel',     label: 'Stay Here' },
+      ],
+    });
+    if (choice === 'cancel') return;
+    if (choice === 'save-leave') canvas.save();
+    window.location.href = '/';
+  });
+
   console.log('\uD83D\uDC8E Digital Luxe loaded — ToolSmart by smartscott-LLC');
 });
 
@@ -79,8 +109,9 @@ function onGlobalKeyDown(e) {
 
   // Escape — close overlays
   if (e.key === 'Escape') {
-    document.getElementById('vault-modal') .setAttribute('hidden', '');
-    document.getElementById('export-modal').setAttribute('hidden', '');
+    document.getElementById('vault-modal')     .setAttribute('hidden', '');
+    document.getElementById('export-modal')    .setAttribute('hidden', '');
+    document.getElementById('whats-new-modal') ?.setAttribute('hidden', '');
     // SmartBar handles its own Escape
   }
 }

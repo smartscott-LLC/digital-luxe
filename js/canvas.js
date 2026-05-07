@@ -5,7 +5,7 @@
    ============================================================ */
 import { NUDGE_BASE_CSS } from './components.js';
 import { nudge } from './nudge.js';
-import { toast } from './utils.js';
+import { toast, dlxConfirm } from './utils.js';
 
 // ── Constants ──────────────────────────────────────────────────
 const CANVAS_W  = 4000;
@@ -191,9 +191,19 @@ export const canvas = {
     updateNudgeAttributes();
   },
 
-  clear() {
+  async clear() {
     if (!items.length) return;
-    if (!confirm('Clear all components from the canvas?')) return;
+    const choice = await dlxConfirm({
+      title: 'Clear Canvas',
+      message: 'All components will be removed. Save first to keep your work.',
+      buttons: [
+        { id: 'save-clear', label: '🗄 Save & Clear', accent: true },
+        { id: 'clear',      label: 'Clear Anyway',   danger: true  },
+        { id: 'cancel',     label: 'Cancel' },
+      ],
+    });
+    if (choice === 'cancel') return;
+    if (choice === 'save-clear') this.save();
     items = [];
     selectedIndices.clear();
     nextZ = 1;

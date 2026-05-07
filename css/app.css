@@ -154,40 +154,8 @@ img, svg { display: block; }
   opacity: .85;
 }
 
-/* SmartBar trigger */
-.dlx-smartbar-trigger {
-  flex: 1;
-  max-width: 380px;
-  display: flex;
-  align-items: center;
-  gap: var(--sp-3);
-  padding: var(--sp-2) var(--sp-4);
-  background: rgba(220,214,185,.12);
-  border: 1px solid rgba(220,214,185,.22);
-  border-radius: var(--r-full);
-  color: rgba(220,214,185,.7);
-  font-size: .85rem;
-  transition: background var(--t), border-color var(--t);
-  cursor: text;
-}
-.dlx-smartbar-trigger:hover {
-  background: rgba(220,214,185,.18);
-  border-color: rgba(220,214,185,.38);
-  color: var(--sand-dune);
-}
-.dlx-smartbar-trigger kbd {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 1px 6px;
-  background: rgba(220,214,185,.18);
-  border: 1px solid rgba(220,214,185,.28);
-  border-radius: var(--r-sm);
-  font-size: .72rem;
-  font-family: var(--font-sans);
-  color: var(--golden-bronze);
-  margin-right: var(--sp-1);
-}
+/* SmartBar trigger removed from header — accessible via ⌘K only */
+.dlx-smartbar-trigger { display: none; }
 
 .dlx-header__actions {
   display: flex;
@@ -266,15 +234,34 @@ img, svg { display: block; }
 }
 
 /* ── 6. Catalog Pane (Left) ───────────────────────────────── */
+
+/* Pane divider — only meaningful when grid is open */
+.dlx-catalog + .dlx-pane-divider {
+  width: 0;
+  pointer-events: none;
+  overflow: hidden;
+  transition: width .28s cubic-bezier(.25,.8,.25,1);
+}
+.dlx-catalog.grid-open + .dlx-pane-divider {
+  width: var(--divider-w);
+  pointer-events: auto;
+}
+
 .dlx-catalog {
   display: flex;
-  width: 44%;
-  min-width: 300px;
-  max-width: 620px;
+  /* Collapsed: just the drawer nav width */
+  width: var(--sidebar-w);
+  min-width: var(--sidebar-w);
+  max-width: var(--sidebar-w);
   overflow: hidden;
   border-right: var(--divider-w) solid var(--graphite);
   flex-shrink: 0;
-  transition: width var(--t-slow);
+  transition: width .28s cubic-bezier(.25,.8,.25,1),
+              max-width .28s cubic-bezier(.25,.8,.25,1);
+}
+.dlx-catalog.grid-open {
+  width: 430px;
+  max-width: 560px;
 }
 
 /* Drawer sidebar */
@@ -352,15 +339,23 @@ img, svg { display: block; }
   margin: var(--sp-4) var(--sp-4);
 }
 
-/* Component grid */
+/* Component grid — hidden until catalog is open */
 .dlx-component-grid {
   flex: 1;
+  min-width: 0;
   overflow-y: auto;
   overflow-x: hidden;
   padding: var(--sp-4);
   background: var(--color-bg);
   scrollbar-width: thin;
   scrollbar-color: var(--color-border) transparent;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .18s ease;
+}
+.dlx-catalog.grid-open .dlx-component-grid {
+  opacity: 1;
+  pointer-events: auto;
 }
 .dlx-component-grid::-webkit-scrollbar { width: 5px; }
 .dlx-component-grid::-webkit-scrollbar-track { background: transparent; }
@@ -368,21 +363,53 @@ img, svg { display: block; }
 
 .dlx-grid-header {
   display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  margin-bottom: var(--sp-4);
+  align-items: center;
+  gap: var(--sp-2);
+  margin-bottom: var(--sp-3);
   padding-bottom: var(--sp-3);
   border-bottom: 1px solid var(--color-border-subtle);
+  flex-wrap: wrap;
 }
 .dlx-grid-header h2 {
-  font-size: 1.05rem;
+  font-size: 1rem;
   font-weight: 700;
   color: var(--color-text);
 }
 .dlx-grid-header__count {
-  font-size: .8rem;
+  font-size: .78rem;
   color: var(--color-text-muted);
 }
+.dlx-grid-search {
+  flex: 1;
+  min-width: 100px;
+}
+.dlx-grid-search input {
+  width: 100%;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--r-full);
+  padding: 4px 10px;
+  font-size: .78rem;
+  color: var(--color-text);
+  transition: border-color var(--t-fast);
+}
+.dlx-grid-search input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+.dlx-grid-search input::placeholder { color: var(--color-text-muted); }
+.dlx-grid-close {
+  background: none;
+  border: none;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  font-size: .8rem;
+  padding: 3px 6px;
+  border-radius: var(--r-sm);
+  flex-shrink: 0;
+  transition: background var(--t-fast), color var(--t-fast);
+}
+.dlx-grid-close:hover { background: rgba(44,43,37,.08); color: var(--color-text); }
 
 .dlx-grid {
   display: grid;
@@ -494,6 +521,8 @@ img, svg { display: block; }
   align-items: center;
   gap: var(--sp-2);
   padding: var(--sp-3) var(--sp-4);
+  /* Right padding clears the 3 dock trigger strips (3 × 32px) + breathing room */
+  padding-right: calc(96px + var(--sp-5));
   background: var(--color-surface-raised);
   border-bottom: 1px solid var(--color-border);
   flex-shrink: 0;
@@ -828,12 +857,13 @@ img, svg { display: block; }
   z-index: 1000;
 }
 
-/* ── 9. Nudge Bar (Bottom) ────────────────────────────────── */
+/* ── 9. Bottom Bar ────────────────────────────────────────── */
+/* Nudge toggles moved to Dock → Canvas panel */
 .dlx-nudge-bar {
   grid-area: nudge;
   display: flex;
   align-items: center;
-  gap: var(--sp-5);
+  justify-content: flex-end;
   padding: 0 var(--sp-6);
   background: var(--graphite);
   color: var(--sand-dune);
@@ -841,73 +871,58 @@ img, svg { display: block; }
   z-index: 100;
   flex-shrink: 0;
   user-select: none;
+  gap: var(--sp-4);
 }
 
-.dlx-nudge-bar__label {
-  font-size: .7rem;
-  font-weight: 700;
-  letter-spacing: .14em;
-  text-transform: uppercase;
-  color: var(--silver);
-  opacity: .7;
-  flex-shrink: 0;
-}
+.dlx-nudge-bar__label { display: none; }  /* label removed */
+#nudge-toggles { display: none; }          /* toggles now live in dock */
 
-.dlx-nudge-toggles {
-  display: flex;
-  align-items: center;
-  gap: var(--sp-3);
-  flex: 1;
-  flex-wrap: wrap;
-}
-
-/* Nudge toggle pill */
+/* Nudge toggle pill — rendered inside dock Canvas panel */
 .dlx-nudge-toggle {
   display: inline-flex;
   align-items: center;
   gap: var(--sp-2);
-  padding: 5px var(--sp-4);
-  border: 1.5px solid rgba(187,165,76,.3);
+  padding: 4px var(--sp-3);
+  border: 1.5px solid var(--color-border);
   border-radius: var(--r-full);
-  background: rgba(187,165,76,.06);
-  color: rgba(220,214,185,.6);
-  font-size: .78rem;
+  background: var(--color-surface);
+  color: var(--color-text-secondary);
+  font-size: .74rem;
   font-weight: 600;
   cursor: pointer;
-  transition: background var(--t-fast), border-color var(--t-fast), color var(--t-fast), box-shadow var(--t-fast);
+  transition: background var(--t-fast), border-color var(--t-fast), color var(--t-fast);
+  width: 100%;
+  margin-bottom: 4px;
 }
+.dlx-nudge-toggle:last-child { margin-bottom: 0; }
 .dlx-nudge-toggle:hover {
-  border-color: rgba(187,165,76,.6);
-  color: var(--sand-dune);
-  background: rgba(187,165,76,.1);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  background: var(--color-primary-dim);
 }
 .dlx-nudge-toggle.active {
-  background: var(--golden-bronze);
-  border-color: var(--golden-bronze);
-  color: var(--graphite);
-  box-shadow: 0 2px 12px rgba(187,165,76,.4);
+  background: var(--color-primary-dim);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
 }
 .dlx-nudge-toggle__dot {
-  width: 7px; height: 7px;
+  width: 6px; height: 6px;
   border-radius: 50%;
   background: currentColor;
   flex-shrink: 0;
-  transition: transform var(--t-fast);
 }
-.dlx-nudge-toggle.active .dlx-nudge-toggle__dot { transform: scale(1.3); }
 
-/* Apply-to selector */
+/* Apply-to selector in bottom bar */
 .dlx-nudge-apply {
   display: flex;
   align-items: center;
   gap: var(--sp-2);
   flex-shrink: 0;
-  margin-left: auto;
 }
 .dlx-nudge-apply label {
   font-size: .72rem;
   color: var(--silver);
-  opacity: .7;
+  opacity: .8;
 }
 .dlx-nudge-apply select {
   background: rgba(220,214,185,.08);
@@ -1610,4 +1625,325 @@ img, svg { display: block; }
 .dlx-comp-card__remove:hover {
   background: rgba(192,57,43,.1);
   color: #c0392b;
+}
+
+/* ── 24. Cascading Dock ───────────────────────────────────── */
+
+/* Dock root — fixed on right side, below header, above nudge bar */
+.dlx-dock {
+  position: fixed;
+  top: var(--header-h, 58px);
+  right: 0;
+  bottom: var(--nudge-h, 54px);
+  z-index: 700;
+  pointer-events: none;
+}
+
+/* Trigger strip container */
+.dlx-dock__strips {
+  position: absolute;
+  top: 0; right: 0; bottom: 0;
+  display: flex;
+  flex-direction: row-reverse;
+  pointer-events: auto;
+  z-index: 2;
+}
+
+/* Individual trigger strip */
+.dlx-dock__strip {
+  width: 32px;
+  height: 100%;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  transition: filter var(--t-fast), opacity var(--t-fast);
+  user-select: none;
+}
+.dlx-dock__strip > span {
+  writing-mode: vertical-lr;
+  text-orientation: mixed;
+  transform: rotate(180deg);
+  font-size: .67rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.dlx-dock__strip:hover  { filter: brightness(1.12); }
+.dlx-dock__strip.active { filter: brightness(.85); }
+
+.dlx-dock__strip--comp  { background: var(--graphite); color: var(--sand-dune); }
+.dlx-dock__strip--cv    { background: var(--pine-teal); color: var(--sand-dune); }
+.dlx-dock__strip--file  { background: var(--golden-bronze); color: var(--graphite); }
+
+/* Sliding panel */
+.dlx-dock__panel {
+  position: absolute;
+  top: 0; bottom: 0;
+  right: 96px;          /* clears all 3 strips (3 × 32px) */
+  width: 280px;         /* component (widest) */
+  background: var(--color-surface-raised);
+  border-left: 1px solid var(--color-border);
+  box-shadow: -6px 0 32px rgba(44,43,37,.16);
+  display: flex;
+  flex-direction: column;
+  transform: translateX(100%);
+  transition: transform .28s cubic-bezier(.25,.8,.25,1);
+  pointer-events: auto;
+  overflow: hidden;
+  z-index: 1;
+}
+.dlx-dock__panel.open   { transform: translateX(0); }
+.dlx-dock__panel--cv    { width: 240px; }
+.dlx-dock__panel--file  { width: 200px; }
+
+/* Panel header */
+.dlx-dock__panel-head {
+  display: flex;
+  align-items: center;
+  padding: var(--sp-3) var(--sp-4);
+  flex-shrink: 0;
+  border-bottom: 1px solid var(--color-border);
+}
+.dlx-dock__panel-head--comp { background: rgba(44,43,37,.06); }
+.dlx-dock__panel-head--cv   { background: rgba(31,79,60,.07); }
+.dlx-dock__panel-head--file { background: rgba(187,165,76,.09); }
+.dlx-dock__panel-title {
+  flex: 1;
+  font-size: .8rem;
+  font-weight: 700;
+  color: var(--color-text);
+  letter-spacing: .03em;
+}
+.dlx-dock__panel-close {
+  background: none;
+  border: none;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  font-size: .8rem;
+  padding: 2px 4px;
+  border-radius: var(--r-sm);
+  transition: background var(--t-fast), color var(--t-fast);
+}
+.dlx-dock__panel-close:hover { background: rgba(44,43,37,.08); color: var(--color-text); }
+
+/* Panel scrollable body */
+.dlx-dock__panel-body {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: var(--sp-2) 0;
+}
+.dlx-dock__panel-body::-webkit-scrollbar { width: 4px; }
+.dlx-dock__panel-body::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: 2px; }
+
+/* Empty state */
+.dlx-dock-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--sp-10) var(--sp-4);
+  gap: var(--sp-3);
+  text-align: center;
+}
+.dlx-dock-empty__icon {
+  font-size: 2rem;
+  color: var(--color-border);
+}
+.dlx-dock-empty__msg {
+  font-size: .8rem;
+  color: var(--color-text-muted);
+  line-height: 1.5;
+}
+
+/* ── Accordion section ─────────────────────────────────────── */
+.dlx-ds { border-bottom: 1px solid var(--color-border-subtle); }
+.dlx-ds:last-child { border-bottom: none; }
+
+.dlx-ds__head {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  width: 100%;
+  background: none;
+  border: none;
+  padding: var(--sp-3) var(--sp-4);
+  cursor: pointer;
+  text-align: left;
+  color: var(--color-text);
+  transition: background var(--t-fast);
+}
+.dlx-ds__head:hover { background: rgba(44,43,37,.04); }
+.dlx-ds__icon  { font-size: .82rem; color: var(--color-text-muted); flex-shrink: 0; }
+.dlx-ds__label { flex: 1; font-size: .78rem; font-weight: 700; letter-spacing: .02em; }
+.dlx-ds__chevron {
+  font-size: 1rem;
+  color: var(--color-text-muted);
+  transition: transform var(--t-fast);
+  line-height: 1;
+}
+.dlx-ds__head[aria-expanded="true"] .dlx-ds__chevron { transform: rotate(90deg); }
+
+.dlx-ds__body {
+  display: none;
+  padding: var(--sp-2) var(--sp-4) var(--sp-3);
+}
+.dlx-ds__body.open { display: block; }
+
+/* ── Dock panel controls (dlx-dp-*) ───────────────────────── */
+.dlx-dp-grid2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp-2);
+}
+.dlx-dp-label {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  font-size: .7rem;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: .05em;
+}
+.dlx-dp-label--row {
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+.dlx-dp-input {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--r-sm);
+  padding: 4px 7px;
+  font-size: .78rem;
+  color: var(--color-text);
+  width: 100%;
+  transition: border-color var(--t-fast);
+}
+.dlx-dp-input:focus { outline: none; border-color: var(--color-primary); }
+.dlx-dp-color {
+  width: 36px; height: 24px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--r-sm);
+  cursor: pointer;
+  padding: 1px;
+  background: none;
+}
+.dlx-dp-row { display: flex; align-items: center; gap: var(--sp-2); }
+.dlx-dp-row-wrap { display: flex; flex-wrap: wrap; gap: var(--sp-1); }
+.dlx-dp-sep { height: 6px; }
+.dlx-dp-muted { font-size: .75rem; color: var(--color-text-muted); }
+.dlx-dp-zoom-lbl {
+  font-size: .78rem; font-weight: 700;
+  color: var(--color-text); min-width: 40px; text-align: center;
+}
+.dlx-dp-btn {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--r-sm);
+  padding: 4px 8px;
+  font-size: .74rem;
+  font-weight: 600;
+  color: var(--color-text);
+  cursor: pointer;
+  transition: background var(--t-fast), color var(--t-fast);
+  white-space: nowrap;
+}
+.dlx-dp-btn:hover { background: var(--color-surface-raised); }
+.dlx-dp-btn--wide  { flex: 1; }
+.dlx-dp-btn--full  { width: 100%; text-align: center; }
+.dlx-dp-btn--primary {
+  background: var(--color-primary);
+  color: var(--color-text-on-dark);
+  border-color: var(--color-primary);
+}
+.dlx-dp-btn--primary:hover { background: var(--color-primary-hover); }
+.dlx-dp-btn--danger {
+  color: #c0392b;
+  border-color: rgba(192,57,43,.35);
+}
+.dlx-dp-btn--danger:hover { background: rgba(192,57,43,.08); }
+
+/* Hide old inspector when dock is present */
+body:has(#dlx-dock) .dlx-inspector { display: none !important; }
+
+/* ── 25. Confirm Dialog ───────────────────────────────────── */
+.dlx-confirm-overlay {
+  position: fixed; inset: 0; z-index: 9000;
+  background: rgba(44,43,37,.55);
+  backdrop-filter: blur(3px);
+  display: flex; align-items: center; justify-content: center;
+  animation: dlx-fade-in .14s ease;
+}
+.dlx-confirm-dialog {
+  background: var(--color-surface-raised);
+  border: 1px solid var(--color-border);
+  border-radius: var(--r-xl);
+  padding: var(--sp-6) var(--sp-6) var(--sp-5);
+  box-shadow: var(--shadow-xl);
+  max-width: 360px; width: 90%;
+  animation: dlx-slide-up .18s ease;
+}
+.dlx-confirm-title {
+  font-size: 1rem; font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: var(--sp-2);
+}
+.dlx-confirm-msg {
+  font-size: .84rem; color: var(--color-text-secondary);
+  line-height: 1.5; margin-bottom: var(--sp-5);
+}
+.dlx-confirm-actions {
+  display: flex; gap: var(--sp-2); flex-wrap: wrap; justify-content: flex-end;
+}
+.dlx-confirm-btn {
+  border: 1px solid var(--color-border);
+  background: var(--color-surface-raised);
+  color: var(--color-text);
+  border-radius: var(--r);
+  padding: .42rem 1rem; font-size: .84rem; font-weight: 600;
+  cursor: pointer; transition: background var(--t-fast), color var(--t-fast);
+}
+.dlx-confirm-btn:hover { background: var(--color-surface); }
+.dlx-confirm-btn--accent {
+  background: var(--color-primary); color: var(--color-text-on-dark);
+  border-color: var(--color-primary);
+}
+.dlx-confirm-btn--accent:hover { background: var(--color-primary-hover); }
+.dlx-confirm-btn--danger {
+  color: #c0392b; border-color: rgba(192,57,43,.3);
+}
+.dlx-confirm-btn--danger:hover { background: rgba(192,57,43,.08); }
+
+@keyframes dlx-fade-in  { from { opacity:0 } to { opacity:1 } }
+@keyframes dlx-slide-up { from { transform:translateY(10px);opacity:0 } to { transform:none;opacity:1 } }
+
+/* ── 25. What's New Modal ─────────────────────────────────── */
+.dlx-modal__content--sm { max-width: 520px; }
+
+.dlx-whats-new-list {
+  list-style: none; display: flex; flex-direction: column; gap: var(--sp-5);
+}
+.dlx-whats-new-list li {
+  display: flex; gap: var(--sp-3); align-items: flex-start;
+}
+.dlx-wn-badge {
+  flex-shrink: 0; margin-top: 2px;
+  padding: 2px 8px; border-radius: var(--r-full);
+  font-size: .68rem; font-weight: 700; letter-spacing: .06em;
+  text-transform: uppercase;
+}
+.dlx-wn-badge--new  { background: var(--color-primary-dim); color: var(--color-primary); }
+.dlx-wn-badge--fix  { background: rgba(187,165,76,.18); color: #7a6420; }
+.dlx-wn-badge--soon { background: rgba(44,43,37,.08); color: var(--color-text-muted); }
+.dlx-whats-new-list strong {
+  display: block; font-size: .88rem; font-weight: 700;
+  color: var(--color-text); margin-bottom: 2px;
+}
+.dlx-whats-new-list p {
+  font-size: .8rem; color: var(--color-text-secondary); line-height: 1.5; margin: 0;
 }

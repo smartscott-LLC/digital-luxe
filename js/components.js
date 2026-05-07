@@ -108,7 +108,7 @@ export const COMPONENTS = [
   {
     id: 'btn-icon',
     category: 'buttons',
-    variantGroup: 'button-core',
+    variantGroup: 'button-action',
     variantLabel: 'Icon + Label',
     name: 'Icon + Label',
     description: 'Button with leading icon',
@@ -135,7 +135,7 @@ export const COMPONENTS = [
   {
     id: 'btn-split',
     category: 'buttons',
-    variantGroup: 'button-core',
+    variantGroup: 'button-action',
     variantLabel: 'Split Action',
     name: 'Split Action',
     description: 'Primary action + dropdown arrow',
@@ -1205,8 +1205,6 @@ export const COMPONENTS = [
   {
     id: 'btn-danger',
     category: 'buttons',
-    variantGroup: 'button-core',
-    variantLabel: 'Danger',
     name: 'Danger Button',
     description: 'Destructive action in bold red',
     tags: ['button', 'danger', 'destructive', 'delete', 'red'],
@@ -1223,8 +1221,6 @@ export const COMPONENTS = [
   {
     id: 'btn-success',
     category: 'buttons',
-    variantGroup: 'button-core',
-    variantLabel: 'Success',
     name: 'Success Button',
     description: 'Confirmation action in forest green',
     tags: ['button', 'success', 'confirm', 'green', 'save'],
@@ -1241,8 +1237,6 @@ export const COMPONENTS = [
   {
     id: 'btn-loading',
     category: 'buttons',
-    variantGroup: 'button-core',
-    variantLabel: 'Loading State',
     name: 'Loading Button',
     description: 'Spinner state for async actions',
     tags: ['button', 'loading', 'spinner', 'async', 'state'],
@@ -1796,8 +1790,6 @@ export const COMPONENTS = [
   {
     id: 'dash-alert-success',
     category: 'dashboards',
-    variantGroup: 'dash-alerts',
-    variantLabel: 'Success',
     name: 'Alert — Success',
     description: 'Green success alert banner with dismiss',
     tags: ['dashboard', 'alert', 'success', 'banner', 'notification'],
@@ -1822,8 +1814,6 @@ export const COMPONENTS = [
   {
     id: 'dash-alert-warn',
     category: 'dashboards',
-    variantGroup: 'dash-alerts',
-    variantLabel: 'Warning',
     name: 'Alert — Warning',
     description: 'Amber warning alert banner',
     tags: ['dashboard', 'alert', 'warning', 'banner', 'caution'],
@@ -1848,8 +1838,6 @@ export const COMPONENTS = [
   {
     id: 'dash-alert-error',
     category: 'dashboards',
-    variantGroup: 'dash-alerts',
-    variantLabel: 'Error',
     name: 'Alert — Error',
     description: 'Red error alert banner',
     tags: ['dashboard', 'alert', 'error', 'banner', 'danger'],
@@ -2092,6 +2080,38 @@ export const COMPONENTS = [
       .st { font-size:.68rem; font-weight:600; border-radius:99px; padding:2px 8px; }
       .st.ok { background:rgba(46,125,50,.12); color:#2e7d32; }
       .st.warn { background:rgba(255,165,0,.12); color:#e65100; }
+    `
+  },
+
+  {
+    id: 'dash-gauge',
+    category: 'dashboards',
+    name: 'Circular Gauge',
+    description: 'SVG arc gauge showing a KPI percentage with label',
+    tags: ['dashboard', 'gauge', 'kpi', 'percentage', 'arc', 'chart'],
+    defaultWidth: 200, defaultHeight: 210,
+    html: `
+      <div class="wrap">
+        <svg viewBox="0 0 120 80" class="arc" aria-hidden="true">
+          <path class="track" d="M10,70 A60,60 0 0,1 110,70" fill="none" stroke-width="10" stroke-linecap="round"/>
+          <path class="fill"  d="M10,70 A60,60 0 0,1 110,70" fill="none" stroke-width="10" stroke-linecap="round"
+                stroke-dasharray="188.5" stroke-dashoffset="47" class="fill"/>
+        </svg>
+        <div class="val">78<span class="pct">%</span></div>
+        <div class="lbl">Server Health</div>
+        <div class="sub">+4% from last week</div>
+      </div>`,
+    css: `
+      :host { display:flex; align-items:center; justify-content:center; padding:.5rem; }
+      * { box-sizing:border-box; margin:0; padding:0; font-family:system-ui,sans-serif; }
+      .wrap { display:flex; flex-direction:column; align-items:center; width:178px; background:#f7f3e8; border:1px solid #e0d9c0; border-radius:16px; padding:1.2rem 1rem .9rem; }
+      .arc { width:130px; }
+      .track { stroke:#e0d9c0; }
+      .fill  { stroke:#1F4F3C; transition:stroke-dashoffset .5s ease; }
+      .val { font-size:2rem; font-weight:800; color:#2c2b25; margin-top:-1.2rem; line-height:1; }
+      .pct { font-size:1rem; font-weight:600; color:#a7a6a2; }
+      .lbl { font-size:.75rem; font-weight:700; color:#2c2b25; margin-top:.3rem; }
+      .sub { font-size:.67rem; color:#2e7d32; font-weight:600; margin-top:.18rem; }
     `
   },
 ];
