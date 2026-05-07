@@ -18,6 +18,7 @@ export const NUDGE_BASE_CSS = `
 // ── Drawer metadata ───────────────────────────────────────────
 export const DRAWERS = [
   { id: 'buttons',     label: 'Buttons',     icon: '⬡' },
+  { id: 'blocks',      label: 'Blocks',      icon: '🧱' },
   { id: 'cards',       label: 'Cards',       icon: '🃏' },
   { id: 'forms',       label: 'Forms',       icon: '✏️'  },
   { id: 'navigation',  label: 'Navigation',  icon: '🧭' },
@@ -35,6 +36,8 @@ export const COMPONENTS = [
   {
     id: 'btn-primary-cta',
     category: 'buttons',
+    variantGroup: 'button-core',
+    variantLabel: 'Primary CTA',
     name: 'Primary CTA',
     description: 'Bold call-to-action with hover lift',
     tags: ['button', 'cta', 'primary', 'action'],
@@ -58,6 +61,8 @@ export const COMPONENTS = [
   {
     id: 'btn-ghost',
     category: 'buttons',
+    variantGroup: 'button-core',
+    variantLabel: 'Ghost Outline',
     name: 'Ghost Outline',
     description: 'Transparent with bold border',
     tags: ['button', 'ghost', 'outline', 'secondary'],
@@ -79,6 +84,8 @@ export const COMPONENTS = [
   {
     id: 'btn-gold-pill',
     category: 'buttons',
+    variantGroup: 'button-core',
+    variantLabel: 'Gold Pill',
     name: 'Gold Pill',
     description: 'Rounded pill in golden bronze accent',
     tags: ['button', 'pill', 'accent', 'gold', 'rounded'],
@@ -101,6 +108,8 @@ export const COMPONENTS = [
   {
     id: 'btn-icon',
     category: 'buttons',
+    variantGroup: 'button-core',
+    variantLabel: 'Icon + Label',
     name: 'Icon + Label',
     description: 'Button with leading icon',
     tags: ['button', 'icon', 'label', 'mixed'],
@@ -126,6 +135,8 @@ export const COMPONENTS = [
   {
     id: 'btn-split',
     category: 'buttons',
+    variantGroup: 'button-core',
+    variantLabel: 'Split Action',
     name: 'Split Action',
     description: 'Primary action + dropdown arrow',
     tags: ['button', 'split', 'dropdown', 'action'],
@@ -156,6 +167,8 @@ export const COMPONENTS = [
   {
     id: 'btn-gradient',
     category: 'buttons',
+    variantGroup: 'button-core',
+    variantLabel: 'Gradient Glow',
     name: 'Gradient Glow',
     description: 'Multi-stop gradient with glow on hover',
     tags: ['button', 'gradient', 'glow', 'premium'],

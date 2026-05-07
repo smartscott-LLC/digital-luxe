@@ -10,10 +10,14 @@
 ## Smoke test matrix
 
 - [ ] Chrome/Edge: launch app, add component, drag/resize/select, pan/zoom
+- [ ] Multi-select toolbar: align/distribute/match-size works correctly
+- [ ] Rulers/guides: add guides and verify guide snapping on drag
+- [ ] Frames: create/select frames and confirm frame-aware export scope
 - [ ] Vault: save, load, rename, delete
-- [ ] Export: generated HTML opens and renders
+- [ ] Export: HTML, PNG, token JSON, and Preview all work
 - [ ] SmartBar: commands execute correctly
 - [ ] Community drawer: import JSON + add to canvas
+- [ ] Blocks drawer: insert curated blocks and edit contained components
 - [ ] Firefox/Safari fallback behavior (localStorage vault path)
 
 ## PWA checks

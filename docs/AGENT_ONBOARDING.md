@@ -24,6 +24,7 @@ Validation is manual UI verification plus static review.
 - `js/canvas.js`: interaction-critical, easiest place to regress behavior
 - `js/inspector.js`: depends on event contract and selector assumptions
 - `js/catalog.js`: import pathways and persistence merge logic
+- `js/blocks.js`: curated block composition mapping to component IDs
 - `css/app.css`: global styles; beware unintended side effects
 
 ## 4) Safe change workflow
@@ -34,8 +35,11 @@ Validation is manual UI verification plus static review.
 4. Manually verify:
    - add component
    - drag/resize/select
+   - alignment/distribution/match-size tools
+   - rulers/guides/frame selection
+   - add block and edit nested items
    - save/load vault
-   - export html
+   - export html/png/tokens + preview tab
    - smartbar actions
 5. Update docs if behavior changed
 

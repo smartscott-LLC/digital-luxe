@@ -494,6 +494,24 @@ img, svg { display: block; }
   gap: var(--sp-2);
   margin-left: auto;
 }
+.dlx-canvas-toolbar {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.dlx-frame-controls {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.dlx-frame-controls select {
+  border: 1px solid var(--color-border);
+  background: var(--color-bg);
+  color: var(--color-text);
+  border-radius: var(--r-sm);
+  font-size: .72rem;
+  padding: 4px 6px;
+}
 
 .dlx-btn-sm {
   display: inline-flex;
@@ -539,6 +557,42 @@ img, svg { display: block; }
   background: var(--color-surface);
   cursor: default;
 }
+.dlx-canvas-ruler {
+  position: absolute;
+  background: rgba(44,43,37,.07);
+  border-color: var(--color-border-subtle);
+  z-index: 4;
+  user-select: none;
+}
+.dlx-canvas-ruler--h {
+  left: 20px;
+  right: 0;
+  top: 0;
+  height: 20px;
+  border-bottom: 1px solid var(--color-border-subtle);
+  background-image: repeating-linear-gradient(to right, transparent 0 39px, rgba(44,43,37,.2) 39px 40px);
+}
+.dlx-canvas-ruler--v {
+  top: 20px;
+  bottom: 0;
+  left: 0;
+  width: 20px;
+  border-right: 1px solid var(--color-border-subtle);
+  background-image: repeating-linear-gradient(to bottom, transparent 0 39px, rgba(44,43,37,.2) 39px 40px);
+}
+.dlx-canvas-guides {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 5;
+}
+.dlx-guide-line {
+  position: absolute;
+  background: rgba(31,79,60,.8);
+  pointer-events: none;
+}
+.dlx-guide-line--v { top: 0; bottom: 0; width: 1px; }
+.dlx-guide-line--h { left: 0; right: 0; height: 1px; }
 .dlx-canvas.is-panning { cursor: grab; }
 .dlx-canvas.is-panning:active { cursor: grabbing; }
 
@@ -576,12 +630,34 @@ img, svg { display: block; }
 /* Virtual canvas (absolute positioned, transform for pan+zoom) */
 .dlx-canvas-items {
   position: absolute;
-  top: 0; left: 0;
+  top: 20px; left: 20px;
   width: 4000px; height: 3000px;
   transform-origin: 0 0;
   /* Subtle dot-grid background */
   background-image: radial-gradient(circle, var(--color-border-subtle) 1px, transparent 1px);
   background-size: 24px 24px;
+}
+.dlx-canvas-frame {
+  position: absolute;
+  border: 2px dashed rgba(31,79,60,.35);
+  background: rgba(31,79,60,.03);
+  border-radius: 8px;
+  pointer-events: none;
+}
+.dlx-canvas-frame.active {
+  border-color: rgba(187,165,76,.95);
+  background: rgba(187,165,76,.04);
+}
+.dlx-canvas-frame__label {
+  position: absolute;
+  top: -21px;
+  left: 0;
+  font-size: .68rem;
+  background: rgba(44,43,37,.72);
+  color: var(--sand-dune);
+  border-radius: 4px;
+  padding: 2px 6px;
+  white-space: nowrap;
 }
 
 /* Individual canvas item (position:absolute inside virtual canvas) */

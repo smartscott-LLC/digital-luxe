@@ -22,6 +22,8 @@ Digital Luxe is a **zero-build ES-module PWA**.
 - item state lifecycle
 - free-form positioning
 - drag/resize/select/pan/zoom
+- guides + ruler interactions
+- frame/page model
 - serialization + export generation
 
 ### `js/inspector.js` (property panel)
@@ -32,7 +34,12 @@ Digital Luxe is a **zero-build ES-module PWA**.
 ### `js/catalog.js` (library browser)
 - drawers + component cards
 - built-in + community merge
+- variant-group deduplication in catalog cards
 - json import pipeline
+
+### `js/blocks.js` (curated sections)
+- pre-assembled multi-component blocks
+- block metadata and relative item layout
 
 ### `js/smartbar.js` (command palette)
 - action routing
@@ -69,6 +76,10 @@ Each canvas item carries:
 ```
 
 Serialized state preserves these geometry/layer fields.
+Canvas state also includes:
+- `frames[]` (named fixed-size export/page frames)
+- `activeFrameId`
+- `guidesX[]` / `guidesY[]`
 
 ## 4) Event contracts
 
@@ -95,7 +106,7 @@ Inspector relies on this event; avoid changing payload shape without coordinated
 
 ## 6) Persistence model
 
-- Vault stores full design JSON including item geometry and props.
+- Vault stores full design JSON including item geometry, props, frames, and guides.
 - Registry cache (`data/registry-cache.json`) is build-time/static data.
 - User-imported community components persist in `localStorage` key:
   - `dlx-custom-components`
@@ -111,3 +122,10 @@ Inspector relies on this event; avoid changing payload shape without coordinated
 - Registry crawler (`scripts/crawl-registry.js`) refreshes bundled cache.
 - App reads cache at runtime; no required backend service.
 - Optional GitHub Actions cron may run crawler and commit refreshed cache.
+
+## 9) Export architecture
+
+- HTML export: frame-scoped live document with component CSS/HTML.
+- PNG export: best-effort `SVG foreignObject` render of active frame.
+- Token export: JSON with color/font token usage from current canvas state.
+- Preview mode: generated frame HTML opened in a new tab.

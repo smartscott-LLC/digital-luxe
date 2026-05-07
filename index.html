@@ -114,6 +114,24 @@
         <div class="dlx-canvas-header__indicator" id="canvas-indicator"></div>
         <h2>Your Design</h2>
 
+        <div class="dlx-canvas-toolbar" id="canvas-multi-tools" hidden aria-label="Multi-selection tools">
+          <button class="dlx-btn-sm dlx-btn-sm--ghost" data-align="left">L</button>
+          <button class="dlx-btn-sm dlx-btn-sm--ghost" data-align="center">C</button>
+          <button class="dlx-btn-sm dlx-btn-sm--ghost" data-align="right">R</button>
+          <button class="dlx-btn-sm dlx-btn-sm--ghost" data-align="top">T</button>
+          <button class="dlx-btn-sm dlx-btn-sm--ghost" data-align="middle">M</button>
+          <button class="dlx-btn-sm dlx-btn-sm--ghost" data-align="bottom">B</button>
+          <button class="dlx-btn-sm dlx-btn-sm--ghost" data-align="dist-h">↔</button>
+          <button class="dlx-btn-sm dlx-btn-sm--ghost" data-align="dist-v">↕</button>
+          <button class="dlx-btn-sm dlx-btn-sm--ghost" data-align="match-w">W=</button>
+          <button class="dlx-btn-sm dlx-btn-sm--ghost" data-align="match-h">H=</button>
+        </div>
+
+        <div class="dlx-frame-controls">
+          <select id="frame-select" aria-label="Active frame"></select>
+          <button class="dlx-btn-sm dlx-btn-sm--ghost" id="frame-add-btn" aria-label="Add frame">+ Frame</button>
+        </div>
+
         <!-- Zoom controls -->
         <div class="dlx-zoom-controls" aria-label="Zoom controls">
           <button class="dlx-zoom-btn" id="zoom-out-btn" title="Zoom out (scroll wheel)">−</button>
@@ -147,6 +165,9 @@
       <!-- Canvas viewport -->
       <div class="dlx-canvas" id="canvas-area" role="region"
            aria-label="Design canvas — drag to pan, scroll to zoom">
+        <div class="dlx-canvas-ruler dlx-canvas-ruler--h" id="canvas-ruler-h" aria-hidden="true"></div>
+        <div class="dlx-canvas-ruler dlx-canvas-ruler--v" id="canvas-ruler-v" aria-hidden="true"></div>
+        <div class="dlx-canvas-guides" id="canvas-guides" aria-hidden="true"></div>
 
         <!-- Empty state -->
         <div class="dlx-canvas-empty" id="canvas-empty" aria-live="polite">
@@ -258,6 +279,10 @@
         <button class="dlx-btn-sm dlx-btn-sm--primary" id="export-copy-btn">
           Copy HTML
         </button>
+        <button class="dlx-btn-sm dlx-btn-sm--ghost" id="export-download-html-btn">Download HTML</button>
+        <button class="dlx-btn-sm dlx-btn-sm--ghost" id="export-png-btn">Export PNG</button>
+        <button class="dlx-btn-sm dlx-btn-sm--ghost" id="export-tokens-btn">Export Tokens</button>
+        <button class="dlx-btn-sm dlx-btn-sm--ghost" id="preview-btn">Preview</button>
         <button class="dlx-btn-sm dlx-btn-sm--ghost"  id="export-close-footer">
           Close
         </button>

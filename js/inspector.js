@@ -3,6 +3,7 @@
    Auto-generates controls from component CSS vars + text nodes.
    ============================================================ */
 import { canvas } from './canvas.js';
+import { catalog } from './catalog.js';
 import { toast } from './utils.js';
 
 // ── DOM refs ──────────────────────────────────────────────────
@@ -42,6 +43,7 @@ function renderSingle(idx, item) {
   const { x, y, width, height, rotation, zIndex, component, nudges, props } = item;
   const cssVars   = extractCssVars(component.css);
   const textNodes = extractTextNodes(component.html);
+  const variants  = catalog.getVariantsFor(component);
 
   inspBody.innerHTML = `
     <!-- Position & Size -->
@@ -76,6 +78,17 @@ function renderSingle(idx, item) {
       </div>
     </div>
 
+    ${variants.length > 1 ? `
+    <div class="dlx-insp-section">
+      <div class="dlx-insp-section__title">Variant</div>
+      <label class="dlx-insp-label">
+        Style
+        <select class="dlx-insp-input" id="insp-variant-select">
+          ${variants.map(v => `<option value="${escAttr(v.id)}" ${v.id === component.id ? 'selected' : ''}>${escHtml(v.variantLabel || v.name)}</option>`).join('')}
+        </select>
+      </label>
+    </div>` : ''}
+
     ${cssVars.length ? `
     <!-- Colors -->
     <div class="dlx-insp-section">
@@ -100,6 +113,22 @@ function renderSingle(idx, item) {
                  value="${escHtml(props['__text_' + i] !== undefined ? props['__text_' + i] : t.text)}">
         </label>`).join('')}
     </div>` : ''}
+
+    <div class="dlx-insp-section">
+      <div class="dlx-insp-section__title">Prompt Assist</div>
+      <label class="dlx-insp-label" style="margin-bottom:6px">
+        Text command
+        <input type="text" class="dlx-insp-input" id="insp-text-prompt" placeholder="Make this button text say 'Start Free Trial'">
+      </label>
+      <button class="dlx-btn-sm dlx-btn-sm--ghost" id="insp-apply-prompt">Apply text prompt</button>
+      <div style="height:8px"></div>
+      <label class="dlx-insp-label dlx-insp-label--row">
+        <span>Brand color</span>
+        <input type="color" id="insp-brand-color" value="#1F4F3C" class="dlx-insp-color">
+      </label>
+      <div style="height:6px"></div>
+      <button class="dlx-btn-sm dlx-btn-sm--ghost" id="insp-apply-theme">Apply generated theme to all items</button>
+    </div>
 
     <!-- Effects -->
     <div class="dlx-insp-section">
@@ -161,6 +190,31 @@ function renderSingle(idx, item) {
     });
   });
 
+  inspBody.querySelector('#insp-apply-prompt')?.addEventListener('click', () => {
+    const prompt = inspBody.querySelector('#insp-text-prompt')?.value?.trim();
+    if (!prompt) return;
+    const value = parsePromptText(prompt);
+    if (!value) { toast('Prompt format: ... say \"Your Text\"', 'warn'); return; }
+    if (textNodes.length) {
+      canvas.updateItemProp(idx, '__text_0', value);
+      const wrap = document.querySelector(`.dlx-canvas-item[data-index="${idx}"]`);
+      const host = wrap?.querySelector('.dlx-shadow-host');
+      if (host?.shadowRoot) {
+        const target = host.shadowRoot.querySelector(textNodes[0].selector);
+        if (target) target.textContent = value;
+      }
+      renderSingle(idx, canvas.getItems()[idx]);
+      toast('Text updated ✦', 'success');
+    } else {
+      toast('No editable text node found', 'warn');
+    }
+  });
+
+  inspBody.querySelector('#insp-apply-theme')?.addEventListener('click', () => {
+    const color = inspBody.querySelector('#insp-brand-color')?.value || '#1F4F3C';
+    canvas.applyThemeFromBrand(color);
+  });
+
   // ── Effect checkboxes ─────────────────────────────────────
   inspBody.querySelectorAll('[data-nudge]').forEach(cb => {
     cb.addEventListener('change', () => {
@@ -220,7 +274,7 @@ function renderMulti(indices) {
   `;
 
   inspBody.querySelectorAll('[data-align]').forEach(btn => {
-    btn.addEventListener('click', () => alignItems(indices, canvas.getItems(), btn.dataset.align));
+    btn.addEventListener('click', () => canvas.alignSelected(btn.dataset.align));
   });
 }
 
@@ -331,3 +385,13 @@ function escHtml(str) {
 function escAttr(str) {
   return String(str).replace(/"/g,'&quot;').replace(/'/g,'&#39;');
 }
+
+function parsePromptText(prompt) {
+  const quoted = prompt.match(/["“](.+?)["”]/);
+  if (quoted?.[1]) return quoted[1];
+  const say = prompt.match(/\bsay\s+(.+)$/i);
+  return say?.[1]?.trim() || '';
+}
+  inspBody.querySelector('#insp-variant-select')?.addEventListener('change', e => {
+    canvas.setItemComponentVariant(idx, e.target.value);
+  });

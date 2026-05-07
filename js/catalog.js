@@ -4,6 +4,7 @@
    user-imported JSON components via drag-drop / localStorage.
    ============================================================ */
 import { DRAWERS, COMPONENTS, NUDGE_BASE_CSS } from './components.js';
+import { BLOCKS } from './blocks.js';
 import { canvas } from './canvas.js';
 import { toast } from './utils.js';
 
@@ -41,11 +42,16 @@ export const catalog = {
   },
 
   getComponents(drawerId) {
+    if (drawerId === 'blocks') return BLOCKS;
     if (drawerId === 'community') return communityComponents;
-    return COMPONENTS.filter(c => c.category === drawerId);
+    return getCatalogComponents(drawerId);
   },
 
   getAllComponents() { return [...COMPONENTS, ...communityComponents]; },
+  getVariantsFor(component) {
+    if (!component?.variantGroup) return [];
+    return COMPONENTS.filter(c => c.variantGroup === component.variantGroup);
+  },
 
   /** Import a component object and persist to localStorage */
   importComponent(component) {
@@ -95,7 +101,9 @@ function renderDrawers() {
     ${allDrawers.map(d => {
       const count = d.id === 'community'
         ? communityComponents.length
-        : COMPONENTS.filter(c => c.category === d.id).length;
+        : d.id === 'blocks'
+          ? BLOCKS.length
+        : getCatalogComponents(d.id).length;
       const isActive = d.id === activeDrawer;
       return `
         <button class="dlx-drawer-item${isActive ? ' active' : ''}"
@@ -138,10 +146,18 @@ function renderDrawers() {
 
 // ── Render component grid ─────────────────────────────────────
 function renderComponents(drawerId) {
+  if (drawerId === 'blocks') {
+    gridTitle.textContent = 'Blocks';
+    gridCount.textContent = `${BLOCKS.length} block${BLOCKS.length !== 1 ? 's' : ''}`;
+    compGrid.innerHTML = '';
+    BLOCKS.forEach(block => renderBlockCard(block));
+    return;
+  }
+
   const isCommunity = drawerId === 'community';
   const items  = isCommunity
     ? communityComponents
-    : COMPONENTS.filter(c => c.category === drawerId);
+    : getCatalogComponents(drawerId);
 
   const drawer = [...DRAWERS, COMMUNITY_DRAWER].find(d => d.id === drawerId);
   gridTitle.textContent = drawer?.label ?? drawerId;
@@ -179,11 +195,15 @@ function renderCard(component) {
   previewWrap.appendChild(host);
 
   const isCommunity = component.category === 'community';
+  const variants = component.variantGroup
+    ? COMPONENTS.filter(c => c.variantGroup === component.variantGroup)
+    : [];
   const meta = document.createElement('div');
   meta.className = 'dlx-comp-card__meta';
   meta.innerHTML = `
     <div class="dlx-comp-card__name">${escHtml(component.name)}</div>
     <div class="dlx-comp-card__desc">${escHtml(component.description)}</div>
+    ${variants.length > 1 ? `<div class="dlx-comp-card__desc">${variants.length} variants in inspector</div>` : ''}
     <div class="dlx-comp-card__actions">
       <button class="dlx-comp-card__add">+ Add to Canvas</button>
       ${isCommunity ? `<button class="dlx-comp-card__remove" title="Remove from library">\u2715</button>` : ''}
@@ -205,6 +225,36 @@ function renderCard(component) {
       removeCustomComponent(component.id);
     });
   }
+}
+
+function renderBlockCard(block) {
+  const card = document.createElement('div');
+  card.className = 'dlx-comp-card';
+  card.setAttribute('tabindex', '0');
+  card.setAttribute('role', 'button');
+  card.setAttribute('aria-label', `Add ${block.name} block to canvas`);
+
+  card.innerHTML = `
+    <div class="dlx-comp-card__preview" style="display:flex;align-items:center;justify-content:center;">
+      <div style="font-size:2rem;opacity:.5">🧱</div>
+    </div>
+    <div class="dlx-comp-card__meta">
+      <div class="dlx-comp-card__name">${escHtml(block.name)}</div>
+      <div class="dlx-comp-card__desc">${escHtml(block.description)}</div>
+      <div class="dlx-comp-card__actions">
+        <button class="dlx-comp-card__add">+ Add Block</button>
+      </div>
+    </div>
+  `;
+
+  const add = () => canvas.addBlock(block);
+  card.addEventListener('click', add);
+  card.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') add(); });
+  card.querySelector('.dlx-comp-card__add')?.addEventListener('click', e => {
+    e.stopPropagation();
+    add();
+  });
+  compGrid.appendChild(card);
 }
 
 // ── Shadow DOM host (catalog preview) ─────────────────────────
@@ -320,6 +370,22 @@ function getStoredCustom() {
 
 function setStoredCustom(arr) {
   localStorage.setItem('dlx-custom-components', JSON.stringify(arr));
+}
+
+function getCatalogComponents(drawerId) {
+  const raw = COMPONENTS.filter(c => c.category === drawerId);
+  const seenVariantGroups = new Set();
+  const out = [];
+  raw.forEach(component => {
+    if (!component.variantGroup) {
+      out.push(component);
+      return;
+    }
+    if (seenVariantGroups.has(component.variantGroup)) return;
+    seenVariantGroups.add(component.variantGroup);
+    out.push(component);
+  });
+  return out;
 }
 
 // ── Utility ───────────────────────────────────────────────────

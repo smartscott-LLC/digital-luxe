@@ -17,6 +17,9 @@ const ACTIONS = [
   { type:'action', name:'Save to Vault',     icon:'🗄', sub:'Save current design',                    action: () => canvas.save() },
   { type:'action', name:'Open Vault',        icon:'⬡',  sub:'Browse your saved designs',               action: openVault },
   { type:'action', name:'Export HTML',       icon:'↗',  sub:'Download as standalone HTML',             action: () => canvas.exportHtml() },
+  { type:'action', name:'Export PNG',        icon:'🖼', sub:'Export active frame as PNG',               action: () => canvas.exportPng?.() },
+  { type:'action', name:'Export Tokens',     icon:'🎨', sub:'Export JSON design tokens',                action: () => canvas.exportTokens?.() },
+  { type:'action', name:'Live Preview',      icon:'▶',  sub:'Open interactive preview in new tab',      action: () => canvas.previewLive?.() },
   { type:'action', name:'Fit to Screen',     icon:'⊡',  sub:'Zoom canvas to fit all items',            action: () => import('./canvas.js').then(m => m.canvas.fitToScreen?.()) },
   { type:'action', name:'Clear Nudges',      icon:'○',  sub:'Remove all active nudge effects',         action: () => import('./nudge.js').then(m => m.nudge.clearAll()) },
   { type:'action', name:'Browse Community',  icon:'🌐', sub:'Switch to Community registry drawer',     action: () => switchDrawer('community') },
@@ -25,6 +28,7 @@ const ACTIONS = [
   { type:'action', name:'Browse Forms',      icon:'✏',  sub:'Switch to Forms drawer',                  action: () => switchDrawer('forms') },
   { type:'action', name:'Browse Navigation', icon:'🧭', sub:'Switch to Navigation drawer',             action: () => switchDrawer('navigation') },
   { type:'action', name:'Browse Dashboards', icon:'📊', sub:'Switch to Dashboards drawer',             action: () => switchDrawer('dashboards') },
+  { type:'action', name:'Browse Blocks',     icon:'🧱', sub:'Switch to Blocks drawer',                  action: () => switchDrawer('blocks') },
   { type:'action', name:'Import from URL',   icon:'⇩',  sub:'Paste a registry JSON URL to import',    action: importFromUrl },
 ];
 

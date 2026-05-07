@@ -16,10 +16,15 @@ Digital Luxe has evolved from a component viewer into a real interactive design 
 - **Drag, multi-select, rubber-band selection, keyboard nudge**
 - **8-handle resize** with Shift aspect-ratio lock
 - **Pan + Zoom** (Space/middle-drag + wheel zoom)
-- **Property Inspector** (position, size, colors, effects, content)
+- **Property Inspector** (position, size, colors, effects, content, variants)
+- **Multi-select toolbar** (align, distribute, match width/height)
+- **Rulers + draggable guides** with guide snapping
+- **Frame/pages model** (desktop/mobile/tablet presets, frame-aware save/export)
+- **Blocks drawer** (curated multi-component sections)
+- **Prompt assist + theme generator** in inspector
 - **Community library support** via local registry cache + local imports
 - **Local-first persistence** (OPFS with localStorage fallback)
-- **Self-contained HTML export**
+- **Exports**: live HTML, PNG (active frame), JSON design tokens, live preview tab
 
 ---
 
@@ -65,6 +70,7 @@ digital-luxe/
 │   ├── nudge.js
 │   ├── vault.js
 │   ├── components.js
+│   ├── blocks.js
 │   └── utils.js
 ├── scripts/
 │   └── crawl-registry.js
@@ -95,6 +101,8 @@ digital-luxe/
 | `⌘D` / `Ctrl+D` | Duplicate selected |
 | `Space + Drag` | Pan canvas |
 | Mouse wheel | Zoom canvas |
+
+Multi-select toolbar and frame controls are available in the canvas header when relevant.
 
 ---
 
