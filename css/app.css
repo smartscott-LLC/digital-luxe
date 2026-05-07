@@ -863,7 +863,7 @@ img, svg { display: block; }
   grid-area: nudge;
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: space-between;
   position: relative;  /* anchors the absolutely-centred hot bar */
   padding: 0 var(--sp-6);
   background: var(--graphite);
@@ -1082,6 +1082,277 @@ img, svg { display: block; }
   color: var(--sand-dune);
   line-height: 1;
 }
+
+/* ── Explore Libraries — trigger ─────────────────────────── */
+.dlx-explore-trigger {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+  max-width: 320px;
+  overflow: hidden;
+}
+.dlx-explore-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 12px 4px 8px;
+  background: rgba(187,165,76,.08);
+  border: 1px solid rgba(187,165,76,.28);
+  border-radius: 20px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background var(--t-fast), border-color var(--t-fast), box-shadow var(--t-fast);
+  flex-shrink: 0;
+}
+.dlx-explore-btn:hover,
+.dlx-explore-btn.open {
+  background: rgba(187,165,76,.18);
+  border-color: rgba(187,165,76,.6);
+  box-shadow: 0 0 10px rgba(187,165,76,.15);
+}
+.dlx-explore-icon {
+  font-size: .78rem;
+  color: var(--sand-dune);
+  opacity: .8;
+}
+.dlx-explore-word {
+  font-family: 'Dancing Script', 'Segoe Script', cursive;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--sand-dune);
+  letter-spacing: .01em;
+  line-height: 1;
+}
+.dlx-explore-tagline {
+  font-size: .68rem;
+  font-style: italic;
+  color: rgba(220,214,185,.55);
+  white-space: nowrap;
+  overflow: hidden;
+  transition: opacity .3s ease;
+}
+.dlx-explore-tagline.fading { opacity: 0; }
+
+/* ── Explore popup ────────────────────────────────────────── */
+.dlx-explorer-popup {
+  position: fixed;
+  z-index: 8800;
+  background: var(--color-surface-raised);
+  border: 1px solid var(--color-border);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-xl);
+  width: 360px;
+  max-height: 72vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: dlx-slide-up .14s ease;
+}
+.dlx-exp-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px 9px;
+  border-bottom: 1px solid var(--color-border-subtle);
+  flex-shrink: 0;
+}
+.dlx-exp-title {
+  font-family: 'Dancing Script', 'Segoe Script', cursive;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--sand-dune);
+}
+.dlx-exp-head-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.dlx-exp-refresh,
+.dlx-exp-close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  min-width: 26px;
+  height: 26px;
+  padding: 0 6px;
+  background: none;
+  border: none;
+  border-radius: var(--r);
+  color: var(--color-text-muted);
+  font-size: .82rem;
+  cursor: pointer;
+  transition: background var(--t-fast), color var(--t-fast);
+}
+.dlx-exp-refresh:hover { background: rgba(187,165,76,.12); color: var(--sand-dune); }
+.dlx-exp-close:hover   { background: rgba(192,57,43,.1);   color: #c0392b; }
+.dlx-exp-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  background: var(--golden-bronze, #bba54c);
+  color: var(--graphite, #2c2b25);
+  font-size: .6rem;
+  font-weight: 700;
+  border-radius: 50%;
+}
+
+/* URL list */
+.dlx-exp-list {
+  overflow-y: auto;
+  max-height: 220px;
+  padding: 6px 0;
+  flex-shrink: 0;
+  border-bottom: 1px solid var(--color-border-subtle);
+}
+.dlx-exp-empty {
+  padding: 10px 14px;
+  font-size: .78rem;
+  color: var(--color-text-muted);
+  font-style: italic;
+}
+.dlx-exp-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 7px 12px;
+  transition: background var(--t-fast);
+}
+.dlx-exp-item:hover { background: rgba(220,214,185,.04); }
+.dlx-exp-item-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+.dlx-exp-item-label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: .82rem;
+  font-weight: 600;
+  color: var(--color-text);
+  white-space: nowrap;
+}
+.dlx-exp-new {
+  font-size: .65rem;
+  color: var(--sand-dune);
+  animation: dlx-exp-pulse 2s ease-in-out infinite;
+}
+@keyframes dlx-exp-pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: .4; }
+}
+.dlx-exp-item-desc {
+  font-size: .68rem;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.dlx-exp-item-actions {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  flex-shrink: 0;
+}
+.dlx-exp-open,
+.dlx-exp-remove {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  background: none;
+  border: none;
+  border-radius: var(--r);
+  font-size: .8rem;
+  cursor: pointer;
+  transition: background var(--t-fast), color var(--t-fast);
+}
+.dlx-exp-open   { color: var(--color-text-muted); }
+.dlx-exp-open:hover   { background: rgba(187,165,76,.14); color: var(--sand-dune); }
+.dlx-exp-remove { color: var(--color-text-muted); }
+.dlx-exp-remove:hover { background: rgba(192,57,43,.1);   color: #c0392b; }
+
+/* Add + Import sections */
+.dlx-exp-section {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--color-border-subtle);
+  flex-shrink: 0;
+}
+.dlx-exp-section:last-child { border-bottom: none; }
+.dlx-exp-section-label {
+  font-size: .66rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .07em;
+  color: var(--color-text-muted);
+  margin-bottom: 7px;
+}
+.dlx-exp-add-row {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.dlx-exp-input {
+  flex: 1;
+  min-width: 80px;
+  height: 28px;
+  padding: 0 8px;
+  background: rgba(220,214,185,.06);
+  border: 1px solid var(--color-border);
+  border-radius: var(--r);
+  color: var(--color-text);
+  font-size: .78rem;
+  font-family: inherit;
+  outline: none;
+  transition: border-color var(--t-fast);
+}
+.dlx-exp-input:focus { border-color: rgba(187,165,76,.5); }
+.dlx-exp-textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 7px 8px;
+  background: rgba(220,214,185,.06);
+  border: 1px solid var(--color-border);
+  border-radius: var(--r);
+  color: var(--color-text);
+  font-size: .76rem;
+  font-family: monospace;
+  resize: vertical;
+  outline: none;
+  transition: border-color var(--t-fast);
+  margin-bottom: 7px;
+  display: block;
+}
+.dlx-exp-textarea:focus { border-color: rgba(187,165,76,.5); }
+.dlx-exp-add-btn,
+.dlx-exp-import-btn {
+  padding: 5px 11px;
+  background: rgba(187,165,76,.14);
+  border: 1px solid rgba(187,165,76,.4);
+  border-radius: var(--r);
+  color: var(--sand-dune);
+  font-size: .78rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background var(--t-fast), border-color var(--t-fast);
+  flex-shrink: 0;
+}
+.dlx-exp-add-btn:hover,
+.dlx-exp-import-btn:hover {
+  background: rgba(187,165,76,.24);
+  border-color: rgba(187,165,76,.65);
+}
+.dlx-exp-section--import .dlx-exp-input { width: 100%; margin-bottom: 6px; display: block; }
+.dlx-exp-import-btn { width: 100%; justify-content: center; display: flex; }
 
 /* ── Context Menu ─────────────────────────────────────────── */
 .dlx-ctx-menu {

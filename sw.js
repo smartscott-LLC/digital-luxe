@@ -20,6 +20,7 @@ const APP_SHELL = [
   '/js/components.js',
   '/js/dock.js',
   '/js/hotbar.js',
+  '/js/explore.js',
   '/js/inspector.js',
   '/icons/icon.svg'
 ];
