@@ -1199,4 +1199,899 @@ export const COMPONENTS = [
       tfoot td.total { color:#7a6420; }
     `
   },
+
+  /* ════════════════════ BUTTONS — new variants ════════════════════ */
+
+  {
+    id: 'btn-danger',
+    category: 'buttons',
+    variantGroup: 'button-core',
+    variantLabel: 'Danger',
+    name: 'Danger Button',
+    description: 'Destructive action in bold red',
+    tags: ['button', 'danger', 'destructive', 'delete', 'red'],
+    defaultWidth: 200, defaultHeight: 60,
+    html: `<button class="btn">Delete Record</button>`,
+    css: `
+      :host { display:flex; align-items:center; justify-content:center; padding:1rem; }
+      .btn { background:#c0392b; color:#fff; border:none; border-radius:8px; padding:.68rem 1.8rem; font-size:.93rem; font-weight:700; cursor:pointer; letter-spacing:.03em; transition:background .2s, transform .2s, box-shadow .2s; box-shadow:0 2px 8px rgba(192,57,43,.35); }
+      .btn:hover { background:#a93226; transform:translateY(-2px); box-shadow:0 6px 18px rgba(192,57,43,.45); }
+      .btn:active { transform:translateY(0); }
+    `
+  },
+
+  {
+    id: 'btn-success',
+    category: 'buttons',
+    variantGroup: 'button-core',
+    variantLabel: 'Success',
+    name: 'Success Button',
+    description: 'Confirmation action in forest green',
+    tags: ['button', 'success', 'confirm', 'green', 'save'],
+    defaultWidth: 200, defaultHeight: 60,
+    html: `<button class="btn">✓ Confirm</button>`,
+    css: `
+      :host { display:flex; align-items:center; justify-content:center; padding:1rem; }
+      .btn { background:#2e7d32; color:#fff; border:none; border-radius:8px; padding:.68rem 1.8rem; font-size:.93rem; font-weight:700; cursor:pointer; letter-spacing:.03em; transition:background .2s, transform .2s, box-shadow .2s; box-shadow:0 2px 8px rgba(46,125,50,.3); }
+      .btn:hover { background:#256427; transform:translateY(-2px); box-shadow:0 6px 18px rgba(46,125,50,.42); }
+      .btn:active { transform:translateY(0); }
+    `
+  },
+
+  {
+    id: 'btn-loading',
+    category: 'buttons',
+    variantGroup: 'button-core',
+    variantLabel: 'Loading State',
+    name: 'Loading Button',
+    description: 'Spinner state for async actions',
+    tags: ['button', 'loading', 'spinner', 'async', 'state'],
+    defaultWidth: 200, defaultHeight: 60,
+    html: `
+      <button class="btn" disabled>
+        <span class="spinner"></span>
+        <span>Processing…</span>
+      </button>`,
+    css: `
+      :host { display:flex; align-items:center; justify-content:center; padding:1rem; }
+      .btn { display:flex; align-items:center; gap:.6rem; background:var(--pine-teal,#1F4F3C); color:var(--sand-dune,#dcd6b9); border:none; border-radius:8px; padding:.68rem 1.8rem; font-size:.92rem; font-weight:700; cursor:not-allowed; opacity:.82; }
+      .spinner { width:14px; height:14px; border:2px solid rgba(220,214,185,.3); border-top-color:var(--sand-dune,#dcd6b9); border-radius:50%; animation:spin .7s linear infinite; flex-shrink:0; }
+      @keyframes spin { to { transform:rotate(360deg); } }
+    `
+  },
+
+  {
+    id: 'btn-outline-gold',
+    category: 'buttons',
+    variantGroup: 'button-core',
+    variantLabel: 'Gold Outline',
+    name: 'Gold Outline',
+    description: 'Transparent button with gold border',
+    tags: ['button', 'outline', 'gold', 'accent', 'secondary'],
+    defaultWidth: 200, defaultHeight: 60,
+    html: `<button class="btn">✦ Premium</button>`,
+    css: `
+      :host { display:flex; align-items:center; justify-content:center; padding:1rem; }
+      .btn { background:transparent; color:var(--golden-bronze,#bba54c); border:2px solid var(--golden-bronze,#bba54c); border-radius:8px; padding:.65rem 1.8rem; font-size:.93rem; font-weight:700; cursor:pointer; letter-spacing:.04em; transition:background .2s, color .2s, box-shadow .2s, transform .2s; }
+      .btn:hover { background:var(--golden-bronze,#bba54c); color:var(--graphite,#2c2b25); box-shadow:0 4px 16px rgba(187,165,76,.4); transform:translateY(-1px); }
+    `
+  },
+
+  /* ════════════════════ CARDS — new ════════════════════ */
+
+  {
+    id: 'card-dark-metric',
+    category: 'cards',
+    name: 'Dark Metric',
+    description: 'Dark-themed headline stat with label and badge',
+    tags: ['card', 'metric', 'dark', 'stat', 'kpi'],
+    defaultWidth: 220, defaultHeight: 130,
+    html: `
+      <div class="card">
+        <div class="top"><span class="label">Monthly Revenue</span><span class="badge">▲ 12%</span></div>
+        <div class="value">$48,290</div>
+        <div class="sub">vs $43,100 last month</div>
+      </div>`,
+    css: `
+      :host { display:flex; align-items:center; justify-content:center; padding:.6rem; }
+      * { box-sizing:border-box; margin:0; padding:0; font-family:system-ui,sans-serif; }
+      .card { width:200px; background:var(--graphite,#2c2b25); border-radius:14px; padding:1.1rem; }
+      .top { display:flex; align-items:center; justify-content:space-between; margin-bottom:.7rem; }
+      .label { font-size:.68rem; font-weight:600; text-transform:uppercase; letter-spacing:.1em; color:rgba(220,214,185,.55); }
+      .badge { font-size:.68rem; font-weight:700; background:rgba(46,125,50,.3); color:#6fcf7a; border-radius:99px; padding:2px 8px; }
+      .value { font-size:1.5rem; font-weight:800; color:var(--sand-dune,#dcd6b9); letter-spacing:-.02em; margin-bottom:.3rem; }
+      .sub { font-size:.7rem; color:rgba(167,166,162,.6); }
+    `
+  },
+
+  {
+    id: 'card-blog-post',
+    category: 'cards',
+    name: 'Blog Post Card',
+    description: 'Article preview with category tag, title and excerpt',
+    tags: ['card', 'blog', 'article', 'post', 'content'],
+    defaultWidth: 260, defaultHeight: 250,
+    html: `
+      <div class="card">
+        <div class="img"></div>
+        <div class="body">
+          <span class="cat">Design</span>
+          <h3>Building Better Dashboards Without Figma</h3>
+          <p>Stop wrestling with tools built for other people. A local-first approach changes everything.</p>
+          <div class="foot"><span class="date">May 7, 2026</span><a class="link" href="#">Read →</a></div>
+        </div>
+      </div>`,
+    css: `
+      :host { display:flex; align-items:center; justify-content:center; padding:.6rem; }
+      * { box-sizing:border-box; margin:0; padding:0; font-family:system-ui,sans-serif; text-decoration:none; }
+      .card { width:232px; background:#f7f3e8; border:1px solid #e0d9c0; border-radius:14px; overflow:hidden; }
+      .img { height:88px; background:linear-gradient(135deg,#1F4F3C 0%,#2c5f47 60%,#bba54c 100%); }
+      .body { padding:.85rem; }
+      .cat { display:inline-block; font-size:.62rem; font-weight:700; text-transform:uppercase; letter-spacing:.1em; color:#1F4F3C; background:rgba(31,79,60,.1); border-radius:99px; padding:2px 8px; margin-bottom:.4rem; }
+      h3 { font-size:.82rem; font-weight:700; color:#2c2b25; line-height:1.35; margin-bottom:.38rem; }
+      p { font-size:.72rem; color:#a7a6a2; line-height:1.5; margin-bottom:.65rem; }
+      .foot { display:flex; align-items:center; justify-content:space-between; }
+      .date { font-size:.67rem; color:#c4bc9a; }
+      .link { font-size:.74rem; font-weight:700; color:#bba54c; }
+    `
+  },
+
+  {
+    id: 'card-settings-panel',
+    category: 'cards',
+    name: 'Settings Panel',
+    description: 'Card with settings rows and toggle switches',
+    tags: ['card', 'settings', 'toggle', 'preferences', 'panel'],
+    defaultWidth: 280, defaultHeight: 250,
+    html: `
+      <div class="card">
+        <div class="head"><span class="title">Preferences</span><span class="badge">Pro</span></div>
+        <div class="row"><div><div class="name">Email Notifications</div><div class="desc">Weekly digest</div></div><div class="tog on"><div class="knob"></div></div></div>
+        <div class="row"><div><div class="name">Dark Mode</div><div class="desc">System default</div></div><div class="tog"><div class="knob"></div></div></div>
+        <div class="row"><div><div class="name">Auto-save</div><div class="desc">Every 2 minutes</div></div><div class="tog on"><div class="knob"></div></div></div>
+        <div class="row last"><div><div class="name">Analytics</div><div class="desc">Anonymous data</div></div><div class="tog"><div class="knob"></div></div></div>
+      </div>`,
+    css: `
+      :host { display:flex; align-items:center; justify-content:center; padding:.6rem; }
+      * { box-sizing:border-box; margin:0; padding:0; font-family:system-ui,sans-serif; }
+      .card { width:250px; background:#f7f3e8; border:1px solid #e0d9c0; border-radius:14px; overflow:hidden; }
+      .head { display:flex; align-items:center; justify-content:space-between; padding:.8rem .9rem .65rem; border-bottom:1px solid #e0d9c0; }
+      .title { font-size:.86rem; font-weight:700; color:#2c2b25; }
+      .badge { font-size:.62rem; font-weight:700; background:rgba(187,165,76,.18); color:#7a6420; border-radius:99px; padding:2px 8px; }
+      .row { display:flex; align-items:center; justify-content:space-between; padding:.6rem .9rem; border-bottom:1px solid #ede7cd; }
+      .row.last { border-bottom:none; }
+      .name { font-size:.78rem; font-weight:600; color:#2c2b25; margin-bottom:.1rem; }
+      .desc { font-size:.67rem; color:#a7a6a2; }
+      .tog { width:34px; height:19px; border-radius:99px; background:#c4bc9a; position:relative; flex-shrink:0; }
+      .tog.on { background:#1F4F3C; }
+      .knob { width:15px; height:15px; border-radius:50%; background:#fff; position:absolute; top:2px; left:2px; box-shadow:0 1px 3px rgba(0,0,0,.2); }
+      .tog.on .knob { left:17px; }
+    `
+  },
+
+  {
+    id: 'card-notification-item',
+    category: 'cards',
+    name: 'Notification Card',
+    description: 'Single actionable notification row',
+    tags: ['card', 'notification', 'alert', 'inbox', 'message'],
+    defaultWidth: 300, defaultHeight: 84,
+    html: `
+      <div class="note">
+        <div class="dot"></div>
+        <div class="body">
+          <div class="title">Design saved to Vault ✦</div>
+          <div class="msg">Your design "Cookbook UI v3" was saved.</div>
+        </div>
+        <span class="time">2m</span>
+        <button class="close">✕</button>
+      </div>`,
+    css: `
+      :host { display:flex; align-items:center; justify-content:center; padding:.5rem; }
+      * { box-sizing:border-box; margin:0; padding:0; font-family:system-ui,sans-serif; }
+      .note { display:flex; align-items:center; gap:.55rem; width:272px; background:#f7f3e8; border:1px solid #e0d9c0; border-radius:12px; padding:.7rem; border-left:3px solid #1F4F3C; }
+      .dot { width:8px; height:8px; border-radius:50%; background:#1F4F3C; flex-shrink:0; }
+      .body { flex:1; min-width:0; }
+      .title { font-size:.78rem; font-weight:700; color:#2c2b25; margin-bottom:.12rem; }
+      .msg { font-size:.7rem; color:#a7a6a2; line-height:1.35; }
+      .time { font-size:.65rem; color:#c4bc9a; flex-shrink:0; }
+      .close { background:none; border:none; color:#c4bc9a; font-size:.72rem; cursor:pointer; padding:0; flex-shrink:0; }
+    `
+  },
+
+  /* ════════════════════ FORMS — new ════════════════════ */
+
+  {
+    id: 'form-input-group',
+    category: 'forms',
+    name: 'Input + Button',
+    description: 'Attached input field and action button',
+    tags: ['form', 'input', 'button', 'group', 'inline'],
+    defaultWidth: 300, defaultHeight: 64,
+    html: `
+      <div class="group">
+        <input class="input" type="text" placeholder="Enter email or URL…" value=""/>
+        <button class="btn">Go →</button>
+      </div>`,
+    css: `
+      :host { display:flex; align-items:center; justify-content:center; padding:.75rem; }
+      * { box-sizing:border-box; margin:0; padding:0; font-family:system-ui,sans-serif; }
+      .group { display:flex; border-radius:9px; overflow:hidden; border:1.5px solid #c4bc9a; width:262px; transition:border-color .2s; }
+      .group:focus-within { border-color:#1F4F3C; }
+      .input { flex:1; border:none; background:#f7f3e8; padding:.6rem .8rem; font-size:.85rem; color:#2c2b25; outline:none; min-width:0; }
+      .input::placeholder { color:#c4bc9a; }
+      .btn { background:#1F4F3C; color:#dcd6b9; border:none; padding:.6rem 1.1rem; font-size:.85rem; font-weight:700; cursor:pointer; flex-shrink:0; transition:background .2s; }
+      .btn:hover { background:#285e47; }
+    `
+  },
+
+  {
+    id: 'form-select-menu',
+    category: 'forms',
+    name: 'Select Menu',
+    description: 'Styled dropdown select with label',
+    tags: ['form', 'select', 'dropdown', 'menu', 'choose'],
+    defaultWidth: 280, defaultHeight: 80,
+    html: `
+      <div class="wrap">
+        <label class="lbl">Category</label>
+        <div class="sel-wrap">
+          <select class="sel">
+            <option>Buttons</option>
+            <option selected>Dashboards</option>
+            <option>Cards</option>
+            <option>Forms</option>
+          </select>
+          <span class="arrow">▾</span>
+        </div>
+      </div>`,
+    css: `
+      :host { display:flex; align-items:center; justify-content:center; padding:.75rem; }
+      * { box-sizing:border-box; margin:0; padding:0; font-family:system-ui,sans-serif; }
+      .wrap { width:242px; }
+      .lbl { display:block; font-size:.72rem; font-weight:600; color:#4a4940; margin-bottom:.35rem; }
+      .sel-wrap { position:relative; }
+      .sel { width:100%; appearance:none; background:#f7f3e8; border:1.5px solid #c4bc9a; border-radius:8px; padding:.55rem .9rem; font-size:.85rem; color:#2c2b25; outline:none; cursor:pointer; transition:border-color .2s; }
+      .sel:focus { border-color:#1F4F3C; }
+      .arrow { position:absolute; right:.75rem; top:50%; transform:translateY(-50%); color:#a7a6a2; font-size:.75rem; pointer-events:none; }
+    `
+  },
+
+  {
+    id: 'form-textarea',
+    category: 'forms',
+    name: 'Textarea',
+    description: 'Multi-line text input with character count',
+    tags: ['form', 'textarea', 'text', 'multiline', 'message'],
+    defaultWidth: 280, defaultHeight: 160,
+    html: `
+      <div class="wrap">
+        <label class="lbl">Message</label>
+        <textarea class="ta" placeholder="Write your message here…" rows="4"></textarea>
+        <div class="foot"><span class="hint">Markdown supported</span><span class="count">0 / 500</span></div>
+      </div>`,
+    css: `
+      :host { display:flex; align-items:center; justify-content:center; padding:.75rem; }
+      * { box-sizing:border-box; margin:0; padding:0; font-family:system-ui,sans-serif; }
+      .wrap { width:244px; }
+      .lbl { display:block; font-size:.72rem; font-weight:600; color:#4a4940; margin-bottom:.35rem; }
+      .ta { width:100%; background:#f7f3e8; border:1.5px solid #c4bc9a; border-radius:8px; padding:.6rem .8rem; font-size:.83rem; color:#2c2b25; outline:none; resize:vertical; font-family:inherit; line-height:1.5; transition:border-color .2s; }
+      .ta:focus { border-color:#1F4F3C; }
+      .ta::placeholder { color:#c4bc9a; }
+      .foot { display:flex; justify-content:space-between; margin-top:.3rem; }
+      .hint,.count { font-size:.65rem; color:#c4bc9a; }
+    `
+  },
+
+  {
+    id: 'form-checkbox-group',
+    category: 'forms',
+    name: 'Checkbox Group',
+    description: 'Labelled checkboxes for multi-select options',
+    tags: ['form', 'checkbox', 'multi', 'select', 'options'],
+    defaultWidth: 220, defaultHeight: 190,
+    html: `
+      <div class="wrap">
+        <div class="title">Notification Channels</div>
+        <label class="row"><span class="box checked"></span><span class="lbl">Email</span><span class="desc">Daily digest</span></label>
+        <label class="row"><span class="box checked"></span><span class="lbl">Push</span><span class="desc">Instant alerts</span></label>
+        <label class="row"><span class="box"></span><span class="lbl">SMS</span><span class="desc">Critical only</span></label>
+        <label class="row"><span class="box"></span><span class="lbl">Slack</span><span class="desc">Team channel</span></label>
+      </div>`,
+    css: `
+      :host { display:flex; align-items:center; justify-content:center; padding:.75rem; }
+      * { box-sizing:border-box; margin:0; padding:0; font-family:system-ui,sans-serif; }
+      .wrap { width:192px; }
+      .title { font-size:.74rem; font-weight:700; color:#2c2b25; margin-bottom:.6rem; }
+      .row { display:flex; align-items:center; gap:.6rem; padding:.42rem 0; border-bottom:1px solid #ede7cd; cursor:pointer; }
+      .row:last-child { border-bottom:none; }
+      .box { width:16px; height:16px; border-radius:4px; border:1.5px solid #c4bc9a; background:#f7f3e8; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:.7rem; color:#dcd6b9; font-weight:700; }
+      .box.checked { background:#1F4F3C; border-color:#1F4F3C; }
+      .box.checked::after { content:'✓'; }
+      .lbl { font-size:.78rem; font-weight:500; color:#2c2b25; flex:1; }
+      .desc { font-size:.66rem; color:#a7a6a2; }
+    `
+  },
+
+  /* ════════════════════ NAVIGATION — new ════════════════════ */
+
+  {
+    id: 'nav-sidebar-full',
+    category: 'navigation',
+    name: 'App Sidebar',
+    description: 'Full left-panel sidebar with sections, icons, and user row',
+    tags: ['nav', 'sidebar', 'menu', 'app', 'navigation'],
+    defaultWidth: 210, defaultHeight: 460,
+    html: `
+      <nav class="sidebar">
+        <div class="brand"><span class="gem">⬡</span><span class="name">Digital Luxe</span></div>
+        <div class="section-label">Workspace</div>
+        <a class="item active"><span class="icon">📊</span>Dashboard</a>
+        <a class="item"><span class="icon">🃏</span>Components</a>
+        <a class="item"><span class="icon">🗄</span>Vault</a>
+        <a class="item"><span class="icon">📤</span>Export</a>
+        <div class="section-label">Settings</div>
+        <a class="item"><span class="icon">⚙</span>Preferences</a>
+        <a class="item"><span class="icon">💳</span>Billing</a>
+        <div class="spacer"></div>
+        <div class="user"><div class="avatar">SS</div><div class="info"><div class="uname">Scott S.</div><div class="plan">Pro Plan</div></div></div>
+      </nav>`,
+    css: `
+      :host { display:flex; align-items:stretch; padding:0; height:100%; }
+      * { box-sizing:border-box; margin:0; padding:0; font-family:system-ui,sans-serif; text-decoration:none; }
+      .sidebar { width:100%; height:100%; background:#2c2b25; display:flex; flex-direction:column; padding:.9rem .6rem; }
+      .brand { display:flex; align-items:center; gap:.5rem; padding:.3rem .5rem .9rem; border-bottom:1px solid rgba(220,214,185,.1); margin-bottom:.6rem; }
+      .gem { font-size:1.1rem; color:#bba54c; }
+      .name { font-size:.88rem; font-weight:700; color:#dcd6b9; }
+      .section-label { font-size:.58rem; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:rgba(167,166,162,.5); padding:.5rem .5rem .3rem; }
+      .item { display:flex; align-items:center; gap:.55rem; padding:.52rem .65rem; border-radius:8px; font-size:.8rem; font-weight:500; color:rgba(220,214,185,.65); margin-bottom:.1rem; cursor:pointer; }
+      .item:hover { background:rgba(220,214,185,.07); color:#dcd6b9; }
+      .item.active { background:rgba(31,79,60,.5); color:#dcd6b9; }
+      .icon { font-size:.85rem; }
+      .spacer { flex:1; }
+      .user { display:flex; align-items:center; gap:.6rem; padding:.6rem .5rem; border-top:1px solid rgba(220,214,185,.1); margin-top:.4rem; }
+      .avatar { width:30px; height:30px; border-radius:50%; background:#1F4F3C; display:flex; align-items:center; justify-content:center; font-size:.65rem; font-weight:700; color:#dcd6b9; flex-shrink:0; }
+      .uname { font-size:.76rem; font-weight:600; color:#dcd6b9; }
+      .plan { font-size:.64rem; color:rgba(187,165,76,.7); }
+    `
+  },
+
+  {
+    id: 'nav-steps',
+    category: 'navigation',
+    name: 'Step Progress',
+    description: 'Numbered step indicator for multi-step flows',
+    tags: ['nav', 'steps', 'progress', 'wizard', 'flow'],
+    defaultWidth: 440, defaultHeight: 80,
+    html: `
+      <div class="steps">
+        <div class="step done"><div class="circle">✓</div><div class="label">Account</div></div>
+        <div class="line done"></div>
+        <div class="step done"><div class="circle">✓</div><div class="label">Profile</div></div>
+        <div class="line active"></div>
+        <div class="step active"><div class="circle">3</div><div class="label">Plan</div></div>
+        <div class="line"></div>
+        <div class="step"><div class="circle">4</div><div class="label">Confirm</div></div>
+      </div>`,
+    css: `
+      :host { display:flex; align-items:center; justify-content:center; padding:1rem; }
+      * { box-sizing:border-box; margin:0; padding:0; font-family:system-ui,sans-serif; }
+      .steps { display:flex; align-items:center; }
+      .step { display:flex; flex-direction:column; align-items:center; gap:.3rem; }
+      .circle { width:28px; height:28px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:.75rem; font-weight:700; background:#e0d9c0; color:#a7a6a2; border:2px solid #e0d9c0; flex-shrink:0; }
+      .step.done .circle { background:#1F4F3C; color:#dcd6b9; border-color:#1F4F3C; }
+      .step.active .circle { background:#fff; color:#1F4F3C; border-color:#1F4F3C; box-shadow:0 0 0 3px rgba(31,79,60,.15); }
+      .label { font-size:.65rem; font-weight:600; color:#a7a6a2; white-space:nowrap; }
+      .step.done .label { color:#1F4F3C; }
+      .step.active .label { color:#2c2b25; font-weight:700; }
+      .line { flex:1; height:2px; background:#e0d9c0; min-width:36px; margin:0 4px 18px; }
+      .line.done { background:#1F4F3C; }
+      .line.active { background:linear-gradient(90deg,#1F4F3C 50%,#e0d9c0 50%); }
+    `
+  },
+
+  {
+    id: 'nav-mobile-bottom',
+    category: 'navigation',
+    name: 'Mobile Bottom Bar',
+    description: 'Bottom navigation bar for mobile layouts',
+    tags: ['nav', 'mobile', 'bottom', 'tab', 'app'],
+    defaultWidth: 340, defaultHeight: 70,
+    html: `
+      <nav class="bar">
+        <a class="item active"><span class="icon">🏠</span><span class="lbl">Home</span></a>
+        <a class="item"><span class="icon">🔍</span><span class="lbl">Search</span></a>
+        <a class="item fab"><span class="plus">＋</span></a>
+        <a class="item"><span class="icon">🗄</span><span class="lbl">Vault</span></a>
+        <a class="item"><span class="icon">👤</span><span class="lbl">Profile</span></a>
+      </nav>`,
+    css: `
+      :host { display:flex; align-items:stretch; padding:0; }
+      * { box-sizing:border-box; margin:0; padding:0; font-family:system-ui,sans-serif; text-decoration:none; }
+      .bar { width:100%; background:#2c2b25; display:flex; align-items:center; border-top:1px solid rgba(220,214,185,.1); padding:0 .4rem; }
+      .item { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:.18rem; padding:.55rem .2rem; color:rgba(167,166,162,.7); cursor:pointer; }
+      .item.active { color:#dcd6b9; }
+      .item.active .lbl { color:#bba54c; }
+      .icon { font-size:1.05rem; }
+      .lbl { font-size:.6rem; letter-spacing:.02em; }
+      .item.fab { flex:0 0 52px; }
+      .plus { display:flex; align-items:center; justify-content:center; width:40px; height:40px; border-radius:50%; background:#1F4F3C; color:#dcd6b9; font-size:1.3rem; font-weight:300; box-shadow:0 4px 14px rgba(31,79,60,.5); margin-bottom:4px; }
+    `
+  },
+
+  /* ════════════════════ DASHBOARDS — new ════════════════════ */
+
+  {
+    id: 'dash-stat-card',
+    category: 'dashboards',
+    name: 'Stat Card',
+    description: 'Single prominent KPI with icon, value and trend',
+    tags: ['dashboard', 'stat', 'kpi', 'metric', 'card'],
+    defaultWidth: 230, defaultHeight: 120,
+    html: `
+      <div class="card">
+        <div class="top"><span class="label">Total Revenue</span><span class="icon">💰</span></div>
+        <div class="value">$84,392</div>
+        <div class="trend up">↑ 14.2% <span class="period">vs last month</span></div>
+      </div>`,
+    css: `
+      :host { display:flex; align-items:center; justify-content:center; padding:.6rem; }
+      * { box-sizing:border-box; margin:0; padding:0; font-family:system-ui,sans-serif; }
+      .card { width:206px; background:#f7f3e8; border:1px solid #e0d9c0; border-radius:14px; padding:1rem 1.1rem; }
+      .top { display:flex; align-items:center; justify-content:space-between; margin-bottom:.5rem; }
+      .label { font-size:.68rem; font-weight:600; text-transform:uppercase; letter-spacing:.09em; color:#a7a6a2; }
+      .icon { font-size:1rem; }
+      .value { font-size:1.55rem; font-weight:800; color:#2c2b25; letter-spacing:-.02em; margin-bottom:.35rem; }
+      .trend { font-size:.72rem; font-weight:700; }
+      .trend.up { color:#2e7d32; }
+      .trend.down { color:#c62828; }
+      .period { font-weight:400; color:#a7a6a2; margin-left:.2rem; }
+    `
+  },
+
+  {
+    id: 'dash-revenue-bars',
+    category: 'dashboards',
+    name: 'Revenue Chart',
+    description: 'Revenue card with inline SVG bar chart',
+    tags: ['dashboard', 'chart', 'bar', 'revenue', 'analytics'],
+    defaultWidth: 340, defaultHeight: 200,
+    html: `
+      <div class="card">
+        <div class="head">
+          <div><div class="label">Monthly Revenue</div><div class="val">$284,390</div></div>
+          <span class="badge">▲ 8.4%</span>
+        </div>
+        <svg viewBox="0 0 280 80" class="chart" aria-hidden="true">
+          <g fill="#e0d9c0">
+            <rect x="4"   y="55" width="22" height="25" rx="3"/>
+            <rect x="32"  y="42" width="22" height="38" rx="3"/>
+            <rect x="60"  y="48" width="22" height="32" rx="3"/>
+            <rect x="88"  y="28" width="22" height="52" rx="3"/>
+            <rect x="116" y="35" width="22" height="45" rx="3"/>
+            <rect x="144" y="18" width="22" height="62" rx="3"/>
+            <rect x="172" y="30" width="22" height="50" rx="3"/>
+          </g>
+          <g fill="#1F4F3C">
+            <rect x="200" y="22" width="22" height="58" rx="3"/>
+            <rect x="228" y="10" width="22" height="70" rx="3"/>
+            <rect x="256" y="16" width="22" height="64" rx="3"/>
+          </g>
+        </svg>
+        <div class="legend"><span class="dot prev"></span>Previous<span class="dot curr"></span>Current</div>
+      </div>`,
+    css: `
+      :host { display:flex; align-items:center; justify-content:center; padding:.7rem; }
+      * { box-sizing:border-box; margin:0; padding:0; font-family:system-ui,sans-serif; }
+      .card { width:302px; background:#f7f3e8; border:1px solid #e0d9c0; border-radius:14px; padding:1.1rem; }
+      .head { display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:.8rem; }
+      .label { font-size:.68rem; font-weight:600; text-transform:uppercase; letter-spacing:.09em; color:#a7a6a2; margin-bottom:.25rem; }
+      .val { font-size:1.35rem; font-weight:800; color:#2c2b25; letter-spacing:-.02em; }
+      .badge { font-size:.7rem; font-weight:700; background:rgba(46,125,50,.12); color:#2e7d32; border-radius:99px; padding:3px 9px; white-space:nowrap; }
+      .chart { width:100%; height:auto; }
+      .legend { display:flex; align-items:center; gap:.5rem; margin-top:.6rem; font-size:.67rem; color:#a7a6a2; }
+      .dot { width:8px; height:8px; border-radius:50%; display:inline-block; margin-right:.2rem; }
+      .dot.prev { background:#e0d9c0; }
+      .dot.curr { background:#1F4F3C; margin-left:.5rem; }
+    `
+  },
+
+  {
+    id: 'dash-donut-chart',
+    category: 'dashboards',
+    name: 'Donut Chart',
+    description: 'SVG donut chart with category legend',
+    tags: ['dashboard', 'donut', 'chart', 'pie', 'analytics'],
+    defaultWidth: 280, defaultHeight: 220,
+    html: `
+      <div class="card">
+        <div class="title">Traffic Sources</div>
+        <div class="body">
+          <svg viewBox="0 0 100 100" class="donut">
+            <circle cx="50" cy="50" r="35" fill="none" stroke="#e0d9c0" stroke-width="14"/>
+            <circle cx="50" cy="50" r="35" fill="none" stroke="#1F4F3C" stroke-width="14" stroke-dasharray="66 154" stroke-dashoffset="-25" stroke-linecap="round"/>
+            <circle cx="50" cy="50" r="35" fill="none" stroke="#bba54c" stroke-width="14" stroke-dasharray="44 176" stroke-dashoffset="-91" stroke-linecap="round"/>
+            <circle cx="50" cy="50" r="35" fill="none" stroke="#a7a6a2" stroke-width="14" stroke-dasharray="22 198" stroke-dashoffset="-135" stroke-linecap="round"/>
+            <text x="50" y="47" text-anchor="middle" font-size="11" font-weight="800" fill="#2c2b25">30%</text>
+            <text x="50" y="57" text-anchor="middle" font-size="6" fill="#a7a6a2">Organic</text>
+          </svg>
+          <div class="legend">
+            <div class="item"><span class="dot teal"></span><span class="lbl">Organic</span><span class="pct">30%</span></div>
+            <div class="item"><span class="dot gold"></span><span class="lbl">Referral</span><span class="pct">20%</span></div>
+            <div class="item"><span class="dot grey"></span><span class="lbl">Direct</span><span class="pct">10%</span></div>
+            <div class="item"><span class="dot light"></span><span class="lbl">Other</span><span class="pct">40%</span></div>
+          </div>
+        </div>
+      </div>`,
+    css: `
+      :host { display:flex; align-items:center; justify-content:center; padding:.6rem; }
+      * { box-sizing:border-box; margin:0; padding:0; font-family:system-ui,sans-serif; }
+      .card { width:252px; background:#f7f3e8; border:1px solid #e0d9c0; border-radius:14px; padding:1rem; }
+      .title { font-size:.74rem; font-weight:700; color:#2c2b25; margin-bottom:.7rem; }
+      .body { display:flex; align-items:center; gap:.8rem; }
+      .donut { width:90px; height:90px; flex-shrink:0; }
+      .legend { flex:1; display:flex; flex-direction:column; gap:.38rem; }
+      .item { display:flex; align-items:center; gap:.4rem; }
+      .dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+      .dot.teal { background:#1F4F3C; } .dot.gold { background:#bba54c; }
+      .dot.grey { background:#a7a6a2; } .dot.light { background:#e0d9c0; }
+      .lbl { font-size:.72rem; color:#4a4940; flex:1; }
+      .pct { font-size:.72rem; font-weight:700; color:#2c2b25; }
+    `
+  },
+
+  {
+    id: 'dash-goal-tracker',
+    category: 'dashboards',
+    name: 'Goal Tracker',
+    description: 'Goal with labelled progress bar and percentage',
+    tags: ['dashboard', 'goal', 'progress', 'target', 'tracker'],
+    defaultWidth: 280, defaultHeight: 130,
+    html: `
+      <div class="card">
+        <div class="head"><span class="title">Q2 Revenue Goal</span><span class="pct">74%</span></div>
+        <div class="bar"><div class="fill" style="width:74%"></div></div>
+        <div class="foot"><span class="current">$74,000 raised</span><span class="target">Goal: $100,000</span></div>
+      </div>`,
+    css: `
+      :host { display:flex; align-items:center; justify-content:center; padding:.6rem; }
+      * { box-sizing:border-box; margin:0; padding:0; font-family:system-ui,sans-serif; }
+      .card { width:248px; background:#f7f3e8; border:1px solid #e0d9c0; border-radius:14px; padding:1rem 1.1rem; }
+      .head { display:flex; justify-content:space-between; align-items:baseline; margin-bottom:.7rem; }
+      .title { font-size:.8rem; font-weight:700; color:#2c2b25; }
+      .pct { font-size:1.2rem; font-weight:800; color:#1F4F3C; }
+      .bar { height:10px; background:#e0d9c0; border-radius:99px; overflow:hidden; margin-bottom:.6rem; }
+      .fill { height:100%; background:linear-gradient(90deg,#1F4F3C,#2e7d32); border-radius:99px; }
+      .foot { display:flex; justify-content:space-between; }
+      .current { font-size:.7rem; font-weight:600; color:#2c2b25; }
+      .target { font-size:.7rem; color:#a7a6a2; }
+    `
+  },
+
+  {
+    id: 'dash-quick-stats',
+    category: 'dashboards',
+    name: 'Quick Stats Row',
+    description: 'Three KPI tiles in a horizontal strip',
+    tags: ['dashboard', 'stats', 'row', 'metrics', 'summary'],
+    defaultWidth: 460, defaultHeight: 90,
+    html: `
+      <div class="row">
+        <div class="tile"><div class="val">2,840</div><div class="lbl">Active Users</div><div class="delta up">↑ 12%</div></div>
+        <div class="tile"><div class="val">$48.2k</div><div class="lbl">Revenue</div><div class="delta up">↑ 8%</div></div>
+        <div class="tile"><div class="val">98.7%</div><div class="lbl">Uptime</div><div class="delta neutral">→ stable</div></div>
+      </div>`,
+    css: `
+      :host { display:flex; align-items:center; justify-content:center; padding:.5rem; }
+      * { box-sizing:border-box; margin:0; padding:0; font-family:system-ui,sans-serif; }
+      .row { display:flex; gap:.5rem; width:430px; }
+      .tile { flex:1; background:#f7f3e8; border:1px solid #e0d9c0; border-radius:12px; padding:.7rem .9rem; }
+      .val { font-size:1.15rem; font-weight:800; color:#2c2b25; letter-spacing:-.01em; margin-bottom:.1rem; }
+      .lbl { font-size:.65rem; text-transform:uppercase; letter-spacing:.08em; color:#a7a6a2; font-weight:600; margin-bottom:.22rem; }
+      .delta { font-size:.68rem; font-weight:700; }
+      .delta.up { color:#2e7d32; } .delta.down { color:#c62828; } .delta.neutral { color:#a7a6a2; }
+    `
+  },
+
+  {
+    id: 'dash-alert-success',
+    category: 'dashboards',
+    variantGroup: 'dash-alerts',
+    variantLabel: 'Success',
+    name: 'Alert — Success',
+    description: 'Green success alert banner with dismiss',
+    tags: ['dashboard', 'alert', 'success', 'banner', 'notification'],
+    defaultWidth: 420, defaultHeight: 68,
+    html: `
+      <div class="alert success">
+        <span class="icon">✓</span>
+        <div class="body"><strong>Changes saved</strong><span> — Your design has been saved to the Vault.</span></div>
+        <button class="close">✕</button>
+      </div>`,
+    css: `
+      :host { display:flex; align-items:center; justify-content:center; padding:.6rem; }
+      * { box-sizing:border-box; margin:0; padding:0; font-family:system-ui,sans-serif; }
+      .alert { display:flex; align-items:center; gap:.7rem; width:390px; padding:.75rem 1rem; border-radius:10px; border:1px solid rgba(46,125,50,.25); background:rgba(46,125,50,.08); }
+      .icon { font-size:1rem; color:#2e7d32; flex-shrink:0; font-weight:700; }
+      .body { flex:1; font-size:.78rem; color:#2c2b25; line-height:1.4; }
+      .body strong { font-weight:700; }
+      .close { background:none; border:none; color:#a7a6a2; cursor:pointer; font-size:.75rem; padding:0; flex-shrink:0; }
+    `
+  },
+
+  {
+    id: 'dash-alert-warn',
+    category: 'dashboards',
+    variantGroup: 'dash-alerts',
+    variantLabel: 'Warning',
+    name: 'Alert — Warning',
+    description: 'Amber warning alert banner',
+    tags: ['dashboard', 'alert', 'warning', 'banner', 'caution'],
+    defaultWidth: 420, defaultHeight: 68,
+    html: `
+      <div class="alert warn">
+        <span class="icon">⚠</span>
+        <div class="body"><strong>Storage nearing limit</strong><span> — You're using 82% of your Vault space.</span></div>
+        <button class="close">✕</button>
+      </div>`,
+    css: `
+      :host { display:flex; align-items:center; justify-content:center; padding:.6rem; }
+      * { box-sizing:border-box; margin:0; padding:0; font-family:system-ui,sans-serif; }
+      .alert { display:flex; align-items:center; gap:.7rem; width:390px; padding:.75rem 1rem; border-radius:10px; border:1px solid rgba(187,165,76,.3); background:rgba(187,165,76,.1); }
+      .icon { font-size:1rem; color:#7a6420; flex-shrink:0; }
+      .body { flex:1; font-size:.78rem; color:#2c2b25; line-height:1.4; }
+      .body strong { font-weight:700; }
+      .close { background:none; border:none; color:#a7a6a2; cursor:pointer; font-size:.75rem; padding:0; flex-shrink:0; }
+    `
+  },
+
+  {
+    id: 'dash-alert-error',
+    category: 'dashboards',
+    variantGroup: 'dash-alerts',
+    variantLabel: 'Error',
+    name: 'Alert — Error',
+    description: 'Red error alert banner',
+    tags: ['dashboard', 'alert', 'error', 'banner', 'danger'],
+    defaultWidth: 420, defaultHeight: 68,
+    html: `
+      <div class="alert error">
+        <span class="icon">✕</span>
+        <div class="body"><strong>Export failed</strong><span> — Could not generate PNG. Try HTML export instead.</span></div>
+        <button class="close">✕</button>
+      </div>`,
+    css: `
+      :host { display:flex; align-items:center; justify-content:center; padding:.6rem; }
+      * { box-sizing:border-box; margin:0; padding:0; font-family:system-ui,sans-serif; }
+      .alert { display:flex; align-items:center; gap:.7rem; width:390px; padding:.75rem 1rem; border-radius:10px; border:1px solid rgba(192,57,43,.25); background:rgba(192,57,43,.08); }
+      .icon { font-size:1rem; color:#c0392b; flex-shrink:0; font-weight:700; }
+      .body { flex:1; font-size:.78rem; color:#2c2b25; line-height:1.4; }
+      .body strong { font-weight:700; }
+      .close { background:none; border:none; color:#a7a6a2; cursor:pointer; font-size:.75rem; padding:0; flex-shrink:0; }
+    `
+  },
+
+  {
+    id: 'dash-notification-list',
+    category: 'dashboards',
+    name: 'Notification Panel',
+    description: 'Grouped notification feed with read/unread states',
+    tags: ['dashboard', 'notifications', 'feed', 'inbox', 'panel'],
+    defaultWidth: 300, defaultHeight: 300,
+    html: `
+      <div class="panel">
+        <div class="head"><span class="title">Notifications</span><span class="badge">4 new</span></div>
+        <div class="item unread"><div class="dot"></div><div class="body"><div class="msg">Vault saved — "Cookbook UI v3"</div><div class="time">Just now</div></div></div>
+        <div class="item unread"><div class="dot"></div><div class="body"><div class="msg">Export complete — dashboard.html ready</div><div class="time">5 min ago</div></div></div>
+        <div class="item"><div class="dot read"></div><div class="body"><div class="msg">12 community components imported</div><div class="time">1 hr ago</div></div></div>
+        <div class="item"><div class="dot read"></div><div class="body"><div class="msg">New drawer added: Dashboards</div><div class="time">Yesterday</div></div></div>
+        <div class="item"><div class="dot read"></div><div class="body"><div class="msg">Canvas updated to v2.4</div><div class="time">2 days ago</div></div></div>
+        <button class="all">View all notifications →</button>
+      </div>`,
+    css: `
+      :host { display:flex; align-items:center; justify-content:center; padding:.5rem; }
+      * { box-sizing:border-box; margin:0; padding:0; font-family:system-ui,sans-serif; }
+      .panel { width:270px; background:#f7f3e8; border:1px solid #e0d9c0; border-radius:14px; overflow:hidden; }
+      .head { display:flex; align-items:center; justify-content:space-between; padding:.75rem .9rem; border-bottom:1px solid #e0d9c0; }
+      .title { font-size:.82rem; font-weight:700; color:#2c2b25; }
+      .badge { font-size:.65rem; font-weight:700; background:#1F4F3C; color:#dcd6b9; border-radius:99px; padding:2px 8px; }
+      .item { display:flex; align-items:center; gap:.65rem; padding:.6rem .9rem; border-bottom:1px solid #ede7cd; }
+      .item:last-of-type { border-bottom:none; }
+      .item.unread { background:rgba(31,79,60,.04); }
+      .dot { width:7px; height:7px; border-radius:50%; background:#1F4F3C; flex-shrink:0; }
+      .dot.read { background:#e0d9c0; }
+      .msg { font-size:.75rem; font-weight:500; color:#2c2b25; line-height:1.35; margin-bottom:.1rem; }
+      .item.unread .msg { font-weight:600; }
+      .time { font-size:.66rem; color:#a7a6a2; }
+      .all { width:100%; background:none; border:none; border-top:1px solid #e0d9c0; padding:.6rem; font-size:.74rem; font-weight:600; color:#1F4F3C; cursor:pointer; }
+      .all:hover { background:rgba(31,79,60,.05); }
+    `
+  },
+
+  {
+    id: 'dash-action-tiles',
+    category: 'dashboards',
+    name: 'Quick Actions',
+    description: 'Grid of quick-action icon tiles',
+    tags: ['dashboard', 'actions', 'quick', 'tiles', 'grid'],
+    defaultWidth: 280, defaultHeight: 210,
+    html: `
+      <div class="card">
+        <div class="title">Quick Actions</div>
+        <div class="grid">
+          <button class="tile"><span class="icon">📤</span><span class="lbl">Export</span></button>
+          <button class="tile"><span class="icon">🗄</span><span class="lbl">Save</span></button>
+          <button class="tile accent"><span class="icon">✦</span><span class="lbl">Publish</span></button>
+          <button class="tile"><span class="icon">🔍</span><span class="lbl">Preview</span></button>
+          <button class="tile"><span class="icon">📋</span><span class="lbl">Copy CSS</span></button>
+          <button class="tile"><span class="icon">♻</span><span class="lbl">Reset</span></button>
+        </div>
+      </div>`,
+    css: `
+      :host { display:flex; align-items:center; justify-content:center; padding:.6rem; }
+      * { box-sizing:border-box; margin:0; padding:0; font-family:system-ui,sans-serif; }
+      .card { width:252px; background:#f7f3e8; border:1px solid #e0d9c0; border-radius:14px; padding:1rem; }
+      .title { font-size:.76rem; font-weight:700; color:#2c2b25; margin-bottom:.75rem; }
+      .grid { display:grid; grid-template-columns:repeat(3,1fr); gap:.45rem; }
+      .tile { display:flex; flex-direction:column; align-items:center; gap:.3rem; padding:.65rem .4rem; background:#fff; border:1px solid #e0d9c0; border-radius:10px; cursor:pointer; transition:background .15s, transform .15s; }
+      .tile:hover { background:#ede7cd; transform:translateY(-1px); }
+      .tile.accent { background:rgba(31,79,60,.07); border-color:rgba(31,79,60,.2); }
+      .icon { font-size:1.1rem; }
+      .lbl { font-size:.64rem; font-weight:600; color:#4a4940; }
+    `
+  },
+
+  {
+    id: 'dash-top-bar',
+    category: 'dashboards',
+    name: 'App Top Bar',
+    description: 'Full application header with nav links and user actions',
+    tags: ['dashboard', 'header', 'topbar', 'nav', 'appbar'],
+    defaultWidth: 560, defaultHeight: 56,
+    html: `
+      <header class="bar">
+        <div class="brand"><span class="gem">⬡</span><span class="name">Digital Luxe</span></div>
+        <nav class="nav">
+          <a class="link active">Dashboard</a>
+          <a class="link">Components</a>
+          <a class="link">Vault</a>
+          <a class="link">Export</a>
+        </nav>
+        <div class="actions">
+          <button class="search">🔍</button>
+          <button class="btn">+ New</button>
+          <div class="avatar">SS</div>
+        </div>
+      </header>`,
+    css: `
+      :host { display:flex; align-items:stretch; padding:0; }
+      * { box-sizing:border-box; margin:0; padding:0; font-family:system-ui,sans-serif; text-decoration:none; }
+      .bar { width:100%; background:#2c2b25; display:flex; align-items:center; gap:1rem; padding:0 1.1rem; }
+      .brand { display:flex; align-items:center; gap:.45rem; flex-shrink:0; }
+      .gem { font-size:1rem; color:#bba54c; }
+      .name { font-size:.82rem; font-weight:700; color:#dcd6b9; white-space:nowrap; }
+      .nav { display:flex; align-items:center; gap:.1rem; flex:1; justify-content:center; }
+      .link { font-size:.78rem; font-weight:500; color:rgba(220,214,185,.55); padding:.4rem .7rem; border-radius:6px; cursor:pointer; }
+      .link:hover { color:#dcd6b9; }
+      .link.active { color:#dcd6b9; background:rgba(220,214,185,.08); }
+      .actions { display:flex; align-items:center; gap:.55rem; flex-shrink:0; }
+      .search { background:none; border:none; color:rgba(167,166,162,.7); font-size:.9rem; cursor:pointer; padding:.2rem .4rem; }
+      .btn { background:#1F4F3C; color:#dcd6b9; border:none; border-radius:7px; padding:.38rem .85rem; font-size:.76rem; font-weight:700; cursor:pointer; white-space:nowrap; }
+      .btn:hover { background:#285e47; }
+      .avatar { width:28px; height:28px; border-radius:50%; background:#bba54c; display:flex; align-items:center; justify-content:center; font-size:.62rem; font-weight:800; color:#2c2b25; flex-shrink:0; }
+    `
+  },
+
+  {
+    id: 'dash-line-chart',
+    category: 'dashboards',
+    name: 'Line Chart',
+    description: 'SVG area/line chart card with axis labels',
+    tags: ['dashboard', 'chart', 'line', 'area', 'analytics'],
+    defaultWidth: 380, defaultHeight: 210,
+    html: `
+      <div class="card">
+        <div class="head">
+          <div class="label">Active Users — 30 days</div>
+          <div class="val">12,480 <span class="up">↑ 8.3%</span></div>
+        </div>
+        <svg viewBox="0 0 300 90" class="chart" preserveAspectRatio="none" aria-hidden="true">
+          <defs>
+            <linearGradient id="dlx-grad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#1F4F3C" stop-opacity=".22"/>
+              <stop offset="100%" stop-color="#1F4F3C" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+          <polyline points="0,72 30,58 60,65 90,38 120,45 150,30 180,42 210,22 240,28 270,15 300,10"
+            fill="none" stroke="#1F4F3C" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+          <polygon points="0,72 30,58 60,65 90,38 120,45 150,30 180,42 210,22 240,28 270,15 300,10 300,90 0,90"
+            fill="url(#dlx-grad)"/>
+        </svg>
+        <div class="axis"><span>May 1</span><span>May 10</span><span>May 20</span><span>May 30</span></div>
+      </div>`,
+    css: `
+      :host { display:flex; align-items:center; justify-content:center; padding:.6rem; }
+      * { box-sizing:border-box; margin:0; padding:0; font-family:system-ui,sans-serif; }
+      .card { width:350px; background:#f7f3e8; border:1px solid #e0d9c0; border-radius:14px; padding:1rem 1.1rem; }
+      .head { display:flex; justify-content:space-between; align-items:baseline; margin-bottom:.65rem; }
+      .label { font-size:.68rem; font-weight:600; text-transform:uppercase; letter-spacing:.08em; color:#a7a6a2; }
+      .val { font-size:1.15rem; font-weight:800; color:#2c2b25; }
+      .up { font-size:.72rem; font-weight:700; color:#2e7d32; }
+      .chart { width:100%; height:90px; display:block; }
+      .axis { display:flex; justify-content:space-between; margin-top:.35rem; }
+      .axis span { font-size:.62rem; color:#c4bc9a; }
+    `
+  },
+
+  {
+    id: 'dash-metric-compare',
+    category: 'dashboards',
+    name: 'Metric Comparison',
+    description: 'Two metrics side-by-side with trend indicators',
+    tags: ['dashboard', 'metric', 'compare', 'vs', 'kpi'],
+    defaultWidth: 280, defaultHeight: 120,
+    html: `
+      <div class="card">
+        <div class="half"><div class="lbl">New Users</div><div class="val">1,284</div><div class="trend up">↑ 22%</div></div>
+        <div class="divider"></div>
+        <div class="half"><div class="lbl">Churn Rate</div><div class="val">2.4%</div><div class="trend good">↓ 0.8%</div></div>
+      </div>`,
+    css: `
+      :host { display:flex; align-items:center; justify-content:center; padding:.6rem; }
+      * { box-sizing:border-box; margin:0; padding:0; font-family:system-ui,sans-serif; }
+      .card { width:250px; background:#f7f3e8; border:1px solid #e0d9c0; border-radius:14px; padding:.9rem 1rem; display:flex; align-items:center; }
+      .half { flex:1; text-align:center; }
+      .lbl { font-size:.65rem; text-transform:uppercase; letter-spacing:.09em; color:#a7a6a2; font-weight:600; margin-bottom:.35rem; }
+      .val { font-size:1.3rem; font-weight:800; color:#2c2b25; letter-spacing:-.01em; margin-bottom:.2rem; }
+      .trend { font-size:.72rem; font-weight:700; }
+      .trend.up,.trend.good { color:#2e7d32; }
+      .trend.down { color:#c62828; }
+      .divider { width:1px; background:#e0d9c0; align-self:stretch; margin:0 .5rem; }
+    `
+  },
+
+  {
+    id: 'dash-user-table',
+    category: 'dashboards',
+    name: 'User Table Card',
+    description: 'Recent users in a dashboard table card',
+    tags: ['dashboard', 'table', 'users', 'list', 'card'],
+    defaultWidth: 480, defaultHeight: 300,
+    html: `
+      <div class="card">
+        <div class="head"><span class="title">Recent Users</span><button class="btn">View All →</button></div>
+        <table class="tbl">
+          <thead><tr><th>Name</th><th>Email</th><th>Plan</th><th>Status</th><th>Joined</th></tr></thead>
+          <tbody>
+            <tr><td class="nc"><div class="av">SS</div>Scott S.</td><td>scott@dlx.io</td><td><span class="tag pro">Pro</span></td><td><span class="st ok">Active</span></td><td>May 1</td></tr>
+            <tr><td class="nc"><div class="av b">AJ</div>Alex J.</td><td>alex@co.io</td><td><span class="tag free">Free</span></td><td><span class="st ok">Active</span></td><td>Apr 28</td></tr>
+            <tr><td class="nc"><div class="av c">MR</div>Morgan R.</td><td>m@riv.co</td><td><span class="tag pro">Pro</span></td><td><span class="st warn">Inactive</span></td><td>Apr 14</td></tr>
+            <tr><td class="nc"><div class="av d">TK</div>Taylor K.</td><td>tk@mail.com</td><td><span class="tag free">Free</span></td><td><span class="st ok">Active</span></td><td>Apr 9</td></tr>
+          </tbody>
+        </table>
+      </div>`,
+    css: `
+      :host { display:flex; align-items:center; justify-content:center; padding:.5rem; }
+      * { box-sizing:border-box; margin:0; padding:0; font-family:system-ui,sans-serif; }
+      .card { width:452px; background:#f7f3e8; border:1px solid #e0d9c0; border-radius:14px; overflow:hidden; }
+      .head { display:flex; align-items:center; justify-content:space-between; padding:.8rem 1rem; border-bottom:1px solid #e0d9c0; }
+      .title { font-size:.84rem; font-weight:700; color:#2c2b25; }
+      .btn { background:none; border:none; font-size:.74rem; font-weight:600; color:#1F4F3C; cursor:pointer; }
+      .tbl { width:100%; border-collapse:collapse; }
+      thead tr { background:#ede7cd; }
+      thead th { padding:.42rem .7rem; font-size:.67rem; font-weight:700; color:#4a4940; text-align:left; white-space:nowrap; }
+      tbody tr { border-bottom:1px solid #ede7cd; }
+      tbody tr:last-child { border-bottom:none; }
+      tbody td { padding:.52rem .7rem; font-size:.74rem; color:#2c2b25; }
+      .nc { display:flex; align-items:center; gap:.5rem; }
+      .av { width:22px; height:22px; border-radius:50%; background:#1F4F3C; color:#dcd6b9; font-size:.57rem; font-weight:700; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+      .av.b { background:#bba54c; color:#2c2b25; } .av.c { background:#a7a6a2; } .av.d { background:#4a4940; color:#dcd6b9; }
+      .tag { font-size:.62rem; font-weight:700; border-radius:99px; padding:2px 7px; }
+      .tag.pro { background:rgba(187,165,76,.18); color:#7a6420; }
+      .tag.free { background:#ede7cd; color:#4a4940; }
+      .st { font-size:.68rem; font-weight:600; border-radius:99px; padding:2px 8px; }
+      .st.ok { background:rgba(46,125,50,.12); color:#2e7d32; }
+      .st.warn { background:rgba(255,165,0,.12); color:#e65100; }
+    `
+  },
 ];

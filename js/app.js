@@ -54,6 +54,10 @@ window.addEventListener('DOMContentLoaded', async () => {
       vault.renderList();
     });
 
+  // Undo / Redo buttons
+  document.getElementById('undo-btn')?.addEventListener('click', () => canvas.undo());
+  document.getElementById('redo-btn')?.addEventListener('click', () => canvas.redo());
+
   console.log('\uD83D\uDC8E Digital Luxe loaded — ToolSmart by smartscott-LLC');
 });
 

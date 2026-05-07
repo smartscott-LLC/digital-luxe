@@ -27,6 +27,12 @@ let zoom   = 1.0;
 let panX   = 0;
 let panY   = 0;
 
+// ── History (Undo/Redo) ────────────────────────────────────────
+const HISTORY_LIMIT = 60;
+let history    = [];
+let historyIdx = -1;
+let propDebounceTimer = null;
+
 // ── Interaction state ─────────────────────────────────────────
 let drag      = null;   // { startPositions:{idx:{x,y}}, mouseStartX, mouseStartY }
 let resize    = null;   // { idx, handle, startX,startY,startW,startH, mouseStartX,mouseStartY }
@@ -98,14 +104,15 @@ export const canvas = {
   },
 
   addComponent(component) {
+    pushHistory();
     const pos = calcDropPosition();
     items.push({
       component,
       nudges  : new Set(nudge.getActiveNudges()),
       x       : pos.x,
       y       : pos.y,
-      width   : DEFAULT_W,
-      height  : DEFAULT_H,
+      width   : component.defaultWidth  || DEFAULT_W,
+      height  : component.defaultHeight || DEFAULT_H,
       zIndex  : nextZ++,
       props   : {},
       rotation: 0,
@@ -119,6 +126,7 @@ export const canvas = {
 
   async addBlock(block) {
     if (!block?.items?.length) return;
+    pushHistory();
     const { COMPONENTS } = await import('./components.js');
     const custom = getCustomComponents();
     const source = new Map([...COMPONENTS, ...custom].map(c => [c.id, c]));
@@ -150,6 +158,7 @@ export const canvas = {
   },
 
   removeComponent(index) {
+    pushHistory();
     items.splice(index, 1);
     selectedIndices.clear();
     nextZ = recalcNextZ();
@@ -158,6 +167,7 @@ export const canvas = {
   },
 
   removeSelected() {
+    pushHistory();
     [...selectedIndices].sort((a, b) => b - a).forEach(i => items.splice(i, 1));
     selectedIndices.clear();
     nextZ = recalcNextZ();
@@ -255,8 +265,24 @@ export const canvas = {
   getSelectedIndices() { return [...selectedIndices]; },
   getZoom()            { return zoom; },
 
+  undo() {
+    if (historyIdx <= 0) return;
+    historyIdx--;
+    restoreSnapshot(history[historyIdx]);
+    updateUndoRedo();
+  },
+
+  redo() {
+    if (historyIdx >= history.length - 1) return;
+    historyIdx++;
+    restoreSnapshot(history[historyIdx]);
+    updateUndoRedo();
+  },
+
   updateItemProp(idx, key, value) {
     if (!items[idx]) return;
+    clearTimeout(propDebounceTimer);
+    propDebounceTimer = setTimeout(pushHistory, 600);
     items[idx].props[key] = value;
     refreshShadowProps(idx);
   },
@@ -290,6 +316,7 @@ export const canvas = {
   alignSelected(mode) {
     const indices = [...selectedIndices];
     if (indices.length < 2) return;
+    pushHistory();
     const selected = indices.map(i => items[i]).filter(Boolean);
     const minX = Math.min(...selected.map(it => it.x));
     const maxX = Math.max(...selected.map(it => it.x + it.width));
@@ -455,6 +482,7 @@ export const canvas = {
   },
 
   applyThemeFromBrand(color) {
+    pushHistory();
     const palette = makePaletteFromBrand(color);
     items.forEach(item => {
       item.props['--pine-teal'] = palette.primary;
@@ -519,6 +547,7 @@ function createItemEl(item, idx) {
   });
   wrap.querySelector('[data-action="duplicate"]').addEventListener('click', e => {
     e.stopPropagation();
+    pushHistory();
     const src = items[idx];
     items.splice(idx + 1, 0, {
       component: src.component,
@@ -710,6 +739,9 @@ function onGlobalKeyDown(e) {
   if (e.key === ' ') { e.preventDefault(); spaceDown = true; if (!panning) canvasArea.style.cursor = 'grab'; return; }
   if (e.key === 'Escape') { clearSelection(); return; }
 
+  if ((e.ctrlKey || e.metaKey) && e.key === 'z' && !e.shiftKey) { e.preventDefault(); canvas.undo(); return; }
+  if ((e.ctrlKey || e.metaKey) && (e.key === 'y' || (e.key === 'z' && e.shiftKey))) { e.preventDefault(); canvas.redo(); return; }
+
   if ((e.key === 'Delete' || e.key === 'Backspace') && selectedIndices.size) {
     e.preventDefault(); canvas.removeSelected(); return;
   }
@@ -726,6 +758,7 @@ function onGlobalKeyDown(e) {
 
   if ((e.ctrlKey || e.metaKey) && e.key === 'd' && selectedIndices.size) {
     e.preventDefault();
+    pushHistory();
     const toClone = [...selectedIndices];
     const newSet  = new Set();
     toClone.forEach(i => {
@@ -852,8 +885,8 @@ function onWindowMouseMove(e) {
 function onWindowMouseUp(e) {
   if (draggingGuide) draggingGuide = null;
   if (panning) { panning = false; panStart = null; canvasArea.style.cursor = spaceDown ? 'grab' : ''; }
-  if (drag)   drag   = null;
-  if (resize) resize = null;
+  if (drag)   { pushHistory(); drag   = null; }
+  if (resize) { pushHistory(); resize = null; }
   if (band) {
     const cm = screenToCanvas(e.clientX, e.clientY);
     const x = Math.min(band.startX, cm.x), y = Math.min(band.startY, cm.y);
@@ -925,6 +958,50 @@ function finalizeBand(x, y, w, h, additive) {
 function isItemInBounds(item, x, y, w, h) {
   return item.x < x + w && item.x + item.width  > x &&
          item.y < y + h && item.y + item.height > y;
+}
+
+// ── Undo/Redo ─────────────────────────────────────────────────
+function snapshotItems() {
+  return items.map(it => ({
+    component: it.component,
+    nudges   : [...it.nudges],
+    x: it.x, y: it.y,
+    width: it.width, height: it.height,
+    zIndex: it.zIndex,
+    props: { ...it.props },
+    rotation: it.rotation,
+  }));
+}
+
+function pushHistory() {
+  history = history.slice(0, historyIdx + 1);
+  history.push(snapshotItems());
+  if (history.length > HISTORY_LIMIT) history.shift();
+  else historyIdx++;
+  updateUndoRedo();
+}
+
+function restoreSnapshot(snapshot) {
+  items = snapshot.map(s => ({
+    component: s.component,
+    nudges   : new Set(s.nudges),
+    x: s.x, y: s.y,
+    width: s.width, height: s.height,
+    zIndex: s.zIndex,
+    props: { ...s.props },
+    rotation: s.rotation,
+  }));
+  selectedIndices.clear();
+  nextZ = recalcNextZ();
+  renderCanvas();
+  fireSelectionChange();
+}
+
+function updateUndoRedo() {
+  const u = document.getElementById('undo-btn');
+  const r = document.getElementById('redo-btn');
+  if (u) u.disabled = historyIdx <= 0;
+  if (r) r.disabled = historyIdx >= history.length - 1;
 }
 
 function applyNudgeClasses(el, nudges) {

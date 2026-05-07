@@ -227,6 +227,36 @@ img, svg { display: block; }
 #install-btn { display: none; }
 #install-btn.visible { display: inline-flex; }
 
+/* Undo / Redo */
+.dlx-undo-redo {
+  display: flex;
+  align-items: center;
+  border: 1px solid rgba(220,214,185,.2);
+  border-radius: var(--r);
+  overflow: hidden;
+}
+.dlx-history-btn {
+  background: none;
+  border: none;
+  color: rgba(220,214,185,.7);
+  padding: 5px 10px;
+  font-size: .95rem;
+  cursor: pointer;
+  transition: background var(--t-fast), color var(--t-fast);
+  line-height: 1;
+}
+.dlx-history-btn:hover:not(:disabled) {
+  background: rgba(220,214,185,.12);
+  color: var(--sand-dune);
+}
+.dlx-history-btn:disabled {
+  opacity: .3;
+  cursor: default;
+}
+.dlx-history-btn:first-child {
+  border-right: 1px solid rgba(220,214,185,.2);
+}
+
 /* ── 5. Workspace (Main) ──────────────────────────────────── */
 .dlx-workspace {
   grid-area: main;
@@ -660,38 +690,55 @@ img, svg { display: block; }
   white-space: nowrap;
 }
 
-/* Individual canvas item (position:absolute inside virtual canvas) */
+/* Individual canvas item — transparent/frameless by default so the component
+   is what you see, not a card wrapper. Chrome only appears on hover/select. */
 .dlx-canvas-item {
   position: absolute;
-  background: var(--color-surface-raised);
-  border: 2px solid var(--color-border-subtle);
+  background: transparent;
+  border: 1.5px dashed transparent;
   border-radius: var(--r-xl);
-  overflow: visible;   /* allow resize handles to extend outside */
-  display: flex;
-  flex-direction: column;
+  overflow: visible;
+  display: block;
   transition: border-color var(--t-fast), box-shadow var(--t-fast);
   user-select: none;
   cursor: default;
 }
-.dlx-canvas-item:hover   { border-color: var(--color-border); }
+.dlx-canvas-item:hover   { border-color: rgba(167,166,162,.5); }
 .dlx-canvas-item.selected {
-  border-color: var(--golden-bronze);
-  box-shadow: 0 0 0 2px rgba(187,165,76,.25), var(--shadow-md);
+  border: 1.5px solid var(--golden-bronze);
+  box-shadow: 0 0 0 2px rgba(187,165,76,.2);
 }
 .dlx-canvas-item.band-hover { border-color: var(--pine-teal); }
 
+/* Control bar floats above the item — hidden until hover/select */
 .dlx-canvas-item__bar {
+  position: absolute;
+  left: -1px;
+  right: -1px;
+  top: -30px;
+  height: 28px;
   display: flex;
   align-items: center;
   gap: 5px;
-  padding: 4px 8px;
-  background: rgba(44,43,37,.04);
-  border-bottom: 1px solid var(--color-border-subtle);
-  border-radius: calc(var(--r-xl) - 2px) calc(var(--r-xl) - 2px) 0 0;
+  padding: 0 8px;
+  background: var(--color-surface-raised);
+  border: 1px solid var(--color-border-subtle);
+  border-bottom: none;
+  border-radius: var(--r-md) var(--r-md) 0 0;
   font-size: .72rem;
   color: var(--color-text-muted);
-  flex-shrink: 0;
   cursor: move;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--t-fast);
+  z-index: 2;
+  white-space: nowrap;
+  box-shadow: 0 -2px 6px rgba(0,0,0,.06);
+}
+.dlx-canvas-item:hover .dlx-canvas-item__bar,
+.dlx-canvas-item.selected .dlx-canvas-item__bar {
+  opacity: 1;
+  pointer-events: auto;
 }
 .dlx-canvas-item__bar-drag {
   font-size: .85rem;
@@ -737,11 +784,12 @@ img, svg { display: block; }
   color: #c0392b;
 }
 
+/* Body fills the full item — no bar eating into its height */
 .dlx-canvas-item__body {
-  flex: 1;
+  position: absolute;
+  inset: 0;
   overflow: hidden;
-  border-radius: 0 0 calc(var(--r-xl) - 2px) calc(var(--r-xl) - 2px);
-  min-height: 0;
+  border-radius: var(--r-xl);
 }
 .dlx-shadow-host {
   width: 100%;
